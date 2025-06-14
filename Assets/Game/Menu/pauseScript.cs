@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class pauseScript : MonoBehaviour
 {
@@ -8,20 +9,29 @@ public class pauseScript : MonoBehaviour
 
     [Header("Dependencies")]
     [SerializeField] private InputActionReference pauseButton;
-    [SerializeField] private SpriteRenderer menuSprite;
+    [SerializeField] private GameObject pauseMenu;
 
-    private void Pause()
+    public void Pause()
     {
-        menuSprite.enabled = true;
+        pauseMenu.SetActive(true);
         isPaused = true;
         Time.timeScale = 0;
+        GameStateManager.SetPaused(true);
     }
 
-    private void Unpause()
+    public void Unpause()
     {
-        menuSprite.enabled = false;
+        pauseMenu.SetActive(false);
         isPaused = false;
         Time.timeScale = 1;
+        GameStateManager.SetPaused(false);
+    }
+
+    // Eventually we'll have a button to go home
+    public void Home(int sceneID)
+    {
+        Unpause();
+        SceneManager.LoadScene(sceneID);
     }
 
     private float getInput()

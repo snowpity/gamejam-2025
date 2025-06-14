@@ -86,6 +86,9 @@ public class PlayerController : MonoBehaviour
     // MAIN LOOP
     private void Update()
     {
+        if (GameStateManager.IsPaused)
+            return;
+
         getInput();
         getFacingDirection();
         updateAnimation();
