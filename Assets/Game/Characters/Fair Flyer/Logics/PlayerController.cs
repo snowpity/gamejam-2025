@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 [SelectionBase]
 public class PlayerController : MonoBehaviour
@@ -10,80 +11,79 @@ public class PlayerController : MonoBehaviour
     private Directions facingDirection = Directions.RIGHT;
     private float animCrossFade = 0;
 
-    // Input logics
     [Header("Player Attributes")]
     [SerializeField] private float movementSpeed = 50f;
 
-    [Header("Dependencies")] // Reveal some input when you click on the "Player" object
+    [Header("Dependencies")]
     [SerializeField] private InputActionReference movement;
     [SerializeField] private InputActionReference interact;
     [SerializeField] private Rigidbody2D rigidBody;
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
+    // INTERACTION RANGE
+    [Header("Customer Interaction")]
+    [SerializeField] private float interactionRadius = 1.5f;
+    private List<CustomerBehavior> nearbyCustomers = new List<CustomerBehavior>();
+
     private readonly int animMoveRight = Animator.StringToHash("Anim_character_move_right");
     private readonly int animIdleRight = Animator.StringToHash("Anim_character_idle_right");
 
-    // Movement logics
+    private void OnEnable()
+    {
+        interact.action.performed += TryInteract;
+    }
+
+    private void OnDisable()
+    {
+        interact.action.performed -= TryInteract;
+    }
+
+    // MOVEMENT + ANIMATION
     private void getInput()
     {
         movementInput = movement.action.ReadValue<Vector2>();
     }
+
     private void updateMovement()
     {
         rigidBody.linearVelocity = movementInput.normalized * movementSpeed * Time.fixedDeltaTime;
     }
 
-    // Animation logics
     private void getFacingDirection()
     {
-        if (movementInput.y != 0 && Mathf.Abs(movementInput.y) > Mathf.Abs(movementInput.x)) // Check y diretion
-        {
-            if (movementInput.y > 0)
-            {
-                facingDirection = Directions.UP;
-            }
-            else if (movementInput.y < 0)
-            {
-                facingDirection = Directions.DOWN;
-            }
-        }
+        if (movementInput.y != 0 && Mathf.Abs(movementInput.y) > Mathf.Abs(movementInput.x))
+            facingDirection = (movementInput.y > 0) ? Directions.UP : Directions.DOWN;
         else if (movementInput.x != 0)
-        {
-            if (movementInput.x > 0) // Moving right
-            {
-                facingDirection = Directions.RIGHT;
-            }
-            else if (movementInput.x < 0) // Moving left
-            {
-                facingDirection = Directions.LEFT;
-            }
-        }
+            facingDirection = (movementInput.x > 0) ? Directions.RIGHT : Directions.LEFT;
     }
 
     private void updateAnimation()
     {
-        if (facingDirection == Directions.RIGHT)
-        {
-            spriteRenderer.flipX = true;
-        }
-        else if (facingDirection == Directions.LEFT)
-        {
-            spriteRenderer.flipX = false;
-        }
+        spriteRenderer.flipX = (facingDirection == Directions.RIGHT);
 
         if (movementInput.SqrMagnitude() > 0)
-        {
             animator.CrossFade(animMoveRight, animCrossFade);
-        }
         else
-        {
             animator.CrossFade(animIdleRight, animCrossFade);
-        }
-        // Todo: eventually we'll have front and back, right?
     }
 
-    // Loop
+    // INTERACT SYSTEM
+    private void TryInteract(InputAction.CallbackContext context)
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
+        foreach (var hit in hits)
+        {
+            CustomerBehavior customer = hit.GetComponent<CustomerBehavior>();
+            if (customer != null && customer.state == CustomerBehavior.CustomerState.Waiting)
+            {
+                customer.StartFollowing(this.transform);
+                break; // Only grab one
+            }
+        }
+    }
+
+    // MAIN LOOP
     private void Update()
     {
         getInput();
@@ -94,5 +94,12 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         updateMovement();
+    }
+
+    // DEBUG VISUALIZER
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, interactionRadius);
     }
 }
