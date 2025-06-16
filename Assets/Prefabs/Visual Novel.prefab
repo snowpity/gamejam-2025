@@ -704,6 +704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad3697f09fa08a42a2a508de724d91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interact: {fileID: 1215922775086709345, guid: 9382469c70b32074d8b4e07606d9f555, type: 3}
   dialoguePanel: {fileID: 7512682322453221095}
   portraitImage: {fileID: 6787648366407460948}
   nameText: {fileID: 4773351382672873927}

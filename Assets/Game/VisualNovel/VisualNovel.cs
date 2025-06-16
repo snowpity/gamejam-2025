@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using static VisualNovel;
 using UnityEngine.Rendering;
+using UnityEngine.InputSystem;
 
 // Data structure for dialogue entries
 [System.Serializable]
@@ -28,6 +29,9 @@ public class DialogueSequence
 public class VisualNovel : MonoBehaviour
 {
     public enum Emotions { NEUTRAL, HAPPY, ANGRY, CONFUSED }
+
+    [Header("Dependencies")]
+    [SerializeField] private InputActionReference interact;
 
     [Header("UI References")]
     [SerializeField] private GameObject dialoguePanel;
@@ -62,6 +66,12 @@ public class VisualNovel : MonoBehaviour
                 nextButton.onClick.AddListener(NextDialogue);
             }
 
+            // Setup input action callback
+            if (interact != null)
+            {
+                interact.action.performed += OnInteractPressed;
+            }
+
             TriggerDialogue(dialogueFile);
 
             // Ensure the canvas is active on start
@@ -75,10 +85,21 @@ public class VisualNovel : MonoBehaviour
         LoadDialogueFromJSON(fileName);
     }
 
-    void Update()
+    private void OnInteractPressed(InputAction.CallbackContext context)
     {
-        // Optional: Allow spacebar or enter to advance dialogue
-        // TODO
+        if (isDialogueActive)
+        {
+            NextDialogue();
+        }
+    }
+
+    void OnDestroy()
+    {
+        // Clean up the callback to prevent memory leaks
+        if (interact != null)
+        {
+            interact.action.performed -= OnInteractPressed;
+        }
     }
 
     // Load dialogue from JSON file
