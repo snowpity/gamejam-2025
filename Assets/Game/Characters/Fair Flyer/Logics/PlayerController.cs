@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float interactionRadius = 1.5f;
     private List<CustomerBehavior> nearbyCustomers = new List<CustomerBehavior>();
 
-    private readonly int animMoveRight = Animator.StringToHash("Anim_character_move_right");
-    private readonly int animIdleRight = Animator.StringToHash("Anim_character_idle_right");
+    private readonly int animMoveRight = Animator.StringToHash("Anim_character_move_left");
+    private readonly int animIdleRight = Animator.StringToHash("Anim_character_idle_left");
 
     private void OnEnable()
     {
