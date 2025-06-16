@@ -228,6 +228,11 @@ public class VisualNovel : MonoBehaviour
 
         // Find sprite in array by name
         Sprite sprite = System.Array.Find(characterPortraits, s => s.name == spriteName);
+
+        if (sprite != null)
+        {
+            portraitImage.sprite = sprite;
+        }
     }
 
     // Handle emotion-based visual or audio effects
@@ -281,7 +286,7 @@ public class VisualNovel : MonoBehaviour
         {
             characterName = "Soiree",
             dialogueText = "Oh another customer...",
-            portraitSpriteName = "bob_excited",
+            portraitSpriteName = "Sprite_Anon_Filly_0",
             emotion = Emotions.NEUTRAL
         });
 
@@ -298,7 +303,7 @@ public class VisualNovel : MonoBehaviour
 
         // Save to file (optional)
 #if UNITY_EDITOR
-        string path = Application.dataPath + "/Resources/example_dialogue.json";
+        string path = Application.dataPath + "/Game/VisualNovel/example_dialogue.json";
         System.IO.File.WriteAllText(path, json);
         Debug.Log("JSON saved to: " + path);
 #endif
