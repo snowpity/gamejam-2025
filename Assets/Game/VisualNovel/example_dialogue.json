@@ -4,21 +4,24 @@
         {
             "characterName": "Fair Flyer",
             "dialogueText": "Hello! Welcome to the Mare Restaurant!",
-            "portraitSpriteName": "Sprite_Fair_Flyer_0",
+            "portraitSpriteRight": "Sprite_Fair_Flyer_0",
+            "portraitSpriteLeft": "",
             "emotion": 1,
             "audioCue": ""
         },
         {
             "characterName": "Soiree",
             "dialogueText": "Oh another customer...",
-            "portraitSpriteName": "Sprite_Anon_Filly_0",
+            "portraitSpriteRight": "Sprite_Anon_Filly_0",
+            "portraitSpriteLeft": "Sprite_Fair_Flyer_0",
             "emotion": 0,
             "audioCue": ""
         },
         {
             "characterName": "Morning Mimosa",
             "dialogueText": "You wanna see me jump the shark!?",
-            "portraitSpriteName": "Sprite_Fair_Flyer_0",
+            "portraitSpriteRight": "Sprite_Fair_Flyer_0",
+            "portraitSpriteLeft": "",
             "emotion": 1,
             "audioCue": ""
         }

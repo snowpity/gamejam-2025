@@ -12,7 +12,8 @@ public class DialogueEntry
 {
     public string characterName;
     public string dialogueText;
-    public string portraitSpriteName; // Name of sprite resource or path
+    public string portraitSpriteRight; // Name of sprite resource or path
+    public string portraitSpriteLeft;
     public Emotions emotion = Emotions.NEUTRAL;
     public string audioCue; // Optional audio cue when slide comes up
 }
@@ -35,7 +36,8 @@ public class VisualNovel : MonoBehaviour
 
     [Header("UI References")]
     [SerializeField] private GameObject dialoguePanel;
-    [SerializeField] private Image portraitImage;
+    [SerializeField] private Image portraitImageRight;
+    [SerializeField] private Image portraitImageLeft;
     [SerializeField] private Text nameText;
     [SerializeField] private Text dialogueText;
     [SerializeField] private Button nextButton;
@@ -167,8 +169,12 @@ public class VisualNovel : MonoBehaviour
         if (dialogueText != null)
             dialogueText.text = current.dialogueText;
 
-        if (portraitImage != null)
-            UpdatePortrait(current.portraitSpriteName);
+        // Handle portraits separately
+        if (portraitImageRight != null)
+            UpdatePortrait(portraitImageRight, current.portraitSpriteRight);
+
+        if (portraitImageLeft != null)
+            UpdatePortrait(portraitImageLeft, current.portraitSpriteLeft);
 
         // Handle audio cue
         if (!string.IsNullOrEmpty(current.audioCue))
@@ -221,17 +227,54 @@ public class VisualNovel : MonoBehaviour
         if (dialoguePanel != null) dialoguePanel.gameObject.SetActive(false);
     }
 
-    // Update character portrait
-    private void UpdatePortrait(string spriteName)
+    private void HidePortraits(int portraitID = 0)
     {
-        if (portraitImage == null || string.IsNullOrEmpty(spriteName)) return;
+        switch(portraitID)
+        {
+            case 0: // Hide all by default
+                if (portraitImageRight != null)
+                    portraitImageRight.gameObject.SetActive(false);
+
+                if (portraitImageLeft != null)
+                    portraitImageLeft.gameObject.SetActive(false);
+                break;
+            case 1: // Hide right for ID 1
+                if (portraitImageRight != null)
+                    portraitImageRight.gameObject.SetActive(false);
+                break;
+            case 2: // Hide left for ID 2
+                if (portraitImageRight != null)
+                    portraitImageRight.gameObject.SetActive(false);
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Update character portrait
+    private void UpdatePortrait(Image portraitImage, string spriteName)
+    {
+        if (portraitImage == null) return;
+
+        if (string.IsNullOrEmpty(spriteName))
+        {
+            // Hide portrait if no sprite name provided
+            portraitImage.gameObject.SetActive(false);
+            return;
+        }
 
         // Find sprite in array by name
-        Sprite sprite = System.Array.Find(characterPortraits, s => s.name == spriteName);
+        Sprite foundSprite = System.Array.Find(characterPortraits, s => s.name == spriteName);
 
-        if (sprite != null)
+        if (foundSprite != null)
         {
-            portraitImage.sprite = sprite;
+            portraitImage.sprite = foundSprite;
+            portraitImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning($"Portrait sprite '{spriteName}' not found in characterPortraits array!");
+            portraitImage.gameObject.SetActive(false);
         }
     }
 
@@ -278,7 +321,8 @@ public class VisualNovel : MonoBehaviour
         {
             characterName = "Fair Flyer",
             dialogueText = "Hello! Welcome to the Mare Restaurant!",
-            portraitSpriteName = "Sprite_Fair_Flyer_0",
+            portraitSpriteRight = "Sprite_Fair_Flyer_0",
+            portraitSpriteLeft = "",
             emotion = Emotions.HAPPY
         });
 
@@ -286,7 +330,8 @@ public class VisualNovel : MonoBehaviour
         {
             characterName = "Soiree",
             dialogueText = "Oh another customer...",
-            portraitSpriteName = "Sprite_Anon_Filly_0",
+            portraitSpriteRight = "Sprite_Anon_Filly_0",
+            portraitSpriteLeft = "Sprite_Fair_Flyer_0",
             emotion = Emotions.NEUTRAL
         });
 
@@ -294,7 +339,8 @@ public class VisualNovel : MonoBehaviour
         {
             characterName = "Morning Mimosa",
             dialogueText = "You wanna see me jump the shark!?",
-            portraitSpriteName = "Sprite_Fair_Flyer_0",
+            portraitSpriteRight = "Sprite_Fair_Flyer_0",
+            portraitSpriteLeft = "",
             emotion = Emotions.HAPPY
         });
 
