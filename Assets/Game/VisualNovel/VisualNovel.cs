@@ -397,6 +397,7 @@ public class VisualNovel : MonoBehaviour
     private void OnDialogueComplete()
     {
         Debug.Log("Dialogue sequence completed!");
+        GameStateManager.SetGameStarted(true);
         // Add your custom logic here (unlock next scene, trigger events, etc.)
     }
 

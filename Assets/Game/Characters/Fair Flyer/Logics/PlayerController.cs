@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
     // MAIN LOOP
     private void Update()
     {
-        if (GameStateManager.IsPaused)
+        if (GameStateManager.IsPaused || !GameStateManager.IsGameStarted)
             return;
 
         getInput();
