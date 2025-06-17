@@ -791,3 +791,6 @@ MonoBehaviour:
   - {fileID: 1187509073, guid: d877f75f0adcb064fafb4c2442fbbf13, type: 3}
   - {fileID: 8954045590664812687, guid: af50552623a47ee4d8a7b3bf25c467d8, type: 3}
   dialogueFile: example_dialogue
+  typewriterSpeed: 0.02
+  skipTypewriterOnClick: 1
+  typewriterSound: {fileID: 0}

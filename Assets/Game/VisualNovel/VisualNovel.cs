@@ -46,6 +46,17 @@ public class VisualNovel : MonoBehaviour
     [SerializeField] private Sprite[] characterPortraits; // Assign in inspector
     [SerializeField] private string dialogueFile = "example_dialogue";
 
+    [Header("Typewriter Settings")]
+    [SerializeField] private float typewriterSpeed = 0.02f; // Time between characters
+    [SerializeField] private bool skipTypewriterOnClick = true;
+    [SerializeField] private AudioClip typewriterSound; // Optional typing sound
+    private AudioSource audioSource;
+
+    // Typewriter effect
+    private Coroutine typewriterCoroutine;
+    private bool isTyping = false;
+    private string currentDialogueFullText = "";
+
     // Current dialogue state
     private DialogueSequence currentSequence;
     private int currentIndex = 0;
@@ -92,6 +103,18 @@ public class VisualNovel : MonoBehaviour
         if (isDialogueActive)
         {
             NextDialogue();
+        }
+    }
+
+    // Accessibility, instantly complete the typewriter effect
+    public void CompleteTypewriter()
+    {
+        if (isTyping && typewriterCoroutine != null)
+        {
+            StopCoroutine(typewriterCoroutine);
+            dialogueText.text = currentDialogueFullText;
+            isTyping = false;
+            typewriterCoroutine = null;
         }
     }
 
@@ -166,8 +189,19 @@ public class VisualNovel : MonoBehaviour
         if (nameText != null)
             nameText.text = current.characterName;
 
+        // Store the full text and start typewriter effect
+        currentDialogueFullText = current.dialogueText;
         if (dialogueText != null)
-            dialogueText.text = current.dialogueText;
+        {
+            // Stop any existing typewriter effect
+            if (typewriterCoroutine != null)
+            {
+                StopCoroutine(typewriterCoroutine);
+            }
+
+            // Start new typewriter effect
+            typewriterCoroutine = StartCoroutine(TypewriterEffect(currentDialogueFullText));
+        }
 
         // Handle portraits separately
         if (portraitImageRight != null)
@@ -186,11 +220,59 @@ public class VisualNovel : MonoBehaviour
         HandleEmotionEffects(current.emotion);
     }
 
+    private System.Collections.IEnumerator TypewriterEffect(string fullText)
+    {
+        isTyping = true;
+        dialogueText.text = "";
+
+        // Get or create AudioSource for typing sounds
+        if (audioSource == null && typewriterSound != null)
+        {
+            audioSource = gameObject.GetComponent<AudioSource>();
+            if (audioSource == null)
+                audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        for (int i = 0; i <= fullText.Length; i++)
+        {
+            dialogueText.text = fullText.Substring(0, i);
+
+            // Play typing sound (but not on spaces or at very fast speeds)
+            if (typewriterSound != null && audioSource != null && i < fullText.Length)
+            {
+                char currentChar = fullText[i];
+                if (!char.IsWhiteSpace(currentChar) && typewriterSpeed > 0.01f)
+                {
+                    audioSource.PlayOneShot(typewriterSound, 0.5f);
+                }
+            }
+
+            yield return new WaitForSeconds(typewriterSpeed);
+        }
+
+        isTyping = false;
+        typewriterCoroutine = null;
+    }
+
     // Advance to next dialogue
     public void NextDialogue()
     {
         if (!isDialogueActive) return;
 
+        // If currently typing and skip is enabled, complete the text immediately
+        if (isTyping && skipTypewriterOnClick)
+        {
+            if (typewriterCoroutine != null)
+            {
+                StopCoroutine(typewriterCoroutine);
+                typewriterCoroutine = null;
+            }
+            dialogueText.text = currentDialogueFullText;
+            isTyping = false;
+            return; // Don't advance to next dialogue, just complete current one
+        }
+
+        // Normal dialogue advancement
         currentIndex++;
 
         if (currentIndex >= currentSequence.dialogues.Count)
@@ -206,7 +288,15 @@ public class VisualNovel : MonoBehaviour
     // End dialogue sequence
     private void EndDialogue()
     {
+        // Stop any active typewriter effect
+        if (typewriterCoroutine != null)
+        {
+            StopCoroutine(typewriterCoroutine);
+            typewriterCoroutine = null;
+        }
+
         isDialogueActive = false;
+        isTyping = false;
 
         // Hide the dialogue UI (but keep canvas active)
         HideDialogueUI();
