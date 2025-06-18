@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.UIElements;
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -12,80 +13,128 @@ public class MainMenuScript : MonoBehaviour
     [Header("Attributes")]
     [SerializeField] private float transitionSpeed = 0.2f;
 
-    [Header("Dependencies")]
-    [SerializeField] private GameObject mainMenu;
-    [SerializeField] private GameObject settingMenu;
+    private UIDocument document;
+    private Button playButton;
+    private Button settingsButton;
+    private Button backButton;
 
-    private Vector3 menuMainPos, settingMainPos, menuCenteredPos, settingCenteredPos;
+    private VisualElement mainMenuElement;
+    private VisualElement settingsMenuElement;
 
     private void Start()
     {
-        menuCenteredPos = mainMenu.transform.position;
-        settingCenteredPos = settingMenu.transform.position;
+        document = GetComponent<UIDocument>();
 
-        print(menuMainPos);
-        print(settingMainPos);
+        // Get UI elements
+        playButton = document.rootVisualElement.Q("playButton") as Button;
+        settingsButton = document.rootVisualElement.Q("settingsButton") as Button;
+        backButton = document.rootVisualElement.Q("backButton") as Button;
 
-        // Initializing position
-        menuMainPos = mainMenu.transform.position;
+        mainMenuElement = document.rootVisualElement.Q("mainMenu");
+        settingsMenuElement = document.rootVisualElement.Q("settingsMenu");
 
-        settingMainPos = new Vector3(settingCenteredPos.y + 3000, settingCenteredPos.y, settingCenteredPos.z);
-        settingMenu.transform.position = settingMainPos;
+        // Register button callbacks
+        if (playButton != null)
+            playButton.RegisterCallback<ClickEvent>(onPlayButtonClick);
+
+        if (settingsButton != null)
+            settingsButton.RegisterCallback<ClickEvent>(onSettingsButtonClick);
+
+        if (backButton != null)
+            backButton.RegisterCallback<ClickEvent>(onBackButtonClick);
+    }
+
+    private void OnDisable()
+    {
+        // Unregister all callbacks
+        if (playButton != null)
+            playButton.UnregisterCallback<ClickEvent>(onPlayButtonClick);
+
+        if (settingsButton != null)
+            settingsButton.UnregisterCallback<ClickEvent>(onSettingsButtonClick);
+
+        if (backButton != null)
+            backButton.UnregisterCallback<ClickEvent>(onBackButtonClick);
+    }
+
+    private void onPlayButtonClick(ClickEvent evt)
+    {
+        toLevel(0);
+    }
+
+    private void onSettingsButtonClick(ClickEvent evt)
+    {
+        transitionMenuToSetting();
+    }
+
+    private void onBackButtonClick(ClickEvent evt)
+    {
+        transitionSettingToMenu();
     }
 
     private IEnumerator menuTransition(Menus from, Menus to)
     {
-        Vector3 mainStartPos = Vector3.zero, mainTargetPos = Vector3.zero, settingStartPos = Vector3.zero, settingTargetPos = Vector3.zero;
-        bool shouldTransition = false;
-
-        if (from != to)
-        {
-            shouldTransition = true;
-
-            // Current position
-            mainStartPos = mainMenu.transform.position;
-            settingStartPos = settingMenu.transform.position;
-
-            if (from == Menus.MAIN && to == Menus.SETTINGS) // Menu to Setting
-            {
-                mainTargetPos = new Vector3(mainStartPos.x - 3000, mainStartPos.y, mainStartPos.z);
-                settingTargetPos = settingCenteredPos;
-            }
-            else if (from == Menus.SETTINGS && to == Menus.MAIN) // Setting to Menu
-            {
-                mainTargetPos = menuCenteredPos;
-                settingTargetPos = new Vector3(settingStartPos.x + 3000, settingStartPos.y, settingStartPos.z); ;
-            }
-        }
-        
-        if(!shouldTransition) // If we should not transition (i.e. same from and to input for some reason)
+        if (from == to)
         {
             isTransitioning = false;
-            yield break; // exit early if no tranition needed
+            yield break;
         }
 
-
         float elapsedTime = 0f;
+        float startMainTranslateX = 0f;
+        float targetMainTranslateX = 0f;
+        float startSettingTranslateX = 200f; // Starting position from CSS
+        float targetSettingTranslateX = 200f;
+
+        if (from == Menus.MAIN && to == Menus.SETTINGS)
+        {
+            // Main menu slides out to the left, settings menu slides in from the right
+            startMainTranslateX = 0f;
+            targetMainTranslateX = -200f;
+            startSettingTranslateX = 200f;
+            targetSettingTranslateX = 0f;
+            currentMenu = Menus.SETTINGS;
+        }
+        else if (from == Menus.SETTINGS && to == Menus.MAIN)
+        {
+            // Settings menu slides out to the right, main menu slides in from the left
+            startMainTranslateX = -200f;
+            targetMainTranslateX = 0f;
+            startSettingTranslateX = 0f;
+            targetSettingTranslateX = 200f;
+            currentMenu = Menus.MAIN;
+        }
 
         while (elapsedTime < transitionSpeed)
         {
             elapsedTime += Time.deltaTime;
-            float t = elapsedTime / transitionSpeed; // The percentage fraction of current transition animation
-            
-            mainMenu.transform.position = Vector3.Lerp(mainStartPos, mainTargetPos, t);
-            settingMenu.transform.position = Vector3.Lerp(settingStartPos, settingTargetPos, t);
+            float t = elapsedTime / transitionSpeed;
+
+            // Smooth interpolation
+            float currentMainTranslateX = Mathf.Lerp(startMainTranslateX, targetMainTranslateX, t);
+            float currentSettingTranslateX = Mathf.Lerp(startSettingTranslateX, targetSettingTranslateX, t);
+
+            // Apply transforms
+            if (mainMenuElement != null)
+                mainMenuElement.style.translate = new Translate(Length.Percent(currentMainTranslateX), 0);
+
+            if (settingsMenuElement != null)
+                settingsMenuElement.style.translate = new Translate(Length.Percent(currentSettingTranslateX), 0);
 
             yield return null;
         }
 
-        // Ensure final is correct
-        mainMenu.transform.position = mainTargetPos;
-        settingMenu.transform.position = settingTargetPos;
+        // Ensure final positions are exact
+        if (mainMenuElement != null)
+            mainMenuElement.style.translate = new Translate(Length.Percent(targetMainTranslateX), 0);
 
-        isTransitioning = false; // DONE! Set flag back
+        if (settingsMenuElement != null)
+            settingsMenuElement.style.translate = new Translate(Length.Percent(targetSettingTranslateX), 0);
+
+        isTransitioning = false;
     }
 
-    // Public
+    // Public methods
     public void transitionMenuToSetting()
     {
         if (!isTransitioning)

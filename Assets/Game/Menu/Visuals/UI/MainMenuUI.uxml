@@ -1,0 +1,17 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Game/Menu/Visuals/UI/MainMenu.uss?fileID=7433441132597879392&amp;guid=4249fb02aa15f074cbc7c134780d81b5&amp;type=3#MainMenu" />
+    <ui:VisualElement class="background" style="background-image: none;">
+        <ui:VisualElement name="banner" class="banner" />
+        <ui:VisualElement style="flex-grow: 1;">
+            <ui:VisualElement name="mainMenu" class="menuCentered">
+                <ui:Button icon-image="project://database/Assets/Game/Menu/Visuals/Sprites/menu_strip4.png?fileID=257395994207865268&amp;guid=974bb7ce847933f49a57671c57d41d5f&amp;type=3#menu_strip4_0" selectable="true" name="playButton" class="button" />
+                <ui:Button icon-image="project://database/Assets/Game/Menu/Visuals/Sprites/menu_strip4.png?fileID=903623629362276343&amp;guid=974bb7ce847933f49a57671c57d41d5f&amp;type=3#menu_strip4_1" selectable="true" name="settingsButton" class="button" />
+            </ui:VisualElement>
+            <ui:VisualElement name="settingsMenu" class="menuCentered setting">
+                <ui:Slider label="Volume&#10;" value="100.03" high-value="100" name="Volume" fill="false" style="width: 70%; color: rgb(255, 255, 255); font-size: 25px;" />
+                <ui:Toggle label="Futa Mode" style="width: 70%; color: rgb(255, 255, 255); font-size: 25px;" />
+                <ui:Button icon-image="project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=7433338533053954386&amp;guid=3d0afde0b0bed8849b219849713625f9&amp;type=3#check@2x" selectable="true" name="backButton" class="button" style="width: 70%; height: 10%; margin-top: 25px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

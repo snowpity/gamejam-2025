@@ -1,0 +1,52 @@
+:root {
+}
+
+.background {
+    width: 100%;
+    height: 100%;
+    background-image: url("project://database/Assets/Game/Menu/Visuals/Sprites/pattern.png?fileID=2800000&guid=09f7833f7eb1f154aae757745dc97bb3&type=3#pattern");
+    background-repeat: repeat;
+    background-size: 50%;
+    background-position: top left;
+}
+
+.menuCentered {
+    background-color: rgba(221, 221, 221, 0.32);
+    width: 40%;
+    height: 80%;
+    border-radius: 50px;
+    align-self: center;
+    align-items: center;
+    margin: 20px;
+    justify-content: center;
+    border-top-width: 7px;
+    border-right-width: 7px;
+    border-bottom-width: 7px;
+    border-left-width: 7px;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+}
+
+.button {
+    height: 20%;
+    border-radius: 10px;
+    -unity-background-scale-mode: scale-to-fit;
+    width: auto;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.banner {
+    background-image: url("project://database/Assets/Game/Menu/Visuals/Sprites/MareFairBanner.png?fileID=2800000&guid=ba4a52e3358a45441ba3ab78b335b993&type=3#MareFairBanner");
+    height: 28%;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.setting {
+    position: absolute;
+    translate: 200% 0;
+}
