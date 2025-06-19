@@ -31,6 +31,7 @@ public class pauseScript : MonoBehaviour
     public void Home(int sceneID)
     {
         Unpause();
+        GameStateManager.SetGameStarted(false);
         SceneManager.LoadScene(sceneID);
     }
 
