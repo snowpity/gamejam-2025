@@ -41,7 +41,7 @@
 }
 
 .banner {
-    background-image: url("project://database/Assets/Game/Menu/Visuals/Sprites/MareFairBanner.png?fileID=2800000&guid=ba4a52e3358a45441ba3ab78b335b993&type=3#MareFairBanner");
+    background-image: url("project://database/Assets/Game/Menu/Visuals/Sprites/Sprite23.png?fileID=2800000&guid=36feda5a36b657b41bdd5052a142f3d4&type=3#Sprite23");
     height: 28%;
     -unity-background-scale-mode: scale-to-fit;
 }
