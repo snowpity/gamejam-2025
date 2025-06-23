@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3568593092087402769}
   - component: {fileID: 1507601354591769366}
   - component: {fileID: 3607008871278680347}
+  - component: {fileID: 5798876286087033745}
   m_Layer: 0
   m_Name: Filly
   m_TagString: Customer
@@ -146,3 +147,19 @@ MonoBehaviour:
   spacing: 1.1
   minPartySize: 2
   maxPartySize: 6
+--- !u!114 &5798876286087033745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4901972792627519135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdfbc6864538f0d44806f59080b17e38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  partyID: 0
+  followSpeed: 5
+  stoppingDistance: 0.2
