@@ -105,6 +105,10 @@ public class CustomerBehavior : MonoBehaviour
             trailFollower.Trail = followerTrail;
             // Set trail position based on party ID or some other logic
             trailFollower.TrailPosition = spacingPosition + (GetPositionInParty() * spacingPosition);
+
+
+            // Set up the lerp speed so the fillies just don't snap immediately
+            trailFollower.LerpSpeed = 0.1f; // default is 0.3f, the smaller, the more time the fillies take to form up a line behind you initially.
         }
     }
 

@@ -8,7 +8,7 @@ public class TrailFollower : MonoBehaviour
     public int TrailPosition;
 
     [SerializeField] private FollowerTrail trail;
-    [SerializeField] private float LerpSpeed = .3f;
+    public float LerpSpeed = .1f;
 
     private Directions facingDirection = Directions.RIGHT;
 
