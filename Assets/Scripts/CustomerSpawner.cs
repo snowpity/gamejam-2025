@@ -84,8 +84,6 @@ public class CustomerSpawner : MonoBehaviour
             trackedCustomers.Add(customerGO);
 
             SpriteRenderer sprite = customerGO.GetComponent<SpriteRenderer>();
-            if (sprite != null)
-                sprite.flipX = false;
 
             Animator anim = customerGO.GetComponent<Animator>();
             if (anim != null)

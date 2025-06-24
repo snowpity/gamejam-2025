@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5723506093119232298}
   - component: {fileID: 6930109262015811220}
-  - component: {fileID: 3568593092087402769}
   - component: {fileID: 1507601354591769366}
   - component: {fileID: 5798876286087033745}
   - component: {fileID: 5047926504867182625}
@@ -92,21 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3568593092087402769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4901972792627519135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df7e75078f75544488126a7fed25dae9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TrailPosition: 20
-  trail: {fileID: 0}
-  LerpSpeed: 0.3
 --- !u!95 &1507601354591769366
 Animator:
   serializedVersion: 7
@@ -145,6 +129,7 @@ MonoBehaviour:
   partyID: 0
   followSpeed: 5
   stoppingDistance: 0.2
+  followerTrail: {fileID: 0}
 --- !u!58 &5047926504867182625
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -203,7 +188,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0

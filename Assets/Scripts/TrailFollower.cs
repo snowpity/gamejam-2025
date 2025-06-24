@@ -15,10 +15,8 @@ public class TrailFollower : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
-    private readonly int animMoveLeft = Animator.StringToHash("Anim_character_move_left");
-    private readonly int animIdleLeft = Animator.StringToHash("Anim_character_idle_left");
-    private readonly int animMoveRight = Animator.StringToHash("Anim_character_move_right");
-    private readonly int animIdleRight = Animator.StringToHash("Anim_character_idle_right");
+    private readonly int animMoveRight = Animator.StringToHash("Anim_character_move_left");
+    private readonly int animIdleRight = Animator.StringToHash("Anim_character_idle_left");
 
     public FollowerTrail Trail
     {
@@ -52,16 +50,11 @@ public class TrailFollower : MonoBehaviour
 
     private void updateAnimation(Vector3 movementVector)
     {
-        bool isMoving = movementVector.sqrMagnitude > 0.001f;
+        spriteRenderer.flipX = (facingDirection == Directions.RIGHT);
 
-        switch (facingDirection)
-        {
-            case Directions.LEFT:
-                animator.CrossFade(isMoving ? animMoveLeft : animIdleLeft, animCrossFade);
-                break;
-            case Directions.RIGHT:
-                animator.CrossFade(isMoving ? animMoveRight : animIdleRight, animCrossFade);
-                break;
-        }
+        if (movementVector.sqrMagnitude > 0.001f)
+            animator.CrossFade(animMoveRight, animCrossFade);
+        else
+            animator.CrossFade(animIdleRight, animCrossFade);
     }
 }
