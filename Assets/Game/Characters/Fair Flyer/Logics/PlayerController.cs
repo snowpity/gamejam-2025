@@ -72,8 +72,9 @@ public class PlayerController : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
         foreach (var hit in hits)
         {
+            // Selecting a party to follow
             CustomerBehavior customer = hit.GetComponent<CustomerBehavior>();
-            if (customer != null && customer.state == CustomerBehavior.CustomerState.Waiting)
+            if (customer != null && customer.state == CustomerBehavior.CustomerState.Waiting && !GameStateManager.hasFollowingParty)
             {
                 int partyToFollow = customer.partyID;
 

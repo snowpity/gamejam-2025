@@ -62,6 +62,7 @@ public class CustomerBehavior : MonoBehaviour
     // this makes the customer start following
     public void StartFollowing()
     {
+        GameStateManager.SetFollowingParty(true);
         EnableTrailFollowing();
         state = CustomerState.following;
         Debug.Log("[customer] now following");
@@ -141,6 +142,8 @@ public class CustomerBehavior : MonoBehaviour
         {
             Destroy(trailFollower);
             trailFollower = null;
+
+            GameStateManager.SetFollowingParty(false);
         }
     }
 
