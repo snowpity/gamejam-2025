@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
                     var c = obj.GetComponent<CustomerBehavior>();
                     if (c != null && c.partyID == partyToFollow && c.state == CustomerBehavior.CustomerState.Waiting)
                     {
-                        c.StartFollowing(this.transform);
+                        c.StartFollowing();
                     }
                 }
 
