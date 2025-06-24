@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CustomerBehavior : MonoBehaviour
@@ -57,6 +58,12 @@ public class CustomerBehavior : MonoBehaviour
     {
         state = CustomerState.seated;
         Debug.Log("[customer] now seated");
+    }
+
+    public class CustomerParty
+    {
+        public int partyID;
+        public List<CustomerBehavior> members = new List<CustomerBehavior>();
     }
 
     void Update()
