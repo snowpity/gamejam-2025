@@ -35,7 +35,7 @@ public class CustomerBehavior : MonoBehaviour
 
     // Dynamically assign TrailFollower to the fillies and set up their variables.
     private TrailFollower trailFollower;
-    // [SerializeField] private FollowerTrail followerTrail; Cannot assign FollowerTrail for objects in prefab, must find another method to get the component.
+    [SerializeField] private FollowerTrail followerTrail; // Cannot assign FollowerTrail for objects in prefab, must find another method to get the component.
 
     private void FindFollowerTrail()
     {
