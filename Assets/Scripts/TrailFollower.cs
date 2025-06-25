@@ -4,6 +4,7 @@ public class TrailFollower : MonoBehaviour
 {
     private enum Directions { UP, DOWN, LEFT, RIGHT };
     private float animCrossFade = 0;
+    private bool isSeated = false;
 
     public int TrailPosition;
 
@@ -17,6 +18,12 @@ public class TrailFollower : MonoBehaviour
 
     private readonly int animMoveLeft = Animator.StringToHash("Anim_character_move_left");
     private readonly int animIdleLeft = Animator.StringToHash("Anim_character_idle_left");
+    private readonly int animEatingLeft = Animator.StringToHash("Anim_character_eating_left");
+
+    public void setSeated(bool seated)
+    {
+        isSeated = seated;
+    }
 
     public FollowerTrail Trail
     {
@@ -50,6 +57,11 @@ public class TrailFollower : MonoBehaviour
 
     private void updateAnimation(Vector3 movementVector)
     {
+        if (isSeated)
+        {
+            animator.CrossFade(animEatingLeft, animCrossFade);
+            return;
+        }
         spriteRenderer.flipX = (facingDirection == Directions.RIGHT);
 
         if (movementVector.sqrMagnitude > 0.001f)

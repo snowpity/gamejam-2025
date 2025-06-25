@@ -5,6 +5,7 @@ using UnityEngine;
 public class CustomerBehavior : MonoBehaviour
 {
     int spacingPosition = 10;
+    private float animCrossFade = 0;
 
     public enum CustomerState
     {
@@ -23,7 +24,14 @@ public class CustomerBehavior : MonoBehaviour
     [SerializeField] private float stoppingDistance = 0.2f;
 
     private TrailFollower trailFollower;
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
+
     [SerializeField] private FollowerTrail followerTrail;
+
+    private readonly int animMoveLeft = Animator.StringToHash("Anim_character_move_left");
+    private readonly int animIdleLeft = Animator.StringToHash("Anim_character_idle_left");
+    private readonly int animEatingLeft = Animator.StringToHash("Anim_character_eating_left");
 
     private void FindFollowerTrail()
     {
@@ -35,6 +43,12 @@ public class CustomerBehavior : MonoBehaviour
                 followerTrail = playerObject.GetComponent<FollowerTrail>();
             }
         }
+    }
+
+    void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     public void Initialize(CustomerSpawner sourceSpawner, Vector3 startPos)
@@ -119,6 +133,8 @@ public class CustomerBehavior : MonoBehaviour
     public void SitDown()
     {
         state = CustomerState.seated;
+
+        animator.CrossFade(animEatingLeft, animCrossFade);
 
         if (trailFollower != null)
         {
