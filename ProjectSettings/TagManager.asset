@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Customer
   layers:
   - Default
   - TransparentFX
@@ -40,6 +41,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Prop
+    uniqueID: 4068069139
     locked: 0
   - name: Character
     uniqueID: 1444288481

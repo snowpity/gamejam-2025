@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private readonly int animIdleLeft = Animator.StringToHash("Anim_character_idle_left");
 
     private HashSet<CustomerBehavior> highlightedCustomers = new HashSet<CustomerBehavior>();
+    private HashSet<TableZone> highlightedTables = new HashSet<TableZone>();
 
     private void OnEnable()
     {
@@ -149,7 +150,7 @@ public class PlayerController : MonoBehaviour
         getInput();
         getFacingDirection();
         updateAnimation();
-        UpdateCustomerHighlighting();
+        UpdateHighLight();
     }
 
     private void FixedUpdate()
@@ -163,6 +164,100 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, interactionRadius);
     }
 
+    // Highlighting systems
+    private void UpdateHighLight()
+    {
+        // This might be the worst implementation ever, I might have to find a better way to clear highlight for the previous states
+        ClearAllCustomerHighlights();
+        ClearAllTableHighlights();
+
+        if(!GameStateManager.hasFollowingParty) // Allowing highlight for customer group if nopony's following right now
+        {
+            UpdateCustomerHighlighting();
+        }
+
+        if (true)// Allow the player to highlight the table to seat the fillies // prob gonna have a condition in the future, just set it true for now
+        {
+            UpdateTableHighlighting();
+        }
+    }
+
+    private void UpdateTableHighlighting() // TODO: Figure out a flag to set table if filled????
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
+        HashSet<TableZone> tablesToHighlight = new HashSet<TableZone>();
+
+        // Get the following party size to check table compatibility
+        List<CustomerBehavior> followingParty = new List<CustomerBehavior>();
+        GameObject[] allCustomers = GameObject.FindGameObjectsWithTag("Customer");
+
+        foreach (var obj in allCustomers)
+        {
+            var c = obj.GetComponent<CustomerBehavior>();
+            if (c != null && c.state == CustomerBehavior.CustomerState.following)
+            {
+                followingParty.Add(c);
+            }
+        }
+
+        int partySize = followingParty.Count;
+
+        foreach (var hit in hits)
+        {
+            TableZone table = hit.GetComponent<TableZone>();
+            if (table == null) continue;
+
+            // Check if table has enough available seats
+            var availableSeats = table.GetSeatPositions().Where(s => s.childCount == 0).ToArray();
+            if (availableSeats.Length >= partySize)
+            {
+                tablesToHighlight.Add(table);
+            }
+        }
+
+        // Remove highlight from tables that should no longer be highlighted
+        var tablesToUnhighlight = new HashSet<TableZone>(highlightedTables);
+        tablesToUnhighlight.ExceptWith(tablesToHighlight);
+
+        foreach (var table in tablesToUnhighlight)
+        {
+            SetTableOutline(table, normalOutlineThickness);
+            highlightedTables.Remove(table);
+        }
+
+        foreach (var table in tablesToHighlight)
+        {
+            if (!highlightedTables.Contains(table))
+            {
+                SetTableOutline(table, highlightOutlineThickness);
+                highlightedTables.Add(table);
+            }
+        }
+    }
+
+    private void SetTableOutline(TableZone table, float thickness)
+    {
+        if (table == null) return;
+
+        // Get all SpriteRenderers in the table and its children
+        SpriteRenderer[] allRenderers = table.GetComponentsInChildren<SpriteRenderer>();
+        Debug.Log("TABLE SELECTED");
+
+        foreach (SpriteRenderer renderer in allRenderers)
+        {
+            if (renderer != null && renderer.material != null)
+            {
+                // Create material instance if it's not already instanced
+                if (renderer.material.name.Contains("(Instance)") == false)
+                    renderer.material = new Material(renderer.material);
+
+                // Set the outline thickness
+                if (renderer.material.HasProperty("_Outline_Thickness"))
+                    renderer.material.SetFloat("_Outline_Thickness", thickness);
+            }
+        }
+    }
+
     private void UpdateCustomerHighlighting()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
@@ -171,7 +266,7 @@ public class PlayerController : MonoBehaviour
         foreach (var hit in hits)
         {
             CustomerBehavior customer = hit.GetComponent<CustomerBehavior>();
-            if (customer != null && customer.state == CustomerBehavior.CustomerState.Waiting && !GameStateManager.hasFollowingParty)
+            if (customer != null && customer.state == CustomerBehavior.CustomerState.Waiting)
             {
                 if (!partiesInRange.ContainsKey(customer.partyID))
                     partiesInRange[customer.partyID] = new List<CustomerBehavior>();
@@ -206,7 +301,7 @@ public class PlayerController : MonoBehaviour
         if (closestPartyID != -1 && partiesInRange.ContainsKey(closestPartyID))
         {
             CustomerBehavior[] allCustomers = Object.FindObjectsByType<CustomerBehavior>(FindObjectsSortMode.None);
- 
+
             foreach (var customer in allCustomers)
             {
                 if (customer.partyID == closestPartyID && customer.state == CustomerBehavior.CustomerState.Waiting)
@@ -252,12 +347,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ClearAllHighlights()
+    private void ClearAllCustomerHighlights()
     {
         foreach (var customer in highlightedCustomers)
         {
             SetCustomerOutline(customer, normalOutlineThickness);
         }
         highlightedCustomers.Clear();
+    }
+
+    private void ClearAllTableHighlights()
+    {
+        foreach (var table in highlightedTables)
+        {
+            SetTableOutline(table, normalOutlineThickness);
+        }
+        highlightedTables.Clear();
     }
 }
