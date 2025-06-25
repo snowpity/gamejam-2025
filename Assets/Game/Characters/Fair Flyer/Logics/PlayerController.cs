@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     private enum Directions { UP, DOWN, LEFT, RIGHT }
 
     private Vector2 movementInput;
-    private Directions facingDirection = Directions.RIGHT;
+    private Directions facingDirection = Directions.LEFT;
     private float animCrossFade = 0;
 
     [Header("Player Attributes")]
@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviour
     [Header("Customer Interaction")]
     [SerializeField] private float interactionRadius = 1.5f;
 
-    private readonly int animMoveRight = Animator.StringToHash("Anim_character_move_left");
-    private readonly int animIdleRight = Animator.StringToHash("Anim_character_idle_left");
+    private readonly int animMoveLeft = Animator.StringToHash("Anim_character_move_left");
+    private readonly int animIdleLeft = Animator.StringToHash("Anim_character_idle_left");
 
     private void OnEnable()
     {
@@ -61,9 +61,9 @@ public class PlayerController : MonoBehaviour
         spriteRenderer.flipX = (facingDirection == Directions.RIGHT);
 
         if (movementInput.SqrMagnitude() > 0)
-            animator.CrossFade(animMoveRight, animCrossFade);
+            animator.CrossFade(animMoveLeft, animCrossFade);
         else
-            animator.CrossFade(animIdleRight, animCrossFade);
+            animator.CrossFade(animIdleLeft, animCrossFade);
     }
 
     // INTERACT SYSTEM

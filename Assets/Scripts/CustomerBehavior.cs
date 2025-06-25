@@ -18,9 +18,6 @@ public class CustomerBehavior : MonoBehaviour
     // current state of this customer
     public CustomerState state;
 
-    // used to track who this customer is following (optional for follow logic)
-    private Transform followTarget;
-
     // the id for the group this customer is in
     public int partyID;
 
@@ -66,13 +63,6 @@ public class CustomerBehavior : MonoBehaviour
         EnableTrailFollowing();
         state = CustomerState.following;
         Debug.Log("[customer] now following");
-    }
-
-    // overload in case player wants to assign a specific follow target
-    public void StartFollowing(Transform target)
-    {
-        followTarget = target;
-        StartFollowing();
     }
 
     // this sets the customer to seated
@@ -150,22 +140,6 @@ public class CustomerBehavior : MonoBehaviour
 
     void Update()
     {
-        /*
-        // only do follow logic if were in following state and have a target
-        if (state == CustomerState.following && followTarget != null)
-        {
-            float distance = Vector3.Distance(transform.position, followTarget.position);
-            if (distance > stoppingDistance)
-            {
-                // move toward follow target
-                transform.position = Vector3.MoveTowards(
-                    transform.position,
-                    followTarget.position,
-                    followSpeed * Time.deltaTime
-                );
-            }
-        }
-        */
     }
 
     // call this when the customer should be removed

@@ -15,8 +15,8 @@ public class TrailFollower : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
-    private readonly int animMoveRight = Animator.StringToHash("Anim_character_move_left");
-    private readonly int animIdleRight = Animator.StringToHash("Anim_character_idle_left");
+    private readonly int animMoveLeft = Animator.StringToHash("Anim_character_move_left");
+    private readonly int animIdleLeft = Animator.StringToHash("Anim_character_idle_left");
 
     public FollowerTrail Trail
     {
@@ -53,8 +53,8 @@ public class TrailFollower : MonoBehaviour
         spriteRenderer.flipX = (facingDirection == Directions.RIGHT);
 
         if (movementVector.sqrMagnitude > 0.001f)
-            animator.CrossFade(animMoveRight, animCrossFade);
+            animator.CrossFade(animMoveLeft, animCrossFade);
         else
-            animator.CrossFade(animIdleRight, animCrossFade);
+            animator.CrossFade(animIdleLeft, animCrossFade);
     }
 }
