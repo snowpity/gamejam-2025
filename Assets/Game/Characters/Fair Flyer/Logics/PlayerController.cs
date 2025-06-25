@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System.Linq;
 
 [SelectionBase]
 public class PlayerController : MonoBehaviour
@@ -25,14 +26,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float interactionRadius = 1.5f;
 
     [Header("Customer Highlighting")]
-    [SerializeField] private float highlightOutlineThickness = 2f / 64f; // 2 pixels
+    [SerializeField] private float highlightOutlineThickness = 2f / 64f;
     [SerializeField] private float normalOutlineThickness = 0f;
-
 
     private readonly int animMoveLeft = Animator.StringToHash("Anim_character_move_left");
     private readonly int animIdleLeft = Animator.StringToHash("Anim_character_idle_left");
 
-    // Keep track of currently highlighted customers
     private HashSet<CustomerBehavior> highlightedCustomers = new HashSet<CustomerBehavior>();
 
     private void OnEnable()
@@ -45,7 +44,6 @@ public class PlayerController : MonoBehaviour
         interact.action.performed -= TryInteract;
     }
 
-    // MOVEMENT
     private void getInput()
     {
         movementInput = movement.action.ReadValue<Vector2>();
@@ -74,29 +72,71 @@ public class PlayerController : MonoBehaviour
             animator.CrossFade(animIdleLeft, animCrossFade);
     }
 
-    // INTERACT SYSTEM
     private void TryInteract(InputAction.CallbackContext context)
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
-        foreach (var hit in hits)
-        {
-            // Selecting a party to follow
-            CustomerBehavior customer = hit.GetComponent<CustomerBehavior>();
-            if (customer != null && customer.state == CustomerBehavior.CustomerState.Waiting && !GameStateManager.hasFollowingParty)
-            {
-                int partyToFollow = customer.partyID;
 
-                GameObject[] allCustomers = GameObject.FindGameObjectsWithTag("Customer");
-                foreach (var obj in allCustomers)
+        if (!GameStateManager.hasFollowingParty)
+        {
+            // try to select a party to follow
+            foreach (var hit in hits)
+            {
+                CustomerBehavior customer = hit.GetComponent<CustomerBehavior>();
+                if (customer != null && customer.state == CustomerBehavior.CustomerState.Waiting)
                 {
-                    var c = obj.GetComponent<CustomerBehavior>();
-                    if (c != null && c.partyID == partyToFollow && c.state == CustomerBehavior.CustomerState.Waiting)
+                    int partyToFollow = customer.partyID;
+                    GameObject[] allCustomers = GameObject.FindGameObjectsWithTag("Customer");
+
+                    foreach (var obj in allCustomers)
                     {
-                        c.StartFollowing();
+                        var c = obj.GetComponent<CustomerBehavior>();
+                        if (c != null && c.partyID == partyToFollow && c.state == CustomerBehavior.CustomerState.Waiting)
+                        {
+                            c.StartFollowing();
+                        }
                     }
+                    break;
+                }
+            }
+        }
+        else
+        {
+            // try to seat the party
+            List<CustomerBehavior> followingParty = new List<CustomerBehavior>();
+            GameObject[] allCustomers = GameObject.FindGameObjectsWithTag("Customer");
+
+            foreach (var obj in allCustomers)
+            {
+                var c = obj.GetComponent<CustomerBehavior>();
+                if (c != null && c.state == CustomerBehavior.CustomerState.following)
+                {
+                    followingParty.Add(c);
+                }
+            }
+
+            int partySize = followingParty.Count;
+
+            foreach (var hit in hits)
+            {
+                TableZone table = hit.GetComponent<TableZone>();
+                if (table == null) continue;
+
+                var seats = table.GetSeatPositions().Where(s => s.childCount == 0).ToArray();
+                if (seats.Length < partySize)
+                    continue;
+
+                for (int i = 0; i < partySize; i++)
+                {
+                    CustomerBehavior customer = followingParty[i];
+                    Transform seat = seats[i];
+
+                    customer.transform.position = seat.position;
+                    customer.transform.SetParent(seat); // optional, keeps them attached
+                    customer.SitDown();
                 }
 
-                break; // Only trigger one group
+                //GameStateManager.SetFollowingParty(false);
+                break;
             }
         }
     }
@@ -123,15 +163,9 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, interactionRadius);
     }
 
-
-
-    // CUSTOMER OUTLINING SYSTEM
     private void UpdateCustomerHighlighting()
     {
-        // Get all colliders within interaction range
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
-
-        // Find all waiting customers in range and group them by partyID
         Dictionary<int, List<CustomerBehavior>> partiesInRange = new Dictionary<int, List<CustomerBehavior>>();
 
         foreach (var hit in hits)
@@ -140,20 +174,17 @@ public class PlayerController : MonoBehaviour
             if (customer != null && customer.state == CustomerBehavior.CustomerState.Waiting && !GameStateManager.hasFollowingParty)
             {
                 if (!partiesInRange.ContainsKey(customer.partyID))
-                {
                     partiesInRange[customer.partyID] = new List<CustomerBehavior>();
-                }
+
                 partiesInRange[customer.partyID].Add(customer);
             }
         }
 
-        // Find the closest party (by finding the closest member of each party)
         int closestPartyID = -1;
         float closestDistance = float.MaxValue;
 
         foreach (var party in partiesInRange)
         {
-            // Find the closest member of this party
             float partyClosestDistance = float.MaxValue;
             foreach (var customer in party.Value)
             {
@@ -164,7 +195,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            // Check if this party is closer than our current closest
             if (partyClosestDistance < closestDistance)
             {
                 closestDistance = partyClosestDistance;
@@ -172,12 +202,11 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Get all customers that should be highlighted (the closest party)
         HashSet<CustomerBehavior> customersToHighlight = new HashSet<CustomerBehavior>();
         if (closestPartyID != -1 && partiesInRange.ContainsKey(closestPartyID))
         {
-            // Add ALL members of the closest party to highlight, even if they're outside interaction range
-            CustomerBehavior[] allCustomers = FindObjectsOfType<CustomerBehavior>();
+            CustomerBehavior[] allCustomers = Object.FindObjectsByType<CustomerBehavior>(FindObjectsSortMode.None);
+ 
             foreach (var customer in allCustomers)
             {
                 if (customer.partyID == closestPartyID && customer.state == CustomerBehavior.CustomerState.Waiting)
@@ -187,7 +216,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Remove highlight from customers no longer supposed to be highlighted
+
+        // Create a new material instance to avoid modifying the shared material
         var customersToUnhighlight = new HashSet<CustomerBehavior>(highlightedCustomers);
         customersToUnhighlight.ExceptWith(customersToHighlight);
 
@@ -197,7 +227,6 @@ public class PlayerController : MonoBehaviour
             highlightedCustomers.Remove(customer);
         }
 
-        // Add highlight to customers that should be highlighted
         foreach (var customer in customersToHighlight)
         {
             if (!highlightedCustomers.Contains(customer))
@@ -215,17 +244,11 @@ public class PlayerController : MonoBehaviour
         SpriteRenderer customerRenderer = customer.GetComponent<SpriteRenderer>();
         if (customerRenderer != null && customerRenderer.material != null)
         {
-            // Create a new material instance to avoid modifying the shared material
             if (customerRenderer.material.name.Contains("(Instance)") == false)
-            {
                 customerRenderer.material = new Material(customerRenderer.material);
-            }
 
-            // Set the outline thickness
             if (customerRenderer.material.HasProperty("_Outline_Thickness"))
-            {
                 customerRenderer.material.SetFloat("_Outline_Thickness", thickness);
-            }
         }
     }
 
