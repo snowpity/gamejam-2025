@@ -155,6 +155,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void toLevel(int sceneID)
     {
+        GameStateManager.SetDefault(); // Precaution, we'll set all public flag to it's default state.
         SceneManager.LoadScene(sceneID);
     }
 }

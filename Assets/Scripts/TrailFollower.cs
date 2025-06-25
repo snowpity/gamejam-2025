@@ -1,15 +1,14 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class TrailFollower : MonoBehaviour
 {
     private enum Directions { UP, DOWN, LEFT, RIGHT };
     private float animCrossFade = 0;
-    private Vector3 previousPosition;
 
     public int TrailPosition;
+
     [SerializeField] private FollowerTrail trail;
-    [SerializeField] private float LerpSpeed = .3f;
+    public float LerpSpeed = .1f;
 
     private Directions facingDirection = Directions.RIGHT;
 
@@ -19,32 +18,33 @@ public class TrailFollower : MonoBehaviour
     private readonly int animMoveRight = Animator.StringToHash("Anim_character_move_left");
     private readonly int animIdleRight = Animator.StringToHash("Anim_character_idle_left");
 
-    void Start() 
+    public FollowerTrail Trail
+    {
+        get { return trail; }
+        set { trail = value; }
+    }
+
+    void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        previousPosition = transform.position;
     }
-    // Update is called once per frame
+
     void FixedUpdate()
     {
+        if (trail == null || trail.locationMemory.Length <= TrailPosition) return;
+
         Vector3 targetPosition = trail.locationMemory[TrailPosition];
-
-        // Determine facing direction
-        if (targetPosition.x < transform.position.x)
-        {
-            facingDirection = Directions.LEFT;
-        }
-        else if (targetPosition.x > transform.position.x)
-        {
-            facingDirection = Directions.RIGHT;
-        }
-
         Vector3 oldPosition = transform.position;
-        //transform.position = Vector3.MoveTowards(transform.position, trail.positions[followerID], speed * Time.deltaTime);
+
         transform.position = Vector3.Lerp(transform.position, targetPosition, LerpSpeed);
 
-        // Get animation
+        // determine facing direction
+        if (targetPosition.x < transform.position.x)
+            facingDirection = Directions.LEFT;
+        else if (targetPosition.x > transform.position.x)
+            facingDirection = Directions.RIGHT;
+
         updateAnimation(transform.position - oldPosition);
     }
 

@@ -21,10 +21,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-    // INTERACTION RANGE
     [Header("Customer Interaction")]
     [SerializeField] private float interactionRadius = 1.5f;
-    private List<CustomerBehavior> nearbyCustomers = new List<CustomerBehavior>();
 
     private readonly int animMoveRight = Animator.StringToHash("Anim_character_move_left");
     private readonly int animIdleRight = Animator.StringToHash("Anim_character_idle_left");
@@ -39,7 +37,7 @@ public class PlayerController : MonoBehaviour
         interact.action.performed -= TryInteract;
     }
 
-    // MOVEMENT + ANIMATION
+    // MOVEMENT
     private void getInput()
     {
         movementInput = movement.action.ReadValue<Vector2>();
@@ -74,16 +72,27 @@ public class PlayerController : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
         foreach (var hit in hits)
         {
+            // Selecting a party to follow
             CustomerBehavior customer = hit.GetComponent<CustomerBehavior>();
-            if (customer != null && customer.state == CustomerBehavior.CustomerState.Waiting)
+            if (customer != null && customer.state == CustomerBehavior.CustomerState.Waiting && !GameStateManager.hasFollowingParty)
             {
-                customer.StartFollowing(this.transform);
-                break; // Only grab one
+                int partyToFollow = customer.partyID;
+
+                GameObject[] allCustomers = GameObject.FindGameObjectsWithTag("Customer");
+                foreach (var obj in allCustomers)
+                {
+                    var c = obj.GetComponent<CustomerBehavior>();
+                    if (c != null && c.partyID == partyToFollow && c.state == CustomerBehavior.CustomerState.Waiting)
+                    {
+                        c.StartFollowing();
+                    }
+                }
+
+                break; // Only trigger one group
             }
         }
     }
 
-    // MAIN LOOP
     private void Update()
     {
         if (GameStateManager.IsPaused || !GameStateManager.IsGameStarted)
@@ -99,7 +108,6 @@ public class PlayerController : MonoBehaviour
         updateMovement();
     }
 
-    // DEBUG VISUALIZER
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
