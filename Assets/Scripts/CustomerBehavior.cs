@@ -32,6 +32,10 @@ public class CustomerBehavior : MonoBehaviour
     private readonly int animMoveLeft = Animator.StringToHash("Anim_character_move_left");
     private readonly int animIdleLeft = Animator.StringToHash("Anim_character_idle_left");
     private readonly int animEatingLeft = Animator.StringToHash("Anim_character_eating_left");
+    private readonly int animMenuLeft = Animator.StringToHash("Anim_character_menu_left");
+    private readonly int animOrderingLeft = Animator.StringToHash("Anim_character_ordering_left");
+    private readonly int animOrderingImpatientLeft = Animator.StringToHash("Anim_character_ordering_impatient_left");
+    private readonly int animOrderingAngryLeft = Animator.StringToHash("Anim_character_ordering_angry_left");
 
     private void FindFollowerTrail()
     {
@@ -134,7 +138,7 @@ public class CustomerBehavior : MonoBehaviour
     {
         state = CustomerState.seated;
 
-        animator.CrossFade(animEatingLeft, animCrossFade);
+        animator.CrossFade(animMenuLeft, animCrossFade);
 
         if (trailFollower != null)
         {

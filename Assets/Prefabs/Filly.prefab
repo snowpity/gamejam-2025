@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 5798876286087033745}
   - component: {fileID: 5047926504867182625}
   - component: {fileID: 8513843367704048258}
+  - component: {fileID: 4474986516726014376}
   m_Layer: 6
   m_Name: Filly
   m_TagString: Customer
@@ -281,3 +282,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4474986516726014376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4901972792627519135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af0fdf61774d49c4e91111150f70dfca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
