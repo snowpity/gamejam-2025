@@ -131,7 +131,24 @@ public class PlayerController : MonoBehaviour
                     CustomerBehavior customer = followingParty[i];
                     Transform seat = seats[i];
 
-                    customer.transform.position = seat.position;
+                    // Get the sprite renderers
+                    SpriteRenderer customerSprite = customer.GetComponent<SpriteRenderer>();
+                    SpriteRenderer seatSprite = seat.GetComponent<SpriteRenderer>();
+
+                    Vector3 additiveSpacing;
+                    float xShift = 0.13f / 2; // divide 2 because our sprite is scaled down by 0.5
+                    float yShift = 1f / 2;
+                    if(seatSprite.flipX)
+                    {
+                        customerSprite.flipX = !seatSprite.flipX;
+                        additiveSpacing = new Vector3(xShift,yShift,0);
+                    }
+                    else
+                    {
+                        additiveSpacing = new Vector3(-xShift,yShift,0);
+                    }
+
+                    customer.transform.position = seat.position + additiveSpacing;
                     customer.transform.SetParent(seat); // optional, keeps them attached
                     customer.SitDown();
                 }
