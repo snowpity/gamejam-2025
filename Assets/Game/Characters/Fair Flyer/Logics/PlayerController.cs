@@ -79,24 +79,54 @@ public class PlayerController : MonoBehaviour
 
         if (!GameStateManager.hasFollowingParty)
         {
-            // try to select a party to follow
+            Dictionary<int, List<CustomerBehavior>> partiesInRange = new Dictionary<int, List<CustomerBehavior>>();
+
             foreach (var hit in hits)
             {
                 CustomerBehavior customer = hit.GetComponent<CustomerBehavior>();
                 if (customer != null && customer.state == CustomerBehavior.CustomerState.Waiting)
                 {
-                    int partyToFollow = customer.partyID;
-                    GameObject[] allCustomers = GameObject.FindGameObjectsWithTag("Customer");
+                    if (!partiesInRange.ContainsKey(customer.partyID))
+                        partiesInRange[customer.partyID] = new List<CustomerBehavior>();
 
-                    foreach (var obj in allCustomers)
+                    partiesInRange[customer.partyID].Add(customer);
+                }
+            }
+
+            int closestPartyID = -1;
+            float closestDistance = float.MaxValue;
+
+            foreach (var party in partiesInRange)
+            {
+                float partyClosestDistance = float.MaxValue;
+                foreach (var customer in party.Value)
+                {
+                    float distance = Vector2.Distance(transform.position, customer.transform.position);
+                    if (distance < partyClosestDistance)
                     {
-                        var c = obj.GetComponent<CustomerBehavior>();
-                        if (c != null && c.partyID == partyToFollow && c.state == CustomerBehavior.CustomerState.Waiting)
-                        {
-                            c.StartFollowing();
-                        }
+                        partyClosestDistance = distance;
                     }
-                    break;
+                }
+
+                if (partyClosestDistance < closestDistance)
+                {
+                    closestDistance = partyClosestDistance;
+                    closestPartyID = party.Key;
+                }
+            }
+
+            // Interact with the closest party if found
+            if (closestPartyID != -1)
+            {
+                GameObject[] allCustomers = GameObject.FindGameObjectsWithTag("Customer");
+
+                foreach (var obj in allCustomers)
+                {
+                    var c = obj.GetComponent<CustomerBehavior>();
+                    if (c != null && c.partyID == closestPartyID && c.state == CustomerBehavior.CustomerState.Waiting)
+                    {
+                        c.StartFollowing();
+                    }
                 }
             }
         }
