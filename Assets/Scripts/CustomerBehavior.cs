@@ -9,16 +9,22 @@ public class CustomerBehavior : MonoBehaviour
 
     public enum CustomerState
     {
-        Waiting,
+        waiting,
         inLine,
         following,
-        seated
+        seated,
+        readingMenu,
+        ordering,
+        eating,
+        finished
     }
 
     public CustomerState state;
     public int partyID;
 
     private CustomerSpawner spawner;
+    private float menuReadingTime;  // Time spent reading menu
+    private bool isPartyLeader = false;  // Only the leader sets the timer
 
     [SerializeField] private float followSpeed = 5f;
     [SerializeField] private float stoppingDistance = 0.2f;
@@ -59,7 +65,7 @@ public class CustomerBehavior : MonoBehaviour
     {
         spawner = sourceSpawner;
         transform.position = startPos;
-        state = CustomerState.Waiting;
+        state = CustomerState.waiting;
         FindFollowerTrail();
     }
 
@@ -107,6 +113,25 @@ public class CustomerBehavior : MonoBehaviour
         }
     }
 
+    private CustomerBehavior GetPartyLeader()
+    {
+        CustomerBehavior[] allCustomers = FindObjectsOfType<CustomerBehavior>();
+        CustomerBehavior leader = null;
+
+        foreach (var customer in allCustomers)
+        {
+            if (customer.partyID == this.partyID)
+            {
+                if (leader == null || customer.GetInstanceID() < leader.GetInstanceID())
+                {
+                    leader = customer;
+                }
+            }
+        }
+
+        return leader;
+    }
+
     private int GetPositionInParty()
     {
         CustomerBehavior[] allCustomers = FindObjectsOfType<CustomerBehavior>();
@@ -137,6 +162,67 @@ public class CustomerBehavior : MonoBehaviour
     public void SitDown()
     {
         state = CustomerState.seated;
+    }
+
+    void FixedUpdate()
+    {
+        // Switch to reading menu when seated
+        if (state == CustomerState.seated)
+        {
+            toReadingMenu();
+        }
+
+        // Handle menu reading timer
+        if (state == CustomerState.readingMenu)
+        {
+            CustomerBehavior leader = GetPartyLeader();
+
+            if (leader != null)
+            {
+                // If I'm the leader, countdown my own timer
+                if (leader == this)
+                {
+                    menuReadingTime -= Time.deltaTime;
+
+                    if (menuReadingTime <= 0)
+                    {
+                        toReadyToOrder();
+                    }
+                }
+                // If I'm not the leader, check if the leader is done
+                else if (leader.state == CustomerState.ordering)
+                {
+                    toReadyToOrder();
+                }
+            }
+        }
+
+        if (state == CustomerState.ordering)
+        {
+            // Handle ordering logic here
+        }
+
+
+    }
+
+    void toReadingMenu()
+    {
+        state = CustomerState.readingMenu;
+
+        CustomerBehavior leader = GetPartyLeader();
+
+        // Only the party leader sets the timer
+        if (leader == this)
+        {
+            isPartyLeader = true;
+            menuReadingTime = Random.Range(10f, 21f); // 10 to 20 seconds (inclusive)
+            Debug.Log($"[customer] Party {partyID} leader will read menu for {menuReadingTime:F1} seconds");
+        }
+        else
+        {
+            isPartyLeader = false;
+            Debug.Log($"[customer] PartyID {partyID} following leader's timing");
+        }
 
         animator.CrossFade(animMenuLeft, animCrossFade);
 
@@ -154,6 +240,26 @@ public class CustomerBehavior : MonoBehaviour
         }
 
         GameStateManager.SetFollowingParty(false);
+
+        Debug.Log($"[customer] PartyID {partyID} now reading menu");
+    }
+
+    void toReadyToOrder()
+    {
+        state = CustomerState.ordering;
+        animator.CrossFade(animOrderingLeft, animCrossFade);
+
+        if (isPartyLeader)
+        {
+            Debug.Log($"[customer] Party {partyID} leader finished reading menu, ready to order!");
+        }
+        else
+        {
+            Debug.Log($"[customer] PartyID {partyID} following leader, ready to order!");
+        }
+
+        // Add any additional logic for when customer is ready to order
+        // For example, showing an indicator or notifying the game manager
     }
 
     void Update() { }
@@ -168,4 +274,3 @@ public class CustomerBehavior : MonoBehaviour
         Destroy(this.gameObject);
     }
 }
-    

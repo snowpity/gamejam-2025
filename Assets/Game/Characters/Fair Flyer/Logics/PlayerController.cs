@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
             foreach (var hit in hits)
             {
                 CustomerBehavior customer = hit.GetComponent<CustomerBehavior>();
-                if (customer != null && customer.state == CustomerBehavior.CustomerState.Waiting)
+                if (customer != null && customer.state == CustomerBehavior.CustomerState.waiting)
                 {
                     if (!partiesInRange.ContainsKey(customer.partyID))
                         partiesInRange[customer.partyID] = new List<CustomerBehavior>();
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
                 foreach (var obj in allCustomers)
                 {
                     var c = obj.GetComponent<CustomerBehavior>();
-                    if (c != null && c.partyID == closestPartyID && c.state == CustomerBehavior.CustomerState.Waiting)
+                    if (c != null && c.partyID == closestPartyID && c.state == CustomerBehavior.CustomerState.waiting)
                     {
                         c.StartFollowing();
                     }
@@ -232,7 +232,8 @@ public class PlayerController : MonoBehaviour
     private void UpdateTableHighlighting() // TODO: Figure out a flag to set table if filled????
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
-        HashSet<TableZone> tablesToHighlight = new HashSet<TableZone>();
+        TableZone closestTable = null;
+        float closestDistance = float.MaxValue;
 
         // Get the following party size to check table compatibility
         List<CustomerBehavior> followingParty = new List<CustomerBehavior>();
@@ -249,6 +250,7 @@ public class PlayerController : MonoBehaviour
 
         int partySize = followingParty.Count;
 
+        // Find the closest table with enough available seats
         foreach (var hit in hits)
         {
             TableZone table = hit.GetComponent<TableZone>();
@@ -258,27 +260,27 @@ public class PlayerController : MonoBehaviour
             var availableSeats = table.GetSeatPositions().Where(s => s.childCount == 0).ToArray();
             if (availableSeats.Length >= partySize)
             {
-                tablesToHighlight.Add(table);
+                float distance = Vector2.Distance(transform.position, table.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestTable = table;
+                }
             }
         }
 
-        // Remove highlight from tables that should no longer be highlighted
-        var tablesToUnhighlight = new HashSet<TableZone>(highlightedTables);
-        tablesToUnhighlight.ExceptWith(tablesToHighlight);
-
-        foreach (var table in tablesToUnhighlight)
+        // Clear all current highlights
+        foreach (var table in highlightedTables)
         {
             SetTableOutline(table, normalOutlineThickness);
-            highlightedTables.Remove(table);
         }
+        highlightedTables.Clear();
 
-        foreach (var table in tablesToHighlight)
+        // Highlight only the closest table if one was found
+        if (closestTable != null)
         {
-            if (!highlightedTables.Contains(table))
-            {
-                SetTableOutline(table, highlightOutlineThickness);
-                highlightedTables.Add(table);
-            }
+            SetTableOutline(closestTable, highlightOutlineThickness);
+            highlightedTables.Add(closestTable);
         }
     }
 
@@ -313,7 +315,7 @@ public class PlayerController : MonoBehaviour
         foreach (var hit in hits)
         {
             CustomerBehavior customer = hit.GetComponent<CustomerBehavior>();
-            if (customer != null && customer.state == CustomerBehavior.CustomerState.Waiting)
+            if (customer != null && customer.state == CustomerBehavior.CustomerState.waiting)
             {
                 if (!partiesInRange.ContainsKey(customer.partyID))
                     partiesInRange[customer.partyID] = new List<CustomerBehavior>();
@@ -351,7 +353,7 @@ public class PlayerController : MonoBehaviour
 
             foreach (var customer in allCustomers)
             {
-                if (customer.partyID == closestPartyID && customer.state == CustomerBehavior.CustomerState.Waiting)
+                if (customer.partyID == closestPartyID && customer.state == CustomerBehavior.CustomerState.waiting)
                 {
                     customersToHighlight.Add(customer);
                 }
