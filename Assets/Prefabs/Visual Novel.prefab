@@ -471,8 +471,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -804, y: 123}
-  m_SizeDelta: {x: 991.93, y: 991.9303}
+  m_AnchoredPosition: {x: -612.34, y: 271.13}
+  m_SizeDelta: {x: 860, y: 860}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1378627689241250688
 CanvasRenderer:
@@ -502,7 +502,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8954045590664812687, guid: af50552623a47ee4d8a7b3bf25c467d8, type: 3}
+  m_Sprite: {fileID: -7314774827995251400, guid: 3a1252bb72d47e54d8fa9806ceebb2a9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -624,8 +624,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 804, y: 123}
-  m_SizeDelta: {x: 991.93, y: 991.9303}
+  m_AnchoredPosition: {x: 612.34, y: 269.76}
+  m_SizeDelta: {x: 860, y: 860}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &672625867749220807
 CanvasRenderer:
@@ -655,7 +655,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8954045590664812687, guid: af50552623a47ee4d8a7b3bf25c467d8, type: 3}
+  m_Sprite: {fileID: 5394085383694055623, guid: 3a1252bb72d47e54d8fa9806ceebb2a9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -788,8 +788,10 @@ MonoBehaviour:
   dialogueText: {fileID: 7242110809485968952}
   nextButton: {fileID: 93988669390089832}
   characterPortraits:
-  - {fileID: 1187509073, guid: d877f75f0adcb064fafb4c2442fbbf13, type: 3}
-  - {fileID: 8954045590664812687, guid: af50552623a47ee4d8a7b3bf25c467d8, type: 3}
+  - {fileID: 5394085383694055623, guid: 3a1252bb72d47e54d8fa9806ceebb2a9, type: 3}
+  - {fileID: 4896184209091423729, guid: 3a1252bb72d47e54d8fa9806ceebb2a9, type: 3}
+  - {fileID: -7314774827995251400, guid: 3a1252bb72d47e54d8fa9806ceebb2a9, type: 3}
+  - {fileID: 4761258776233554334, guid: 3a1252bb72d47e54d8fa9806ceebb2a9, type: 3}
   dialogueFile: example_dialogue
   typewriterSpeed: 0.02
   skipTypewriterOnClick: 1
