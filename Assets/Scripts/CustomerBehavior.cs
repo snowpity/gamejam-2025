@@ -26,14 +26,18 @@ public class CustomerBehavior : MonoBehaviour
     private float menuReadingTime;  // Time spent reading menu
     private bool isPartyLeader = false;  // Only the leader sets the timer
 
-    [SerializeField] private float followSpeed = 5f;
-    [SerializeField] private float stoppingDistance = 0.2f;
-
     private TrailFollower trailFollower;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
+    [Header("Dependencies")]
     [SerializeField] private FollowerTrail followerTrail;
+
+    [Header("Character Variables")]
+    [SerializeField] private float orderingImpatienceTimer = 30f;
+
+    private float impatientTime; // put these in var so we don't recalc every time, optimization
+    private float angryTime;
 
     private readonly int animMoveLeft = Animator.StringToHash("Anim_character_move_left");
     private readonly int animIdleLeft = Animator.StringToHash("Anim_character_idle_left");
@@ -59,6 +63,8 @@ public class CustomerBehavior : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        impatientTime = orderingImpatienceTimer * 0.66f;
+        angryTime = orderingImpatienceTimer * 0.33f;
     }
 
     public void Initialize(CustomerSpawner sourceSpawner, Vector3 startPos)
@@ -199,6 +205,21 @@ public class CustomerBehavior : MonoBehaviour
 
         if (state == CustomerState.ordering)
         {
+            orderingImpatienceTimer -= Time.deltaTime;
+
+            if (orderingImpatienceTimer <= 0)
+            {
+                // Make the filly disappear lol!!!
+            }
+            else if (orderingImpatienceTimer <= angryTime)
+            {
+                animator.CrossFade(animOrderingAngryLeft, animCrossFade);
+            }
+            else if(orderingImpatienceTimer <= impatientTime)
+            {
+                animator.CrossFade(animOrderingImpatientLeft, animCrossFade);
+            }
+
             // Handle ordering logic here
         }
 
