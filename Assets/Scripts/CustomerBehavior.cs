@@ -74,7 +74,7 @@ public class CustomerBehavior : MonoBehaviour
         GameStateManager.SetFollowingParty(true);
         EnableTrailFollowing();
         state = CustomerState.following;
-        Debug.Log("[customer] now following");
+        //Debug.Log("[customer] now following");
     }
 
     public void SitDownAt(Transform seat)
@@ -87,7 +87,7 @@ public class CustomerBehavior : MonoBehaviour
 
         transform.position = seat.position;
         state = CustomerState.seated;
-        Debug.Log($"[customer] now seated at {seat.name}");
+        //Debug.Log($"[customer] now seated at {seat.name}");
     }
 
     public class CustomerParty
@@ -216,12 +216,12 @@ public class CustomerBehavior : MonoBehaviour
         {
             isPartyLeader = true;
             menuReadingTime = Random.Range(10f, 21f); // 10 to 20 seconds (inclusive)
-            Debug.Log($"[customer] Party {partyID} leader will read menu for {menuReadingTime:F1} seconds");
+            //Debug.Log($"[customer] Party {partyID} leader will read menu for {menuReadingTime:F1} seconds");
         }
         else
         {
             isPartyLeader = false;
-            Debug.Log($"[customer] PartyID {partyID} following leader's timing");
+            //Debug.Log($"[customer] PartyID {partyID} following leader's timing");
         }
 
         animator.CrossFade(animMenuLeft, animCrossFade);
@@ -241,7 +241,7 @@ public class CustomerBehavior : MonoBehaviour
 
         GameStateManager.SetFollowingParty(false);
 
-        Debug.Log($"[customer] PartyID {partyID} now reading menu");
+        //Debug.Log($"[customer] PartyID {partyID} now reading menu");
     }
 
     void toReadyToOrder()
@@ -251,11 +251,11 @@ public class CustomerBehavior : MonoBehaviour
 
         if (isPartyLeader)
         {
-            Debug.Log($"[customer] Party {partyID} leader finished reading menu, ready to order!");
+            //Debug.Log($"[customer] Party {partyID} leader finished reading menu, ready to order!");
         }
         else
         {
-            Debug.Log($"[customer] PartyID {partyID} following leader, ready to order!");
+            //Debug.Log($"[customer] PartyID {partyID} following leader, ready to order!");
         }
 
         // Add any additional logic for when customer is ready to order

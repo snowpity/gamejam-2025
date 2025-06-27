@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8877621118522748116}
   - component: {fileID: 7278909821326333211}
   - component: {fileID: 4211167454241670769}
+  - component: {fileID: 4259056626093981253}
   m_Layer: 0
   m_Name: Seat_2
   m_TagString: Untagged
@@ -74,8 +75,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -226898157
-  m_SortingLayer: 1
+  m_SortingLayerID: 1444288481
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 5954573287755826741, guid: 689887da531f26544835adb2f5205620, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -134,6 +135,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2, y: 1.2}
   m_EdgeRadius: 0
+--- !u!114 &4259056626093981253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430833813223246033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af0fdf61774d49c4e91111150f70dfca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStatic: 0
+  parentName: Table
+  zDepthOffset: 2
 --- !u!1 &3079697509436451422
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,6 +161,7 @@ GameObject:
   - component: {fileID: 1975913887704149901}
   - component: {fileID: 532794983961434911}
   - component: {fileID: 5805721115605245231}
+  - component: {fileID: 3712687374059481938}
   m_Layer: 0
   m_Name: Seat_3
   m_TagString: Untagged
@@ -208,8 +225,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -226898157
-  m_SortingLayer: 1
+  m_SortingLayerID: 1444288481
+  m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: 5954573287755826741, guid: 689887da531f26544835adb2f5205620, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -268,6 +285,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2, y: 1.2}
   m_EdgeRadius: 0
+--- !u!114 &3712687374059481938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3079697509436451422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af0fdf61774d49c4e91111150f70dfca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStatic: 0
+  parentName: Table
+  zDepthOffset: 1
 --- !u!1 &4388988098133373938
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,6 +310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6857970605563841535}
   - component: {fileID: 4192263062070979103}
+  - component: {fileID: 5567344756993295045}
   m_Layer: 0
   m_Name: tableset_strip11_0
   m_TagString: Untagged
@@ -341,8 +374,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -226898157
-  m_SortingLayer: 1
+  m_SortingLayerID: 1444288481
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -1986927276189674245, guid: 689887da531f26544835adb2f5205620, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -355,6 +388,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5567344756993295045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4388988098133373938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af0fdf61774d49c4e91111150f70dfca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStatic: 0
+  parentName: Seat_
+  zDepthOffset: 1
 --- !u!1 &5212428275474758886
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +414,7 @@ GameObject:
   - component: {fileID: 4749894272484082157}
   - component: {fileID: 4188527398465519636}
   - component: {fileID: 2675387916113954345}
+  - component: {fileID: 335015390751413346}
   m_Layer: 0
   m_Name: Seat_4
   m_TagString: Untagged
@@ -429,8 +478,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -226898157
-  m_SortingLayer: 1
+  m_SortingLayerID: 1444288481
+  m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: 5954573287755826741, guid: 689887da531f26544835adb2f5205620, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -489,6 +538,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2, y: 1.2}
   m_EdgeRadius: 0
+--- !u!114 &335015390751413346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5212428275474758886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af0fdf61774d49c4e91111150f70dfca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStatic: 0
+  parentName: Table
+  zDepthOffset: 1
 --- !u!1 &7329785312245570373
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,6 +564,7 @@ GameObject:
   - component: {fileID: 6447909620645711991}
   - component: {fileID: 1330260853053683658}
   - component: {fileID: 5617921617001003681}
+  - component: {fileID: 4606566085229447327}
   m_Layer: 0
   m_Name: Seat_1
   m_TagString: Untagged
@@ -563,8 +628,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -226898157
-  m_SortingLayer: 1
+  m_SortingLayerID: 1444288481
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 5954573287755826741, guid: 689887da531f26544835adb2f5205620, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -623,6 +688,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2, y: 1.2}
   m_EdgeRadius: 0
+--- !u!114 &4606566085229447327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7329785312245570373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af0fdf61774d49c4e91111150f70dfca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStatic: 0
+  parentName: Table
+  zDepthOffset: 2
 --- !u!1 &8060732128771316513
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,6 +715,7 @@ GameObject:
   - component: {fileID: 6033577045327395871}
   - component: {fileID: 807073598891073517}
   - component: {fileID: 1034109218513477962}
+  - component: {fileID: 5129945222440328116}
   m_Layer: 0
   m_Name: Table_4
   m_TagString: Untagged
@@ -703,8 +784,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -226898157
-  m_SortingLayer: 1
+  m_SortingLayerID: 1444288481
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: -1986927276189674245, guid: 689887da531f26544835adb2f5205620, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -775,3 +856,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db0393d823fdcdf4bbd783e8438c1098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5129945222440328116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8060732128771316513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af0fdf61774d49c4e91111150f70dfca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isStatic: 1
+  parentName: Seat_
+  zDepthOffset: 1

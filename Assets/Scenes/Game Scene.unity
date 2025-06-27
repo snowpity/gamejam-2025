@@ -1275,6 +1275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af0fdf61774d49c4e91111150f70dfca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isStatic: 0
+  parentName: Seat_
 --- !u!1 &1304002245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,7 +1638,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.8}
-  m_Size: {x: 1.4, y: 0.3}
+  m_Size: {x: 1, y: 0.3}
   m_Direction: 1
 --- !u!1001 &1421459131
 PrefabInstance:
@@ -1648,7 +1650,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2233030436557925815, guid: 10752e8a0d3a13945bd9621863b92c2b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.33
+      value: 5.68
       objectReference: {fileID: 0}
     - target: {fileID: 2233030436557925815, guid: 10752e8a0d3a13945bd9621863b92c2b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2283,7 +2285,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2233030436557925815, guid: 10752e8a0d3a13945bd9621863b92c2b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.33
+      value: 5.68
       objectReference: {fileID: 0}
     - target: {fileID: 2233030436557925815, guid: 10752e8a0d3a13945bd9621863b92c2b, type: 3}
       propertyPath: m_LocalPosition.y

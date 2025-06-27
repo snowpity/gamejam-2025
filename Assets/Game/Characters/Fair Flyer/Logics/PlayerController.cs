@@ -290,7 +290,7 @@ public class PlayerController : MonoBehaviour
 
         // Get all SpriteRenderers in the table and its children
         SpriteRenderer[] allRenderers = table.GetComponentsInChildren<SpriteRenderer>();
-        Debug.Log("TABLE SELECTED");
+        //Debug.Log("TABLE SELECTED");
 
         foreach (SpriteRenderer renderer in allRenderers)
         {

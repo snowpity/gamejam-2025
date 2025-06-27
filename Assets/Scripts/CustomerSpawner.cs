@@ -26,7 +26,7 @@ public class CustomerSpawner : MonoBehaviour
     void Start()
     {
         trackedCustomers.Clear();
-        Debug.Log("[spawner] initialized.");
+        //Debug.Log("[spawner] initialized.");
     }
 
     void Update()
@@ -38,7 +38,7 @@ public class CustomerSpawner : MonoBehaviour
             if (trackedCustomers.Count < maxCustomers)
             {
                 int slotsLeft = maxCustomers - trackedCustomers.Count;
-                Debug.Log($"[spawner] timer hit {timer:F2}, currently tracking {trackedCustomers.Count}, max is {maxCustomers}");
+                //Debug.Log($"[spawner] timer hit {timer:F2}, currently tracking {trackedCustomers.Count}, max is {maxCustomers}");
                 SpawnCustomerGroup(slotsLeft);
             }
 
@@ -48,10 +48,10 @@ public class CustomerSpawner : MonoBehaviour
 
     void SpawnCustomerGroup(int availableSlots)
     {
-        Debug.Log("[spawner] trying to spawn a new group");
+        //Debug.Log("[spawner] trying to spawn a new group");
 
         int partySize = Mathf.Min(Random.Range(minPartySize, maxPartySize + 1), availableSlots);
-        Debug.Log("[spawner] rolled party size: " + partySize);
+        //Debug.Log("[spawner] rolled party size: " + partySize);
 
         int newPartyID = Random.Range(1000, 9999);
         List<CustomerBehavior> partyMembers = new List<CustomerBehavior>();
@@ -72,7 +72,7 @@ public class CustomerSpawner : MonoBehaviour
 
             if (behavior == null)
             {
-                Debug.LogError("[spawner] missing CustomerBehavior on: " + customerGO.name);
+                //Debug.LogError("[spawner] missing CustomerBehavior on: " + customerGO.name);
                 continue;
             }
 
@@ -96,13 +96,13 @@ public class CustomerSpawner : MonoBehaviour
         if (customerQueue.Contains(customer))
         {
             customerQueue.Remove(customer);
-            Debug.Log("[spawner] removed from visible queue.");
+            //Debug.Log("[spawner] removed from visible queue.");
         }
 
         if (trackedCustomers.Contains(customer))
         {
             trackedCustomers.Remove(customer);
-            Debug.Log($"[spawner] removed from tracking list. {trackedCustomers.Count} left.");
+            //Debug.Log($"[spawner] removed from tracking list. {trackedCustomers.Count} left.");
         }
 
         RepositionQueue();
