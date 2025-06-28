@@ -140,7 +140,7 @@ public class CustomerBehavior : MonoBehaviour
 
     private CustomerBehavior GetPartyLeader()
     {
-        CustomerBehavior[] allCustomers = FindObjectsOfType<CustomerBehavior>();
+        CustomerBehavior[] allCustomers = FindObjectsByType<CustomerBehavior>(FindObjectsSortMode.None);
         CustomerBehavior leader = null;
 
         foreach (var customer in allCustomers)
@@ -159,7 +159,7 @@ public class CustomerBehavior : MonoBehaviour
 
     private int GetPositionInParty()
     {
-        CustomerBehavior[] allCustomers = FindObjectsOfType<CustomerBehavior>();
+        CustomerBehavior[] allCustomers = FindObjectsByType<CustomerBehavior>(FindObjectsSortMode.None);
 
         var partyMembers = new List<CustomerBehavior>();
         foreach (var customer in allCustomers)
@@ -293,7 +293,7 @@ public class CustomerBehavior : MonoBehaviour
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
-            rb.isKinematic = true;
+            rb.bodyType = RigidbodyType2D.Kinematic;
         }
 
         GameStateManager.SetFollowingParty(false);
