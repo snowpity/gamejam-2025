@@ -15,6 +15,7 @@ public class CustomerBehavior : MonoBehaviour
         seated,
         readingMenu,
         ordering,
+        waitingFood,
         eating,
         finished
     }
@@ -35,17 +36,25 @@ public class CustomerBehavior : MonoBehaviour
 
     [Header("Character Variables")]
     [SerializeField] private float orderingImpatienceTimer = 30f;
+    [SerializeField] private float foodImpatienceTimer = 30f;
 
-    private float impatientTime; // put these in var so we don't recalc every time, optimization
-    private float angryTime;
+    // put these in var so we don't recalc every time, optimization
+    private float orderingImpatientTime, orderingAngryTime; // Timer for hoof-raised ordering
+    private float foodImpatientTime, foodAngryTime; // Timer for waiting for food
 
     private readonly int animMoveLeft = Animator.StringToHash("Anim_character_move_left");
     private readonly int animIdleLeft = Animator.StringToHash("Anim_character_idle_left");
+
     private readonly int animEatingLeft = Animator.StringToHash("Anim_character_eating_left");
     private readonly int animMenuLeft = Animator.StringToHash("Anim_character_menu_left");
+
     private readonly int animOrderingLeft = Animator.StringToHash("Anim_character_ordering_left");
     private readonly int animOrderingImpatientLeft = Animator.StringToHash("Anim_character_ordering_impatient_left");
     private readonly int animOrderingAngryLeft = Animator.StringToHash("Anim_character_ordering_angry_left");
+
+    private readonly int animWaitingLeft = Animator.StringToHash("Anim_character_waiting_left");
+    private readonly int animWaitingImpatientLeft = Animator.StringToHash("Anim_character_waiting_impatient_left");
+    private readonly int animWaitingAngryLeft = Animator.StringToHash("Anim_character_waiting_angry_left");
 
     private void FindFollowerTrail()
     {
@@ -63,8 +72,12 @@ public class CustomerBehavior : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        impatientTime = orderingImpatienceTimer * 0.66f;
-        angryTime = orderingImpatienceTimer * 0.33f;
+
+        orderingImpatientTime = orderingImpatienceTimer * 0.66f;
+        orderingAngryTime = orderingImpatienceTimer * 0.33f;
+
+        foodImpatientTime = foodImpatienceTimer * 0.66f;
+        foodAngryTime = foodImpatienceTimer * 0.33f;
     }
 
     public void Initialize(CustomerSpawner sourceSpawner, Vector3 startPos)
@@ -75,12 +88,18 @@ public class CustomerBehavior : MonoBehaviour
         FindFollowerTrail();
     }
 
-    public void StartFollowing()
+    public void startFollowing()
     {
         GameStateManager.SetFollowingParty(true);
         EnableTrailFollowing();
         state = CustomerState.following;
         //Debug.Log("[customer] now following");
+    }
+
+    public void startWaitingFood()
+    {
+        state = CustomerState.waitingFood;
+        animator.CrossFade(animWaitingLeft, animCrossFade);
     }
 
     public void SitDownAt(Transform seat)
@@ -203,6 +222,8 @@ public class CustomerBehavior : MonoBehaviour
             }
         }
 
+
+        // FILLIES ARE HOLDING THEIR HOOVES UP TO GRAB YOUR ATTENTION
         if (state == CustomerState.ordering)
         {
             orderingImpatienceTimer -= Time.deltaTime;
@@ -211,19 +232,34 @@ public class CustomerBehavior : MonoBehaviour
             {
                 // Make the filly disappear lol!!!
             }
-            else if (orderingImpatienceTimer <= angryTime)
+            else if (orderingImpatienceTimer <= orderingAngryTime)
             {
                 animator.CrossFade(animOrderingAngryLeft, animCrossFade);
             }
-            else if(orderingImpatienceTimer <= impatientTime)
+            else if(orderingImpatienceTimer <= orderingImpatientTime)
             {
                 animator.CrossFade(animOrderingImpatientLeft, animCrossFade);
             }
-
-            // Handle ordering logic here
         }
 
+        // FILLIES ARE WAITING FOR THE FOOD THEY ORDERED
+        if (state == CustomerState.waitingFood)
+        {
+            foodImpatienceTimer -= Time.deltaTime;
 
+            if (foodImpatienceTimer <= 0)
+            {
+                // Make the filly disappear lol!!!
+            }
+            else if (foodImpatienceTimer <= foodImpatientTime)
+            {
+                animator.CrossFade(animWaitingAngryLeft, animCrossFade);
+            }
+            else if(foodImpatienceTimer <= foodAngryTime)
+            {
+                animator.CrossFade(animWaitingImpatientLeft, animCrossFade);
+            }
+        }
     }
 
     void toReadingMenu()

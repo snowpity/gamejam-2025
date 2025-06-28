@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
             foreach (var hit in hits)
             {
                 CustomerBehavior customer = hit.GetComponent<CustomerBehavior>();
-                if (customer != null && customer.state == CustomerBehavior.CustomerState.waiting)
+                if (isCustomerInteractible(customer))
                 {
                     if (!partiesInRange.ContainsKey(customer.partyID))
                         partiesInRange[customer.partyID] = new List<CustomerBehavior>();
@@ -123,9 +123,16 @@ public class PlayerController : MonoBehaviour
                 foreach (var obj in allCustomers)
                 {
                     var c = obj.GetComponent<CustomerBehavior>();
-                    if (c != null && c.partyID == closestPartyID && c.state == CustomerBehavior.CustomerState.waiting)
+                    if (c != null && c.partyID == closestPartyID && isCustomerInteractible(c))
                     {
-                        c.StartFollowing();
+                        if(c.state == CustomerBehavior.CustomerState.waiting)
+                        {
+                            c.startFollowing();
+                        }
+                        else if(c.state == CustomerBehavior.CustomerState.ordering)
+                        {
+                            c.startWaitingFood();
+                        }
                     }
                 }
             }
@@ -328,6 +335,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private bool isCustomerInteractible(CustomerBehavior customer)
+    {
+        return customer != null && (
+                customer.state == CustomerBehavior.CustomerState.waiting ||
+                customer.state == CustomerBehavior.CustomerState.ordering);
+    }
+
     private void UpdateCustomerHighlighting()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
@@ -336,7 +350,7 @@ public class PlayerController : MonoBehaviour
         foreach (var hit in hits)
         {
             CustomerBehavior customer = hit.GetComponent<CustomerBehavior>();
-            if (customer != null && customer.state == CustomerBehavior.CustomerState.waiting)
+            if (isCustomerInteractible(customer))
             {
                 if (!partiesInRange.ContainsKey(customer.partyID))
                     partiesInRange[customer.partyID] = new List<CustomerBehavior>();
@@ -374,7 +388,7 @@ public class PlayerController : MonoBehaviour
 
             foreach (var customer in allCustomers)
             {
-                if (customer.partyID == closestPartyID && customer.state == CustomerBehavior.CustomerState.waiting)
+                if (customer.partyID == closestPartyID && isCustomerInteractible(customer))
                 {
                     customersToHighlight.Add(customer);
                 }
@@ -433,5 +447,25 @@ public class PlayerController : MonoBehaviour
             SetTableOutline(table, normalOutlineThickness);
         }
         highlightedTables.Clear();
+    }
+
+    // Helper method to get party leader by party ID
+    private CustomerBehavior GetPartyLeader(int partyID)
+    {
+        CustomerBehavior[] allCustomers = Object.FindObjectsByType<CustomerBehavior>(FindObjectsSortMode.None);
+        CustomerBehavior leader = null;
+
+        foreach (var customer in allCustomers)
+        {
+            if (customer.partyID == partyID)
+            {
+                if (leader == null || customer.GetInstanceID() < leader.GetInstanceID())
+                {
+                    leader = customer;
+                }
+            }
+        }
+
+        return leader;
     }
 }
