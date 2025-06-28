@@ -1,43 +1,40 @@
 fileFormatVersion: 2
-guid: c19a255ed2bba24408ffa9a46ff2e3d4
+guid: b89aaf16814da4a47ad73f0a2c8f9e79
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2455539375263480101
-    second: FillySeated_0
+      213: -3796550865828164446
+    second: soiree_strip11_0
   - first:
-      213: 1586278473668313356
-    second: FillySeated_1
+      213: 4283282630188101231
+    second: soiree_strip11_1
   - first:
-      213: 1575581617098803949
-    second: FillySeated_2
+      213: 8495948847735465104
+    second: soiree_strip11_2
   - first:
-      213: 5258457776360341040
-    second: FillySeated_3
+      213: -2708520736372614591
+    second: soiree_strip11_3
   - first:
-      213: -8686426667113855650
-    second: FillySeated_4
+      213: 7900774885458890257
+    second: soiree_strip11_4
   - first:
-      213: -8329277581826792929
-    second: FillySeated_5
+      213: -5831896995849441984
+    second: soiree_strip11_5
   - first:
-      213: 3058718927477269677
-    second: FillySeated_6
+      213: -8592427106864682161
+    second: soiree_strip11_6
   - first:
-      213: -5054550633303286438
-    second: FillySeated_7
+      213: 6335315056956023867
+    second: soiree_strip11_7
   - first:
-      213: -1469170343246885915
-    second: FillySeated_8
+      213: 5469889891485137136
+    second: soiree_strip11_8
   - first:
-      213: -640699207732747900
-    second: FillySeated_9
+      213: -7131405210242112244
+    second: soiree_strip11_9
   - first:
-      213: -7312776533859169064
-    second: FillySeated_10
-  - first:
-      213: -2626891897118114603
-    second: FillySeated_11
+      213: -3142313819029780887
+    second: soiree_strip11_10
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -146,12 +143,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FillySeated_0
+      name: soiree_strip11_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 96
+        width: 64
         height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -161,19 +158,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bd68f6db2fb2cedd0800000000000000
-      internalID: -2455539375263480101
+      spriteID: 2ac4c9e3a11ff4bc0800000000000000
+      internalID: -3796550865828164446
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FillySeated_1
+      name: soiree_strip11_1
       rect:
         serializedVersion: 2
-        x: 96
+        x: 64
         y: 0
-        width: 96
+        width: 64
         height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -183,19 +180,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c0149d90ed7930610800000000000000
-      internalID: 1586278473668313356
+      spriteID: f6e66fcbbd6417b30800000000000000
+      internalID: 4283282630188101231
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FillySeated_2
+      name: soiree_strip11_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 094692ba67ca7e570800000000000000
+      internalID: 8495948847735465104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: soiree_strip11_3
       rect:
         serializedVersion: 2
         x: 192
         y: 0
-        width: 96
+        width: 64
         height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -205,19 +224,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dea4fc902279dd510800000000000000
-      internalID: 1575581617098803949
+      spriteID: 14a1bb99db6696ad0800000000000000
+      internalID: -2708520736372614591
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FillySeated_3
+      name: soiree_strip11_4
       rect:
         serializedVersion: 2
-        x: 288
+        x: 256
         y: 0
-        width: 96
+        width: 64
         height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -227,19 +246,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 03e3952bc7bc9f840800000000000000
-      internalID: 5258457776360341040
+      spriteID: 11eca12f5e035ad60800000000000000
+      internalID: 7900774885458890257
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FillySeated_4
+      name: soiree_strip11_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04de9bbb490f01fa0800000000000000
+      internalID: -5831896995849441984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: soiree_strip11_6
       rect:
         serializedVersion: 2
         x: 384
         y: 0
-        width: 96
+        width: 64
         height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -249,19 +290,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e55c23b08fc937780800000000000000
-      internalID: -8686426667113855650
+      spriteID: f4ba4e8221191c880800000000000000
+      internalID: -8592427106864682161
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FillySeated_5
+      name: soiree_strip11_7
       rect:
         serializedVersion: 2
-        x: 480
+        x: 448
         y: 0
-        width: 96
+        width: 64
         height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -271,19 +312,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f12e6937b26786c80800000000000000
-      internalID: -8329277581826792929
+      spriteID: b342c067a7f8be750800000000000000
+      internalID: 6335315056956023867
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FillySeated_6
+      name: soiree_strip11_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f8b87620e3f8eb40800000000000000
+      internalID: 5469889891485137136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: soiree_strip11_9
       rect:
         serializedVersion: 2
         x: 576
         y: 0
-        width: 96
+        width: 64
         height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -291,21 +354,21 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 35768f2571b0cc5428ce3d01242aa8c4
-      internalID: 227741048
+      spriteID: c05262ebeb8280d90800000000000000
+      internalID: -7131405210242112244
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FillySeated_7
+      name: soiree_strip11_10
       rect:
         serializedVersion: 2
-        x: 672
+        x: 640
         y: 0
-        width: 96
+        width: 64
         height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -313,32 +376,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: d3753d5c2046dd340b15c9f53653ba51
-      internalID: 531435456
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: FillySeated_8
-      rect:
-        serializedVersion: 2
-        x: 768
-        y: 0
-        width: 96
-        height: 96
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c990d21b9d26efb4ba16526e961c0daa
-      internalID: -1888786245
+      spriteID: 966cde3fa324464d0800000000000000
+      internalID: -3142313819029780887
       vertices: []
       indices: 
       edges: []
@@ -347,7 +388,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7202e19a18e705b419064277a5dc8bbb
+    spriteID: f4e05660c78d0044bb420734236d7a6b
     internalID: 0
     vertices: []
     indices: 
@@ -359,17 +400,19 @@ TextureImporter:
       - key: SpriteEditor.SliceOnImport
         value: False
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":96.0,"y":96.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":11.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":96.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      FillySeated_0: -2455539375263480101
-      FillySeated_1: 1586278473668313356
-      FillySeated_2: 1575581617098803949
-      FillySeated_3: 5258457776360341040
-      FillySeated_4: -8686426667113855650
-      FillySeated_5: -8329277581826792929
-      FillySeated_6: 227741048
-      FillySeated_7: 531435456
-      FillySeated_8: -1888786245
+      soiree_strip11_0: -3796550865828164446
+      soiree_strip11_1: 4283282630188101231
+      soiree_strip11_10: -3142313819029780887
+      soiree_strip11_2: 8495948847735465104
+      soiree_strip11_3: -2708520736372614591
+      soiree_strip11_4: 7900774885458890257
+      soiree_strip11_5: -5831896995849441984
+      soiree_strip11_6: -8592427106864682161
+      soiree_strip11_7: 6335315056956023867
+      soiree_strip11_8: 5469889891485137136
+      soiree_strip11_9: -7131405210242112244
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

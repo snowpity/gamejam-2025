@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Anim_character_eating_left
+  m_Name: Anim_character_idle_left
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,9 +21,9 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 531435456, guid: c19a255ed2bba24408ffa9a46ff2e3d4, type: 3}
+      value: {fileID: -7131405210242112244, guid: b89aaf16814da4a47ad73f0a2c8f9e79, type: 3}
     - time: 0.083333336
-      value: {fileID: -1888786245, guid: c19a255ed2bba24408ffa9a46ff2e3d4, type: 3}
+      value: {fileID: -3142313819029780887, guid: b89aaf16814da4a47ad73f0a2c8f9e79, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,8 +46,8 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 531435456, guid: c19a255ed2bba24408ffa9a46ff2e3d4, type: 3}
-    - {fileID: -1888786245, guid: c19a255ed2bba24408ffa9a46ff2e3d4, type: 3}
+    - {fileID: -7131405210242112244, guid: b89aaf16814da4a47ad73f0a2c8f9e79, type: 3}
+    - {fileID: -3142313819029780887, guid: b89aaf16814da4a47ad73f0a2c8f9e79, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
