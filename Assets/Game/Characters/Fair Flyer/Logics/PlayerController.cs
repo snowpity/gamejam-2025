@@ -144,8 +144,11 @@ public class PlayerController : MonoBehaviour
                     followingParty.Add(c);
                 }
             }
-
             int partySize = followingParty.Count;
+
+            // Find the closest table with enough seats
+            TableZone closestTable = null;
+            float closestDistance = float.MaxValue;
 
             foreach (var hit in hits)
             {
@@ -155,6 +158,19 @@ public class PlayerController : MonoBehaviour
                 var seats = table.GetSeatPositions().Where(s => s.childCount == 0).ToArray();
                 if (seats.Length < partySize)
                     continue;
+
+                float distance = Vector2.Distance(transform.position, table.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestTable = table;
+                }
+            }
+
+            // Seat the party at the closest table if found
+            if (closestTable != null)
+            {
+                var seats = closestTable.GetSeatPositions().Where(s => s.childCount == 0).ToArray();
 
                 for (int i = 0; i < partySize; i++)
                 {
@@ -184,7 +200,6 @@ public class PlayerController : MonoBehaviour
                 }
 
                 //GameStateManager.SetFollowingParty(false);
-                break;
             }
         }
     }
@@ -231,10 +246,6 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateTableHighlighting() // TODO: Figure out a flag to set table if filled????
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
-        TableZone closestTable = null;
-        float closestDistance = float.MaxValue;
-
         // Get the following party size to check table compatibility
         List<CustomerBehavior> followingParty = new List<CustomerBehavior>();
         GameObject[] allCustomers = GameObject.FindGameObjectsWithTag("Customer");
@@ -249,6 +260,16 @@ public class PlayerController : MonoBehaviour
         }
 
         int partySize = followingParty.Count;
+
+        // Early return if no followers - don't highlight any tables
+        if (partySize == 0)
+        {
+            return;
+        }
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
+        TableZone closestTable = null;
+        float closestDistance = float.MaxValue;
 
         // Find the closest table with enough available seats
         foreach (var hit in hits)
