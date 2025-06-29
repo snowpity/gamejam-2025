@@ -116,4 +116,22 @@ public class CustomerSpawner : MonoBehaviour
             }
         }
     }
+
+    public void RemoveFromQueue(GameObject customer)
+    {
+        if (customerQueue.Contains(customer))
+        {
+            customerQueue.Remove(customer);
+            //Debug.Log("[spawner] removed from visible queue.");
+        }
+
+        if (trackedCustomers.Contains(customer))
+        {
+            trackedCustomers.Remove(customer);
+            //Debug.Log($"[spawner] removed from tracking list. {trackedCustomers.Count} left.");
+        }
+
+        CustomerBehavior behavior = customer.GetComponent<CustomerBehavior>();
+        RemoveTrackedParty(behavior.partyID);
+    }
 }
