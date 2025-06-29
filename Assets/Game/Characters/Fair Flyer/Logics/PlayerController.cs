@@ -96,12 +96,10 @@ public class PlayerController : MonoBehaviour
                 {
                     Debug.Log($"[DeliverySystem] Delivered food to Table {heldFoodTableID}");
 
-                    if (tableOrders.TryGetValue(heldFoodTableID, out var party))
+                    var party = GetCustomerPartyAtTable(heldFoodTableID);
+                    foreach (var member in party.members)
                     {
-                        foreach (var member in party.members)
-                        {
-                            member.ReceiveFood();
-                        }
+                        member.ReceiveFood();
                     }
 
                     isHoldingFood = false;
@@ -154,6 +152,7 @@ public class PlayerController : MonoBehaviour
             heldFoodObject.transform.SetParent(transform);  // Attach to player
         }
 
+        // If has no following party...
         if (!GameStateManager.hasFollowingParty)
         {
             Dictionary<int, List<CustomerBehavior>> partiesInRange = new Dictionary<int, List<CustomerBehavior>>();
@@ -289,7 +288,7 @@ public class PlayerController : MonoBehaviour
 
                 }
 
-                
+
 
                 //GameStateManager.SetFollowingParty(false);
             }
@@ -347,52 +346,70 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void UpdateTableHighlighting() // TODO: Figure out a flag to set table if filled????
+    private void UpdateTableHighlighting()
     {
-        // Get the following party size to check table compatibility
-        List<CustomerBehavior> followingParty = new List<CustomerBehavior>();
-        GameObject[] allCustomers = GameObject.FindGameObjectsWithTag("Customer");
-
-        foreach (var obj in allCustomers)
-        {
-            var c = obj.GetComponent<CustomerBehavior>();
-            if (c != null && c.state == CustomerBehavior.CustomerState.following)
-            {
-                followingParty.Add(c);
-            }
-        }
-
-        int partySize = followingParty.Count;
-
-        // Early return if no followers - don't highlight any tables
-        if (partySize == 0)
-        {
-            return;
-        }
-
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
-
-
-        
-
         TableZone closestTable = null;
         float closestDistance = float.MaxValue;
 
-        // Find the closest table with enough available seats
-        foreach (var hit in hits)
+        // If holding food, only highlight the correct delivery table
+        if (isHoldingFood)
         {
-            TableZone table = hit.GetComponent<TableZone>();
-            if (table == null) continue;
-
-            // Check if table has enough available seats
-            var availableSeats = table.GetSeatPositions().Where(s => s.childCount == 0).ToArray();
-            if (availableSeats.Length >= partySize)
+            foreach (var hit in hits)
             {
-                float distance = Vector2.Distance(transform.position, table.transform.position);
-                if (distance < closestDistance)
+                TableZone table = hit.GetComponent<TableZone>();
+                if (table != null && table.GetTableID() == heldFoodTableID)
                 {
-                    closestDistance = distance;
                     closestTable = table;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            // Get the following party size to check table compatibility
+            List<CustomerBehavior> followingParty = new List<CustomerBehavior>();
+            GameObject[] allCustomers = GameObject.FindGameObjectsWithTag("Customer");
+
+            foreach (var obj in allCustomers)
+            {
+                var c = obj.GetComponent<CustomerBehavior>();
+                if (c != null && c.state == CustomerBehavior.CustomerState.following)
+                {
+                    followingParty.Add(c);
+                }
+            }
+
+            int partySize = followingParty.Count;
+
+            // Early return if no followers - don't highlight any tables
+            if (partySize == 0)
+            {
+                // Clear all current highlights before returning
+                foreach (var table in highlightedTables)
+                {
+                    SetTableOutline(table, normalOutlineThickness);
+                }
+                highlightedTables.Clear();
+                return;
+            }
+
+            // Find the closest table with enough available seats
+            foreach (var hit in hits)
+            {
+                TableZone table = hit.GetComponent<TableZone>();
+                if (table == null) continue;
+
+                // Check if table has enough available seats
+                var availableSeats = table.GetSeatPositions().Where(s => s.childCount == 0).ToArray();
+                if (availableSeats.Length >= partySize)
+                {
+                    float distance = Vector2.Distance(transform.position, table.transform.position);
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestTable = table;
+                    }
                 }
             }
         }
@@ -445,9 +462,6 @@ public class PlayerController : MonoBehaviour
     private void UpdateCustomerHighlighting()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
-
-        
-
 
         Dictionary<int, List<CustomerBehavior>> partiesInRange = new Dictionary<int, List<CustomerBehavior>>();
 

@@ -26,6 +26,7 @@ public class CustomerBehavior : MonoBehaviour
 
     private CustomerSpawner spawner;
     private float menuReadingTime;  // Time spent reading menu
+    private float eatingTime;
     private bool isPartyLeader = false;  // Only the leader sets the timer
 
     private TrailFollower trailFollower;
@@ -198,6 +199,31 @@ public class CustomerBehavior : MonoBehaviour
             toReadingMenu();
         }
 
+        // Handle eating timer
+        if (state == CustomerState.eating)
+        {
+            CustomerBehavior leader = GetPartyLeader();
+
+            if (leader != null)
+            {
+                // If I'm the leader, countdown my own timer
+                if (leader == this)
+                {
+                    eatingTime -= Time.deltaTime;
+
+                    if (eatingTime <= 0)
+                    {
+                        toDismiss();
+                    }
+                }
+                // If I'm not the leader, check if the leader is done
+                else if (leader.state == CustomerState.finished)
+                {
+                   toDismiss();
+                }
+            }
+        }
+
         // Handle menu reading timer
         if (state == CustomerState.readingMenu)
         {
@@ -309,7 +335,7 @@ public class CustomerBehavior : MonoBehaviour
 
         if (isPartyLeader)
         {
-            // The party is ready to order — notify game state
+            // The party is ready to order, notify game state
             if (seatedTableID != -1)
             {
                 GameStateManager.MarkTableWantsToOrder(seatedTableID);
@@ -324,7 +350,27 @@ public class CustomerBehavior : MonoBehaviour
 
     public void ReceiveFood()
     {
-        Debug.Log($"Customer {name} at Table {seatedTableID} received food!");
+        state = CustomerState.eating;
+
+        CustomerBehavior leader = GetPartyLeader();
+
+        // Only the party leader sets the timer
+        if (leader == this)
+        {
+            isPartyLeader = true;
+            eatingTime = Random.Range(10f, 21f); // 10 to 20 seconds (inclusive)
+        }
+        else
+        {
+            isPartyLeader = false;
+        }
+        animator.CrossFade(animEatingLeft, animCrossFade);
+    }
+
+    public void toDismiss()
+    {
+        state = CustomerState.finished;
+        animator.CrossFade(animOrderingLeft, animCrossFade);
     }
 
     public void Exit()
