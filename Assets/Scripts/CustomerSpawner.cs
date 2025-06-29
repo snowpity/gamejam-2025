@@ -12,6 +12,7 @@ public class CustomerSpawner : MonoBehaviour
     [Header("queue settings")]
     public Transform queueStartPoint; // where the first customer starts
     public float spacing = 1.1f;      // vertical space between each full group in the queue
+    public float horizontalSpacing = 0.5f; // Horizontal spacing between each filly in a group
 
     [Header("group settings")]
     [SerializeField] private int minPartySize = 2; // minimum group size to spawn
@@ -19,6 +20,7 @@ public class CustomerSpawner : MonoBehaviour
 
     // internal memory
     private List<GameObject> customerQueue = new List<GameObject>(); // actual lineup order
+    private List<int> partyQueue = new List<int>(); // List of queued parties
     private HashSet<GameObject> trackedCustomers = new HashSet<GameObject>(); // all spawned, even if not in queue
     private float timer;
     private int partySpawnCount = 0; // how many groups we've spawned so far
@@ -56,10 +58,9 @@ public class CustomerSpawner : MonoBehaviour
         int newPartyID = Random.Range(1000, 9999);
         List<CustomerBehavior> partyMembers = new List<CustomerBehavior>();
 
-        float verticalOffset = spacing * partySpawnCount;
-        partySpawnCount++; // increment for next group
+        float verticalOffset = spacing * partyQueue.Count;
 
-        float horizontalSpacing = 0.5f;
+        partyQueue.Add(newPartyID);
 
         for (int i = 0; i < partySize; i++)
         {
@@ -91,29 +92,28 @@ public class CustomerSpawner : MonoBehaviour
         }
     }
 
-    public void RemoveFromQueue(GameObject customer)
+    public void RemoveTrackedParty(int partyID)
     {
-        if (customerQueue.Contains(customer))
+        if (partyQueue.Remove(partyID))
         {
-            customerQueue.Remove(customer);
-            //Debug.Log("[spawner] removed from visible queue.");
-        }
+            for (int i = 0; i < partyQueue.Count; i++)
+            {
+                List<GameObject> partyMembers = customerQueue.FindAll(
+                    delegate (GameObject customer)
+                    {
+                        CustomerBehavior behavior = customer.GetComponent<CustomerBehavior>();
+                        return behavior.partyID == partyQueue[i];
+                    }
+                );
 
-        if (trackedCustomers.Contains(customer))
-        {
-            trackedCustomers.Remove(customer);
-            //Debug.Log($"[spawner] removed from tracking list. {trackedCustomers.Count} left.");
-        }
-
-        RepositionQueue();
-    }
-
-    void RepositionQueue()
-    {
-        for (int i = 0; i < customerQueue.Count; i++)
-        {
-            Vector3 newPos = queueStartPoint.position + Vector3.down * spacing * i;
-            customerQueue[i].transform.position = newPos;
+                for (int j = 0; j < partyMembers.Count; j++)
+                {
+                    partyMembers[j].transform.position =
+                        queueStartPoint.position
+                        + Vector3.down * (i * spacing)
+                        + Vector3.right * (j * horizontalSpacing);
+                }
+            }
         }
     }
 }

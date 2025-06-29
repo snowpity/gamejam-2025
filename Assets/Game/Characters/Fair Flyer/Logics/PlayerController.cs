@@ -196,6 +196,7 @@ public class PlayerController : MonoBehaviour
             if (closestPartyID != -1)
             {
                 GameObject[] allCustomers = GameObject.FindGameObjectsWithTag("Customer");
+                CustomerSpawner spawner = GameObject.FindObjectOfType(typeof(CustomerSpawner)) as CustomerSpawner;
 
                 foreach (var obj in allCustomers)
                 {
@@ -204,6 +205,7 @@ public class PlayerController : MonoBehaviour
                     {
                         if(c.state == CustomerBehavior.CustomerState.waiting)
                         {
+                            spawner.RemoveTrackedParty(c.partyID);
                             c.startFollowing();
                         }
                         else if(c.state == CustomerBehavior.CustomerState.ordering)
