@@ -1259,7 +1259,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &671461739
 Transform:
   m_ObjectHideFlags: 0
@@ -3121,6 +3121,8 @@ MonoBehaviour:
   kitchenCounterTransform: {fileID: 1591758161}
   foodPrefab: {fileID: 7220516514315675685, guid: a84c19c84682d0b47aa5dfe262760fe1, type: 3}
   foodSpawnPoint: {fileID: 1051149331}
+  SoireeIdle: {fileID: 647846462}
+  SoireeActive: {fileID: 671461738}
   cookBaseTime: 2
   cookPartyMultiplier: 2
 --- !u!4 &2070523931
