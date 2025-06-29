@@ -10,6 +10,9 @@ public class Kitchen : MonoBehaviour
     [SerializeField] public GameObject foodPrefab;
     [SerializeField] private Transform foodSpawnPoint;
 
+    [SerializeField] private GameObject SoireeIdle;
+    [SerializeField] private GameObject SoireeActive;
+
     [Header("Variables")]
     [SerializeField] private float cookBaseTime = 2f;
     [SerializeField] private float cookPartyMultiplier = 2f;
@@ -24,7 +27,7 @@ public class Kitchen : MonoBehaviour
     public void ReceiveOrder(int tableID, CustomerBehavior.CustomerParty party)
     {
         Debug.Log($"[Kitchen] Received order from Table {tableID}. Preparing food...");
-
+        SetSoireeState(true);
         StartCoroutine(PrepareOrderCoroutine(tableID, party));
     }
 
@@ -36,5 +39,13 @@ public class Kitchen : MonoBehaviour
         Debug.Log($"[Kitchen] Order for Table {tableID} is ready.");
         GameStateManager.MarkOrderReady(tableID); // Ensure this method exists
         Instantiate(foodPrefab, foodSpawnPoint.position, Quaternion.identity);
+        SetSoireeState(false);
+    }
+
+    private void SetSoireeState(bool isCooking)
+    {
+        if (SoireeIdle == null || SoireeActive == null) return;
+        SoireeIdle.SetActive(!isCooking);
+        SoireeActive.SetActive(isCooking);
     }
 }

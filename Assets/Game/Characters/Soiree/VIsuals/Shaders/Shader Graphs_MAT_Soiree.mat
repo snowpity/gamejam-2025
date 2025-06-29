@@ -45,7 +45,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Bottom_Clip: 0.177
+    - _Bottom_Clip: 0.09
     - _Float: 0
     - _Invert_Vertical_Mask: 0
     - _MASK: 0.016

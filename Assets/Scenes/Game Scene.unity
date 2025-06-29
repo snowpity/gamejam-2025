@@ -446,14 +446,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 329096565}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.48834, y: 3.62031, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.81552, y: 3.48158, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 647846465}
   - {fileID: 671461739}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2070523931}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &485985730
 GameObject:
@@ -1160,7 +1160,7 @@ Animator:
   m_GameObject: {fileID: 647846462}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 09a8728e02883904d9cfc891c54c73d7, type: 2}
+  m_Controller: {fileID: 9100000, guid: f44f04aeeb16c4644874695245ac0e79, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1269,7 +1269,7 @@ Transform:
   m_GameObject: {fileID: 671461738}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.988, y: 0.973, z: 0}
+  m_LocalPosition: {x: 2.32, y: 1.24, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1285,7 +1285,7 @@ Animator:
   m_GameObject: {fileID: 671461738}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 09a8728e02883904d9cfc891c54c73d7, type: 2}
+  m_Controller: {fileID: 9100000, guid: bbfd835bda9f3b345b301a18efc0ff87, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1343,7 +1343,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -3796550865828164446, guid: b89aaf16814da4a47ad73f0a2c8f9e79, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 4, y: 6}
@@ -1692,6 +1692,7 @@ MonoBehaviour:
   spawnInterval: 2
   queueStartPoint: {fileID: 1072079769}
   spacing: 1.1
+  horizontalSpacing: 0.5
   minPartySize: 2
   maxPartySize: 4
 --- !u!4 &1072079769
@@ -3120,6 +3121,8 @@ MonoBehaviour:
   kitchenCounterTransform: {fileID: 1591758161}
   foodPrefab: {fileID: 7220516514315675685, guid: a84c19c84682d0b47aa5dfe262760fe1, type: 3}
   foodSpawnPoint: {fileID: 1051149331}
+  cookBaseTime: 2
+  cookPartyMultiplier: 2
 --- !u!4 &2070523931
 Transform:
   m_ObjectHideFlags: 0
@@ -3133,6 +3136,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 329096566}
   - {fileID: 1591758161}
   - {fileID: 544674111}
   - {fileID: 1051149331}
@@ -3217,6 +3221,5 @@ SceneRoots:
   - {fileID: 1421459131}
   - {fileID: 1446434225}
   - {fileID: 956425789}
-  - {fileID: 329096566}
   - {fileID: 2070523931}
   - {fileID: 695756483}
