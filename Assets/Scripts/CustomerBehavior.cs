@@ -22,6 +22,7 @@ public class CustomerBehavior : MonoBehaviour
 
     public CustomerState state;
     public int partyID;
+    public int seatedTableID = -1;
 
     private CustomerSpawner spawner;
     private float menuReadingTime;  // Time spent reading menu
@@ -308,18 +309,23 @@ public class CustomerBehavior : MonoBehaviour
 
         if (isPartyLeader)
         {
-            //Debug.Log($"[customer] Party {partyID} leader finished reading menu, ready to order!");
-        }
-        else
-        {
-            //Debug.Log($"[customer] PartyID {partyID} following leader, ready to order!");
+            // The party is ready to order — notify game state
+            if (seatedTableID != -1)
+            {
+                GameStateManager.MarkTableWantsToOrder(seatedTableID);
+                Debug.Log($"[CustomerBehavior] Party leader at table {seatedTableID} marked as wanting to order.");
+            }
         }
 
-        // Add any additional logic for when customer is ready to order
-        // For example, showing an indicator or notifying the game manager
+        //Debug.Log($"[customer] Party {partyID} leader finished reading menu, ready to order!");
     }
 
     void Update() { }
+
+    public void ReceiveFood()
+    {
+        Debug.Log($"Customer {name} at Table {seatedTableID} received food!");
+    }
 
     public void Exit()
     {
@@ -330,4 +336,6 @@ public class CustomerBehavior : MonoBehaviour
 
         Destroy(this.gameObject);
     }
+
+
 }

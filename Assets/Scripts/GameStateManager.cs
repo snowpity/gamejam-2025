@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class GameStateManager
@@ -5,6 +6,16 @@ public static class GameStateManager
     public static bool IsPaused { get; private set; } = false;
     public static bool IsGameStarted { get; private set; } = false;
     public static bool hasFollowingParty {get; private set; } = false;
+
+    public static HashSet<int> readyTables = new HashSet<int>();
+
+    public static HashSet<int> readyOrders = new HashSet<int>();
+
+    public static HashSet<int> tablesAwaitingOrder = new HashSet<int>();
+
+    public static HashSet<int> ordersInProgress = new HashSet<int>();
+
+
 
     public static void SetPaused(bool paused)
     {
@@ -27,5 +38,52 @@ public static class GameStateManager
         IsPaused = false;
         IsGameStarted = false;
         hasFollowingParty = false;
+    }
+
+
+
+    public static IEnumerable<int> GetReadyOrders()
+    {
+        return readyOrders;
+    }
+    public static void MarkOrderReady(int tableID)
+    {
+        if (!readyOrders.Contains(tableID))
+            readyOrders.Add(tableID);
+    }
+
+    public static bool IsOrderReady(int tableID)
+    {
+        return readyOrders.Contains(tableID);
+    }
+
+    public static void ClearOrder(int tableID)
+    {
+        readyOrders.Remove(tableID);
+    }
+
+
+    public static void MarkTableWantsToOrder(int tableID)
+    {
+        tablesAwaitingOrder.Add(tableID);
+    }
+
+    public static bool TableWantsToOrder(int tableID)
+    {
+        return tablesAwaitingOrder.Contains(tableID);
+    }
+
+    public static void SubmitOrderToKitchen(int tableID)
+    {
+        if (tablesAwaitingOrder.Contains(tableID))
+        {
+            tablesAwaitingOrder.Remove(tableID);
+            ordersInProgress.Add(tableID);
+        }
+    }
+
+    public static bool IsOrderInProgress(int tableID)
+    {
+        return ordersInProgress.Contains(tableID);
     }
 }

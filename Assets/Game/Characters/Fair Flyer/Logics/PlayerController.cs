@@ -1,7 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using System.Linq;
+using static UnityEngine.Rendering.DebugUI;
 
 [SelectionBase]
 public class PlayerController : MonoBehaviour
@@ -34,6 +35,13 @@ public class PlayerController : MonoBehaviour
 
     private HashSet<CustomerBehavior> highlightedCustomers = new HashSet<CustomerBehavior>();
     private HashSet<TableZone> highlightedTables = new HashSet<TableZone>();
+
+    public static Dictionary<int, CustomerBehavior.CustomerParty> tableOrders = new();
+
+    // food delivery tracking
+    private bool isHoldingFood = false;
+    private int heldFoodTableID = -1;
+    private GameObject heldFoodObject = null;
 
     private void OnEnable()
     {
@@ -76,6 +84,75 @@ public class PlayerController : MonoBehaviour
     private void TryInteract(InputAction.CallbackContext context)
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
+
+
+        // if holding food, check for nearby correct table to deliver
+        if (isHoldingFood)
+        {
+            foreach (var hit in hits)
+            {
+                TableZone table = hit.GetComponent<TableZone>();
+                if (table != null && table.GetTableID() == heldFoodTableID)
+                {
+                    Debug.Log($"[DeliverySystem] Delivered food to Table {heldFoodTableID}");
+
+                    if (tableOrders.TryGetValue(heldFoodTableID, out var party))
+                    {
+                        foreach (var member in party.members)
+                        {
+                            member.ReceiveFood();
+                        }
+                    }
+
+                    isHoldingFood = false;
+                    heldFoodTableID = -1;
+
+                    if (heldFoodObject != null)
+                    {
+                        Destroy(heldFoodObject);
+                        heldFoodObject = null;
+                    }
+
+                    return; // End interaction after delivery
+                }
+            }
+        }
+
+        // Check if player is near a table that wants to order
+        foreach (var hit in hits)
+        {
+            TableZone table = hit.GetComponent<TableZone>();
+            if (table != null)
+            {
+                int tableID = table.GetTableID();
+
+                if (GameStateManager.TableWantsToOrder(tableID))
+                {
+                    Debug.Log($"[Player] Took receipt from Table {tableID}, submitting to kitchen...");
+
+                    GameStateManager.SubmitOrderToKitchen(tableID);
+                    Kitchen.Instance.ReceiveOrder(tableID, GetCustomerPartyAtTable(tableID));
+
+                    return; // End interaction after handling the order
+                }
+            }
+        }
+
+        // Check if player is near the kitchen and there's a ready order
+        int readyTableID = KitchenPickupZone.Instance.GetReadyOrderInRange(transform.position, interactionRadius);
+        if (readyTableID != -1)
+        {
+            GameStateManager.ClearOrder(readyTableID);
+            Debug.Log($"[PickupSystem] Picked up order for Table {readyTableID}");
+
+            // Store that we're now holding food
+            isHoldingFood = true;
+            heldFoodTableID = readyTableID;
+
+            // Optionally spawn a visual food object to show it's being carried
+            heldFoodObject = Instantiate(Kitchen.Instance.foodPrefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
+            heldFoodObject.transform.SetParent(transform);  // Attach to player
+        }
 
         if (!GameStateManager.hasFollowingParty)
         {
@@ -203,13 +280,23 @@ public class PlayerController : MonoBehaviour
 
                     customer.transform.position = seat.position + additiveSpacing;
                     customer.transform.SetParent(seat); // optional, keeps them attached
+                    customer.seatedTableID = closestTable.tableID;
                     customer.SitDown();
+
+
+
                 }
+
+                
 
                 //GameStateManager.SetFollowingParty(false);
             }
         }
     }
+
+
+
+
 
     private void Update()
     {
@@ -220,6 +307,13 @@ public class PlayerController : MonoBehaviour
         getFacingDirection();
         updateAnimation();
         UpdateHighLight();
+
+
+        if (heldFoodObject != null)
+        {
+            heldFoodObject.transform.position = transform.position + Vector3.up * 0.5f;
+        }
+
     }
 
     private void FixedUpdate()
@@ -275,6 +369,10 @@ public class PlayerController : MonoBehaviour
         }
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
+
+
+        
+
         TableZone closestTable = null;
         float closestDistance = float.MaxValue;
 
@@ -345,6 +443,10 @@ public class PlayerController : MonoBehaviour
     private void UpdateCustomerHighlighting()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
+
+        
+
+
         Dictionary<int, List<CustomerBehavior>> partiesInRange = new Dictionary<int, List<CustomerBehavior>>();
 
         foreach (var hit in hits)
@@ -467,5 +569,25 @@ public class PlayerController : MonoBehaviour
         }
 
         return leader;
+    }
+
+    private CustomerBehavior.CustomerParty GetCustomerPartyAtTable(int tableID)
+    {
+        CustomerBehavior.CustomerParty party = new CustomerBehavior.CustomerParty();
+        party.partyID = -1;
+
+        CustomerBehavior[] allCustomers = FindObjectsByType<CustomerBehavior>(FindObjectsSortMode.None);
+        foreach (var customer in allCustomers)
+        {
+            if (customer.seatedTableID == tableID)
+            {
+                if (party.partyID == -1)
+                    party.partyID = customer.partyID;
+
+                party.members.Add(customer);
+            }
+        }
+
+        return party;
     }
 }

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 public class TableZone : MonoBehaviour
 {
+    [SerializeField] public int tableID;
     private Transform[] seatPositions;
 
     private void Awake()
     {
-        // automatically grab all child transforms named "Seat_*"
+        // Auto-load seats
         List<Transform> seats = new List<Transform>();
-
         foreach (Transform child in transform)
         {
             if (child.name.ToLower().StartsWith("seat"))
@@ -19,6 +19,7 @@ public class TableZone : MonoBehaviour
         seatPositions = seats.ToArray();
     }
 
+    public int GetTableID() => tableID;
     public Transform[] GetSeatPositions() => seatPositions;
 
     private void OnDrawGizmosSelected()
