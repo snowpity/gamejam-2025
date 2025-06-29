@@ -10,6 +10,11 @@ public class Kitchen : MonoBehaviour
     [SerializeField] public GameObject foodPrefab;
     [SerializeField] private Transform foodSpawnPoint;
 
+    [Header("Variables")]
+    [SerializeField] private float cookBaseTime = 2f;
+    [SerializeField] private float cookPartyMultiplier = 2f;
+
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -25,7 +30,7 @@ public class Kitchen : MonoBehaviour
 
     private IEnumerator PrepareOrderCoroutine(int tableID, CustomerBehavior.CustomerParty party)
     {
-        float prepTime = 5f + party.members.Count * 2f; // More customers = longer prep time
+        float prepTime = cookBaseTime + party.members.Count * cookPartyMultiplier; // More customers = longer prep time
         yield return new WaitForSeconds(prepTime);
 
         Debug.Log($"[Kitchen] Order for Table {tableID} is ready.");

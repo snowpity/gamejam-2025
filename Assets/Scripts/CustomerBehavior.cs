@@ -100,6 +100,23 @@ public class CustomerBehavior : MonoBehaviour
 
     public void startWaitingFood()
     {
+        CustomerBehavior leader = GetPartyLeader();
+        if (leader == null) return;
+
+        TableZone[] allTables = FindObjectsByType<TableZone>(FindObjectsSortMode.None);
+        foreach (var table in allTables)
+        {
+            int tableID = table.GetTableID();
+            if (tableID == leader.seatedTableID)
+            {
+                Debug.Log($"[Player] Took receipt from Table {tableID}, submitting to kitchen...");
+
+                GameStateManager.SubmitOrderToKitchen(tableID);
+                Kitchen.Instance.ReceiveOrder(tableID, GetCustomerPartyAtTable(tableID));
+                break; // Found the table, no need to continue searching
+            }
+        }
+
         state = CustomerState.waitingFood;
         animator.CrossFade(animWaitingLeft, animCrossFade);
     }
@@ -278,11 +295,11 @@ public class CustomerBehavior : MonoBehaviour
             {
                 // Make the filly disappear lol!!!
             }
-            else if (foodImpatienceTimer <= foodImpatientTime)
+            else if (foodImpatienceTimer <= foodAngryTime)
             {
                 animator.CrossFade(animWaitingAngryLeft, animCrossFade);
             }
-            else if(foodImpatienceTimer <= foodAngryTime)
+            else if(foodImpatienceTimer <= foodImpatientTime)
             {
                 animator.CrossFade(animWaitingImpatientLeft, animCrossFade);
             }
@@ -373,6 +390,11 @@ public class CustomerBehavior : MonoBehaviour
         animator.CrossFade(animOrderingLeft, animCrossFade);
     }
 
+    public void dismissCustomer()
+    {
+        Exit();
+    }
+
     public void Exit()
     {
         if (spawner != null)
@@ -383,5 +405,23 @@ public class CustomerBehavior : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    public static CustomerBehavior.CustomerParty GetCustomerPartyAtTable(int tableID)
+    {
+        CustomerBehavior.CustomerParty party = new CustomerBehavior.CustomerParty();
+        party.partyID = -1;
 
+        CustomerBehavior[] allCustomers = FindObjectsByType<CustomerBehavior>(FindObjectsSortMode.None);
+        foreach (var customer in allCustomers)
+        {
+            if (customer.seatedTableID == tableID)
+            {
+                if (party.partyID == -1)
+                    party.partyID = customer.partyID;
+
+                party.members.Add(customer);
+            }
+        }
+
+        return party;
+    }
 }

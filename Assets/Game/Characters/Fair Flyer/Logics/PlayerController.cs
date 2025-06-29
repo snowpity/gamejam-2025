@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
                 {
                     Debug.Log($"[DeliverySystem] Delivered food to Table {heldFoodTableID}");
 
-                    var party = GetCustomerPartyAtTable(heldFoodTableID);
+                    var party = CustomerBehavior.GetCustomerPartyAtTable(heldFoodTableID);
                     foreach (var member in party.members)
                     {
                         member.ReceiveFood();
@@ -116,25 +116,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Check if player is near a table that wants to order
-        foreach (var hit in hits)
-        {
-            TableZone table = hit.GetComponent<TableZone>();
-            if (table != null)
-            {
-                int tableID = table.GetTableID();
-
-                if (GameStateManager.TableWantsToOrder(tableID))
-                {
-                    Debug.Log($"[Player] Took receipt from Table {tableID}, submitting to kitchen...");
-
-                    GameStateManager.SubmitOrderToKitchen(tableID);
-                    Kitchen.Instance.ReceiveOrder(tableID, GetCustomerPartyAtTable(tableID));
-
-                    return; // End interaction after handling the order
-                }
-            }
-        }
 
         // Check if player is near the kitchen and there's a ready order
         int readyTableID = KitchenPickupZone.Instance.GetReadyOrderInRange(transform.position, interactionRadius);
@@ -210,6 +191,10 @@ public class PlayerController : MonoBehaviour
                         else if(c.state == CustomerBehavior.CustomerState.ordering)
                         {
                             c.startWaitingFood();
+                        }
+                        else if(c.state == CustomerBehavior.CustomerState.finished)
+                        {
+                            c.dismissCustomer();
                         }
                     }
                 }
@@ -456,7 +441,8 @@ public class PlayerController : MonoBehaviour
     {
         return customer != null && (
                 customer.state == CustomerBehavior.CustomerState.waiting ||
-                customer.state == CustomerBehavior.CustomerState.ordering);
+                customer.state == CustomerBehavior.CustomerState.ordering ||
+                customer.state == CustomerBehavior.CustomerState.finished);
     }
 
     private void UpdateCustomerHighlighting()
@@ -605,25 +591,5 @@ public class PlayerController : MonoBehaviour
         }
 
         return leader;
-    }
-
-    private CustomerBehavior.CustomerParty GetCustomerPartyAtTable(int tableID)
-    {
-        CustomerBehavior.CustomerParty party = new CustomerBehavior.CustomerParty();
-        party.partyID = -1;
-
-        CustomerBehavior[] allCustomers = FindObjectsByType<CustomerBehavior>(FindObjectsSortMode.None);
-        foreach (var customer in allCustomers)
-        {
-            if (customer.seatedTableID == tableID)
-            {
-                if (party.partyID == -1)
-                    party.partyID = customer.partyID;
-
-                party.members.Add(customer);
-            }
-        }
-
-        return party;
     }
 }
