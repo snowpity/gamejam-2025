@@ -538,14 +538,34 @@ public class PlayerController : MonoBehaviour
     {
         if (customer == null) return;
 
-        SpriteRenderer customerRenderer = customer.GetComponent<SpriteRenderer>();
-        if (customerRenderer != null && customerRenderer.material != null)
-        {
-            if (customerRenderer.material.name.Contains("(Instance)") == false)
-                customerRenderer.material = new Material(customerRenderer.material);
+        CustomerBehavior leader = GetPartyLeader(customer.partyID); // Find the party leader
+        if (leader == null) return;
 
-            if (customerRenderer.material.HasProperty("_Outline_Thickness"))
-                customerRenderer.material.SetFloat("_Outline_Thickness", thickness);
+        SpriteRenderer customerRenderer = customer.GetComponent<SpriteRenderer>();
+
+        if (leader.seatedTableID == -1) // If leader exists but unseated
+        {
+            if (customerRenderer != null && customerRenderer.material != null)
+            {
+                if (customerRenderer.material.name.Contains("(Instance)") == false)
+                    customerRenderer.material = new Material(customerRenderer.material);
+
+                if (customerRenderer.material.HasProperty("_Outline_Thickness"))
+                    customerRenderer.material.SetFloat("_Outline_Thickness", thickness);
+            }
+        }
+        else
+        {
+            // Find the table the leader is seated at
+            TableZone[] allTables = FindObjectsByType<TableZone>(FindObjectsSortMode.None);
+            foreach (var table in allTables)
+            {
+                if (table.GetTableID() == leader.seatedTableID)
+                {
+                    SetTableOutline(table, thickness);
+                    break; // Found the table, no need to continue searching
+                }
+            }
         }
     }
 
