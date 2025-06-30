@@ -29,6 +29,12 @@ public class CustomerBehavior : MonoBehaviour
     private float eatingTime;
     private bool isPartyLeader = false;  // Only the leader sets the timer
 
+    // Penalty flags
+    private bool isPerfectService = true; // flag for if the player perfectly served this customer
+    private bool orderingImpatient = false, orderingAngry = false;
+    private bool foodWaitingImpatient = false, foodWaitingAngry = false;
+    private int penaltyPoint = 0;
+
     private TrailFollower trailFollower;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -39,7 +45,9 @@ public class CustomerBehavior : MonoBehaviour
     [Header("Character Variables")]
     [SerializeField] private float orderingImpatienceTimer = 30f;
     [SerializeField] private float foodImpatienceTimer = 30f;
-    [SerializeField] private int score = 100; // Score the player gets for perfectly serve the filly
+    [SerializeField] private int score = 100; // Max score for serving the filly
+    [SerializeField] private int bonusScore = 10; // Score the player gets for perfectly serve the filly
+    [SerializeField] private int quitPenaltyScore = -10; // Penalty for neglecting customer
 
     // put these in var so we don't recalc every time, optimization
     private float orderingImpatientTime, orderingAngryTime; // Timer for hoof-raised ordering
@@ -285,10 +293,20 @@ public class CustomerBehavior : MonoBehaviour
             }
             else if (orderingImpatienceTimer <= orderingAngryTime)
             {
+                if(!orderingAngry)
+                {
+                    orderingAngry = true;
+                    penaltyPoint += 10;
+                }
                 animator.CrossFade(animOrderingAngryLeft, animCrossFade);
             }
             else if(orderingImpatienceTimer <= orderingImpatientTime)
             {
+                if(!orderingImpatient)
+                {
+                    orderingImpatient = true;
+                    penaltyPoint += 10;
+                }
                 animator.CrossFade(animOrderingImpatientLeft, animCrossFade);
             }
         }
@@ -305,10 +323,20 @@ public class CustomerBehavior : MonoBehaviour
             }
             else if (foodImpatienceTimer <= foodAngryTime)
             {
+                if(!foodWaitingAngry)
+                {
+                    foodWaitingAngry = true;
+                    penaltyPoint += 10;
+                }
                 animator.CrossFade(animWaitingAngryLeft, animCrossFade);
             }
             else if(foodImpatienceTimer <= foodImpatientTime)
             {
+                if(!foodWaitingImpatient)
+                {
+                    foodWaitingImpatient = true;
+                    penaltyPoint += 10;
+                }
                 animator.CrossFade(animWaitingImpatientLeft, animCrossFade);
             }
         }
@@ -400,15 +428,32 @@ public class CustomerBehavior : MonoBehaviour
 
     public void dismissCustomer()
     {
-        GameStateManager.IncrementScore(score);
+        if (orderingImpatientTime || orderingAngryTime || foodImpatientTime || foodAngryTime)
+            isPerfectService = false;
+        //int scoreAccumulated = score - penaltyPoint; // Only one bonus score should be awarded per party?
+        int scoreAccumulated = score - penaltyPoint + (isPerfectService ?  bonusScore : 0); // Base score - penalties + bonus
+
+        GameStateManager.IncrementScore(scoreAccumulated);
         GameStateManager.IncrementCustomerServed(1);
+
+        /*
+        if (isPartyLeader) // Only one bonus score should be awarded per party?
+        {
+            GameStateManager.IncrementScore(isPerfectService ?  bonusScore : 0)
+        }
+        */
         Exit();
     }
 
     public void customerQuitting()
     {
         // Call other stuffs like "Subtracting score"?
-        //GameStateManager.IncrementScore(quitScore);
+        GameStateManager.IncrementScore(quitPenaltyScore);
+        Exit();
+    }
+
+    public void customerLeaving()
+    {
         Exit();
     }
 
