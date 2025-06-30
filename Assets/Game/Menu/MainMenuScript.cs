@@ -14,9 +14,7 @@ public class MainMenuScript : MonoBehaviour
     [SerializeField] private float transitionSpeed = 0.2f;
 
     private UIDocument document;
-    private Button playButton;
-    private Button settingsButton;
-    private Button backButton;
+    private Button playButton, settingsButton, backButton, exitButton;
 
     private VisualElement mainMenuElement;
     private VisualElement settingsMenuElement;
@@ -29,6 +27,7 @@ public class MainMenuScript : MonoBehaviour
         playButton = document.rootVisualElement.Q("playButton") as Button;
         settingsButton = document.rootVisualElement.Q("settingsButton") as Button;
         backButton = document.rootVisualElement.Q("backButton") as Button;
+        exitButton = document.rootVisualElement.Q("exitButton") as Button;
 
         mainMenuElement = document.rootVisualElement.Q("mainMenu");
         settingsMenuElement = document.rootVisualElement.Q("settingsMenu");
@@ -42,6 +41,9 @@ public class MainMenuScript : MonoBehaviour
 
         if (backButton != null)
             backButton.RegisterCallback<ClickEvent>(onBackButtonClick);
+
+        if (exitButton != null)
+            exitButton.RegisterCallback<ClickEvent>(onExitButtonClick);
     }
 
     private void OnDisable()
@@ -55,6 +57,9 @@ public class MainMenuScript : MonoBehaviour
 
         if (backButton != null)
             backButton.UnregisterCallback<ClickEvent>(onBackButtonClick);
+
+        if (exitButton != null)
+            exitButton.UnregisterCallback<ClickEvent>(onExitButtonClick);
     }
 
     private void onPlayButtonClick(ClickEvent evt)
@@ -70,6 +75,17 @@ public class MainMenuScript : MonoBehaviour
     private void onBackButtonClick(ClickEvent evt)
     {
         transitionSettingToMenu();
+    }
+
+    private void onExitButtonClick(ClickEvent evt)
+    {
+#if UNITY_EDITOR
+        // If running in the Unity Editor, stop play mode
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        // If running as a built application, quit the application
+        Application.Quit();
+#endif
     }
 
     private IEnumerator menuTransition(Menus from, Menus to)
