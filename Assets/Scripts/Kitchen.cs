@@ -17,6 +17,10 @@ public class Kitchen : MonoBehaviour
     [SerializeField] private float cookBaseTime = 2f;
     [SerializeField] private float cookPartyMultiplier = 2f;
 
+    [Header("Food Sprites")]
+    public Sprite[] foodSprites;
+
+    public int selectedSprite = -1;
 
     private void Awake()
     {
@@ -38,7 +42,14 @@ public class Kitchen : MonoBehaviour
 
         Debug.Log($"[Kitchen] Order for Table {tableID} is ready.");
         GameStateManager.MarkOrderReady(tableID); // Ensure this method exists
-        Instantiate(foodPrefab, foodSpawnPoint.position, Quaternion.identity);
+
+        // Instantiate the food prefab
+        GameObject spawnedFood = Instantiate(foodPrefab, foodSpawnPoint.position, Quaternion.identity);
+
+        SpriteRenderer spriteRenderer = spawnedFood.GetComponent<SpriteRenderer>();
+        selectedSprite = Random.Range(0, foodSprites.Length);
+        spriteRenderer.sprite = foodSprites[selectedSprite];
+
         SetSoireeState(false);
     }
 
