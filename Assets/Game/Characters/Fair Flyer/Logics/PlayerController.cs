@@ -86,6 +86,8 @@ public class PlayerController : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
 
 
+
+
         // if holding food, check for nearby correct table to deliver
         if (isHoldingFood)
         {
@@ -120,26 +122,29 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        // Check if player is near the kitchen and there's a ready order
-        int readyTableID = KitchenPickupZone.Instance.GetReadyOrderInRange(transform.position, interactionRadius);
-        if (readyTableID != -1)
+        // prevent picking up if already holding food
+        if (!isHoldingFood)
         {
-            GameStateManager.ClearOrder(readyTableID);
-            Debug.Log($"[PickupSystem] Picked up order for Table {readyTableID}");
+            int readyTableID = KitchenPickupZone.Instance.GetReadyOrderInRange(transform.position, interactionRadius);
+            if (readyTableID != -1)
+            {
+                GameStateManager.ClearOrder(readyTableID);
+                Debug.Log($"[PickupSystem] Picked up order for Table {readyTableID}");
 
-            // Store that we're now holding food
-            isHoldingFood = true;
-            heldFoodTableID = readyTableID;
+                // Store that we're now holding food
+                isHoldingFood = true;
+                heldFoodTableID = readyTableID;
 
-            // Get the original spawned food object and move it to the player
-            GameObject originalFood = Kitchen.Instance.GetSpawnedFood(readyTableID);
+                // Get the original spawned food object and move it to the player
+                GameObject originalFood = Kitchen.Instance.GetSpawnedFood(readyTableID);
 
-            heldFoodObject = originalFood;
-            heldFoodObject.transform.position = transform.position + Vector3.up * 0.5f;
-            heldFoodObject.transform.SetParent(transform);  // Attach to player
+                heldFoodObject = originalFood;
+                heldFoodObject.transform.position = transform.position + Vector3.up * 0.5f;
+                heldFoodObject.transform.SetParent(transform);  // Attach to player
 
-            // Remove it from kitchen's tracking
-            Kitchen.Instance.RemoveSpawnedFood(readyTableID);
+                // remove it from kitchens tracking
+                Kitchen.Instance.RemoveSpawnedFood(readyTableID);
+            }
         }
 
         // If has no following party...
