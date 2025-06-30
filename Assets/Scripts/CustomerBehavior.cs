@@ -39,6 +39,7 @@ public class CustomerBehavior : MonoBehaviour
     [Header("Character Variables")]
     [SerializeField] private float orderingImpatienceTimer = 30f;
     [SerializeField] private float foodImpatienceTimer = 30f;
+    [SerializeField] private int score = 100; // Score the player gets for perfectly serve the filly
 
     // put these in var so we don't recalc every time, optimization
     private float orderingImpatientTime, orderingAngryTime; // Timer for hoof-raised ordering
@@ -275,6 +276,7 @@ public class CustomerBehavior : MonoBehaviour
             if (orderingImpatienceTimer <= 0)
             {
                 // Make the filly disappear lol!!!
+                customerQuitting();
             }
             else if (orderingImpatienceTimer <= orderingAngryTime)
             {
@@ -294,6 +296,7 @@ public class CustomerBehavior : MonoBehaviour
             if (foodImpatienceTimer <= 0)
             {
                 // Make the filly disappear lol!!!
+                customerQuitting();
             }
             else if (foodImpatienceTimer <= foodAngryTime)
             {
@@ -392,6 +395,15 @@ public class CustomerBehavior : MonoBehaviour
 
     public void dismissCustomer()
     {
+        GameStateManager.IncrementScore(score);
+        GameStateManager.IncrementCustomerServed(1);
+        Exit();
+    }
+
+    public void customerQuitting()
+    {
+        // Call other stuffs like "Subtracting score"?
+        //GameStateManager.IncrementScore(quitScore);
         Exit();
     }
 

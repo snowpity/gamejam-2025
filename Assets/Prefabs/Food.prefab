@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8082990378765762266}
   - component: {fileID: 5630768418971646570}
+  - component: {fileID: 2804619655203229824}
   m_Layer: 0
   m_Name: Food
   m_TagString: Customer
@@ -87,3 +88,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2804619655203229824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7220516514315675685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c0c3637f7b2c344bf871fd8ed28aee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodSprites:
+  - {fileID: 376925828962962561, guid: 689887da531f26544835adb2f5205620, type: 3}
+  - {fileID: 3009692584479664067, guid: 689887da531f26544835adb2f5205620, type: 3}
+  - {fileID: -8768571359450349593, guid: 689887da531f26544835adb2f5205620, type: 3}
+  - {fileID: -1955941707604148936, guid: 689887da531f26544835adb2f5205620, type: 3}
+  - {fileID: 5234464503679955727, guid: 689887da531f26544835adb2f5205620, type: 3}
+  - {fileID: 6400926670506277622, guid: 689887da531f26544835adb2f5205620, type: 3}
+  - {fileID: -1217376631381368994, guid: 689887da531f26544835adb2f5205620, type: 3}
+  - {fileID: 7286808612140585828, guid: 689887da531f26544835adb2f5205620, type: 3}

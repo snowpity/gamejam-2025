@@ -15,6 +15,19 @@ public static class GameStateManager
 
     public static HashSet<int> ordersInProgress = new HashSet<int>();
 
+    public static int totalCustomerServed = 0;
+    public static int totalScore = 0;
+
+    public static void IncrementCustomerServed(int number)
+    {
+        totalCustomerServed += number;
+    }
+
+
+    public static void IncrementScore(int number)
+    {
+        totalScore += number;
+    }
 
 
     public static void SetPaused(bool paused)
