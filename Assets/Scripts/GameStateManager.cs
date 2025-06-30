@@ -18,6 +18,9 @@ public static class GameStateManager
     public static int totalCustomerServed = 0;
     public static int totalScore = 0;
 
+    // Dictionary to store sprite ID for each table's order
+    public static Dictionary<int, int> tableFoodSprites = new Dictionary<int, int>();
+
     public static void IncrementCustomerServed(int number)
     {
         totalCustomerServed += number;
@@ -98,5 +101,21 @@ public static class GameStateManager
     public static bool IsOrderInProgress(int tableID)
     {
         return ordersInProgress.Contains(tableID);
+    }
+
+    // Kitchen
+    public static void SetTableFoodSprite(int tableID, int spriteID)
+    {
+        tableFoodSprites[tableID] = spriteID;
+    }
+
+    public static int GetTableFoodSprite(int tableID)
+    {
+        return tableFoodSprites.ContainsKey(tableID) ? tableFoodSprites[tableID] : -1;
+    }
+
+    public static void ClearTableFoodSprite(int tableID)
+    {
+        tableFoodSprites.Remove(tableID);
     }
 }

@@ -103,6 +103,9 @@ public class PlayerController : MonoBehaviour
                     }
 
                     isHoldingFood = false;
+
+                    // Clean up the sprite data for this table
+                    GameStateManager.ClearTableFoodSprite(heldFoodTableID);
                     heldFoodTableID = -1;
 
                     if (heldFoodObject != null)
@@ -128,8 +131,19 @@ public class PlayerController : MonoBehaviour
             isHoldingFood = true;
             heldFoodTableID = readyTableID;
 
-            // Optionally spawn a visual food object to show it's being carried
+            // Get the sprite ID for this table's order
+            int spriteID = GameStateManager.GetTableFoodSprite(readyTableID);
+
+            // Spawn a visual food object to show it's being carried
             heldFoodObject = Instantiate(Kitchen.Instance.foodPrefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
+
+            // Set the correct sprite if we have a valid sprite ID
+            if (spriteID >= 0 && spriteID < Kitchen.Instance.foodSprites.Length)
+            {
+                SpriteRenderer heldFoodRenderer = heldFoodObject.GetComponent<SpriteRenderer>();
+                heldFoodRenderer.sprite = Kitchen.Instance.foodSprites[spriteID];
+            }
+
             heldFoodObject.transform.SetParent(transform);  // Attach to player
         }
 

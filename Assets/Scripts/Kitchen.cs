@@ -22,6 +22,8 @@ public class Kitchen : MonoBehaviour
 
     public int selectedSprite = -1;
 
+    private Dictionary<int, GameObject> spawnedFoodObjects = new Dictionary<int, GameObject>();
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -43,14 +45,33 @@ public class Kitchen : MonoBehaviour
         Debug.Log($"[Kitchen] Order for Table {tableID} is ready.");
         GameStateManager.MarkOrderReady(tableID); // Ensure this method exists
 
+        // Select sprite and store it in GameStateManager
+        selectedSprite = Random.Range(0, foodSprites.Length);
+        GameStateManager.SetTableFoodSprite(tableID, selectedSprite);
+
         // Instantiate the food prefab
         GameObject spawnedFood = Instantiate(foodPrefab, foodSpawnPoint.position, Quaternion.identity);
 
         SpriteRenderer spriteRenderer = spawnedFood.GetComponent<SpriteRenderer>();
-        selectedSprite = Random.Range(0, foodSprites.Length);
         spriteRenderer.sprite = foodSprites[selectedSprite];
 
+        // Store the spawned food object so we can destroy it later
+        spawnedFoodObjects[tableID] = spawnedFood;
+
         SetSoireeState(false);
+    }
+
+    // Method to destroy the spawned food when picked up
+    public void DestroySpawnedFood(int tableID)
+    {
+        if (spawnedFoodObjects.ContainsKey(tableID))
+        {
+            if (spawnedFoodObjects[tableID] != null)
+            {
+                Destroy(spawnedFoodObjects[tableID]);
+            }
+            spawnedFoodObjects.Remove(tableID);
+        }
     }
 
     private void SetSoireeState(bool isCooking)
