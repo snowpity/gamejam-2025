@@ -104,20 +104,25 @@ public class CustomerBehavior : MonoBehaviour
         CustomerBehavior leader = GetPartyLeader();
         if (leader == null) return;
 
-        TableZone[] allTables = FindObjectsByType<TableZone>(FindObjectsSortMode.None);
-        foreach (var table in allTables)
+        // Only the party leader should submit the order to the kitchen
+        if (leader == this)
         {
-            int tableID = table.GetTableID();
-            if (tableID == leader.seatedTableID)
+            TableZone[] allTables = FindObjectsByType<TableZone>(FindObjectsSortMode.None);
+            foreach (var table in allTables)
             {
-                Debug.Log($"[Player] Took receipt from Table {tableID}, submitting to kitchen...");
+                int tableID = table.GetTableID();
+                if (tableID == leader.seatedTableID)
+                {
+                    Debug.Log($"[Player] Took receipt from Table {tableID}, submitting to kitchen...");
 
-                GameStateManager.SubmitOrderToKitchen(tableID);
-                Kitchen.Instance.ReceiveOrder(tableID, GetCustomerPartyAtTable(tableID));
-                break; // Found the table, no need to continue searching
+                    GameStateManager.SubmitOrderToKitchen(tableID);
+                    Kitchen.Instance.ReceiveOrder(tableID, GetCustomerPartyAtTable(tableID));
+                    break; // Found the table, no need to continue searching
+                }
             }
         }
 
+        // All customers in the party should change their state to waitingFood
         state = CustomerState.waitingFood;
         animator.CrossFade(animWaitingLeft, animCrossFade);
     }

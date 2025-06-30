@@ -22,6 +22,7 @@ public class Kitchen : MonoBehaviour
 
     public int selectedSprite = -1;
 
+    // Dictionary to track spawned food objects by table ID
     private Dictionary<int, GameObject> spawnedFoodObjects = new Dictionary<int, GameObject>();
 
     private void Awake()
@@ -43,7 +44,7 @@ public class Kitchen : MonoBehaviour
         yield return new WaitForSeconds(prepTime);
 
         Debug.Log($"[Kitchen] Order for Table {tableID} is ready.");
-        GameStateManager.MarkOrderReady(tableID); // Ensure this method exists
+        GameStateManager.MarkOrderReady(tableID);
 
         // Select sprite and store it in GameStateManager
         selectedSprite = Random.Range(0, foodSprites.Length);
@@ -57,19 +58,23 @@ public class Kitchen : MonoBehaviour
 
         // Store the spawned food object so we can destroy it later
         spawnedFoodObjects[tableID] = spawnedFood;
+        Debug.Log("SPAWNED:" + spawnedFoodObjects[tableID]);
 
         SetSoireeState(false);
     }
 
-    // Method to destroy the spawned food when picked up
-    public void DestroySpawnedFood(int tableID)
+    // Method to get the spawned food object for a table
+    public GameObject GetSpawnedFood(int tableID)
+    {
+        Debug.Log("GET OBJECT: " + spawnedFoodObjects[tableID]);
+        return spawnedFoodObjects.ContainsKey(tableID) ? spawnedFoodObjects[tableID] : null;
+    }
+
+    // Method to remove food from tracking without destroying it
+    public void RemoveSpawnedFood(int tableID)
     {
         if (spawnedFoodObjects.ContainsKey(tableID))
         {
-            if (spawnedFoodObjects[tableID] != null)
-            {
-                Destroy(spawnedFoodObjects[tableID]);
-            }
             spawnedFoodObjects.Remove(tableID);
         }
     }

@@ -131,20 +131,15 @@ public class PlayerController : MonoBehaviour
             isHoldingFood = true;
             heldFoodTableID = readyTableID;
 
-            // Get the sprite ID for this table's order
-            int spriteID = GameStateManager.GetTableFoodSprite(readyTableID);
+            // Get the original spawned food object and move it to the player
+            GameObject originalFood = Kitchen.Instance.GetSpawnedFood(readyTableID);
 
-            // Spawn a visual food object to show it's being carried
-            heldFoodObject = Instantiate(Kitchen.Instance.foodPrefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
-
-            // Set the correct sprite if we have a valid sprite ID
-            if (spriteID >= 0 && spriteID < Kitchen.Instance.foodSprites.Length)
-            {
-                SpriteRenderer heldFoodRenderer = heldFoodObject.GetComponent<SpriteRenderer>();
-                heldFoodRenderer.sprite = Kitchen.Instance.foodSprites[spriteID];
-            }
-
+            heldFoodObject = originalFood;
+            heldFoodObject.transform.position = transform.position + Vector3.up * 0.5f;
             heldFoodObject.transform.SetParent(transform);  // Attach to player
+
+            // Remove it from kitchen's tracking
+            Kitchen.Instance.RemoveSpawnedFood(readyTableID);
         }
 
         // If has no following party...
