@@ -33,6 +33,7 @@ public class CustomerSpawner : MonoBehaviour
 
     void Update()
     {
+        if (GameStateManager.IsPaused || !GameStateManager.IsGameStarted) return; // Don't spawn anypony in
         timer += Time.deltaTime;
 
         if (timer >= spawnInterval)
