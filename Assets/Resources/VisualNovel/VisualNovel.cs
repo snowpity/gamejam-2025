@@ -130,26 +130,23 @@ public class VisualNovel : MonoBehaviour
     // Load dialogue from JSON file
     public void LoadDialogueFromJSON(string fileName)
     {
-        string folderPath = Application.dataPath + "/Game/VisualNovel/";
-        string filePath = folderPath + fileName + ".json";
-
-        if (System.IO.File.Exists(filePath))
+        try
         {
-            try
+            TextAsset jsonFile = Resources.Load<TextAsset>($"VisualNovel/{fileName}");
+            if (jsonFile != null)
             {
-                string jsonContent = System.IO.File.ReadAllText(filePath);
-                currentSequence = JsonUtility.FromJson<DialogueSequence>(jsonContent);
+                currentSequence = JsonUtility.FromJson<DialogueSequence>(jsonFile.text);
                 StartDialogue();
-                Debug.Log($"Loaded dialogue from: {filePath}");
+                Debug.Log($"Loaded dialogue: {fileName}");
             }
-            catch (System.Exception e)
+            else
             {
-                Debug.LogError($"Error reading dialogue file {fileName}: {e.Message}");
+                Debug.LogError($"Could not find dialogue file: {fileName}");
             }
         }
-        else
+        catch (System.Exception e)
         {
-            Debug.LogError($"Could not find dialogue file: {filePath}");
+            Debug.LogError($"Error reading dialogue file {fileName}: {e.Message}");
         }
     }
 
@@ -438,11 +435,23 @@ public class VisualNovel : MonoBehaviour
         string json = JsonUtility.ToJson(example, true);
         Debug.Log("Example JSON:\n" + json);
 
-        // Save to file (optional)
+        // Save to Resources folder (works in builds)
 #if UNITY_EDITOR
-        string path = Application.dataPath + "/Game/VisualNovel/example_dialogue.json";
+        string resourcesPath = Application.dataPath + "/Resources/VisualNovel/";
+
+        // Create directory if it doesn't exist
+        if (!System.IO.Directory.Exists(resourcesPath))
+        {
+            System.IO.Directory.CreateDirectory(resourcesPath);
+            Debug.Log("Created Resources/VisualNovel/ directory");
+        }
+
+        string path = resourcesPath + "example_dialogue.json";
         System.IO.File.WriteAllText(path, json);
         Debug.Log("JSON saved to: " + path);
+
+        // Refresh the asset database so Unity recognizes the new file
+        UnityEditor.AssetDatabase.Refresh();
 #endif
     }
 }

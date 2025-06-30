@@ -59,7 +59,7 @@ public class MainMenuScript : MonoBehaviour
 
     private void onPlayButtonClick(ClickEvent evt)
     {
-        toLevel(0);
+        toLevel(1);
     }
 
     private void onSettingsButtonClick(ClickEvent evt)
