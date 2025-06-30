@@ -265,26 +265,19 @@ public class PlayerController : MonoBehaviour
                     float yShift = 1f / 2;
                     if(seatSprite.flipX)
                     {
-                        customerSprite.flipX = !seatSprite.flipX;
                         additiveSpacing = new Vector3(xShift,yShift,0);
                     }
                     else
                     {
                         additiveSpacing = new Vector3(-xShift,yShift,0);
                     }
+                    customerSprite.flipX = !seatSprite.flipX;
 
                     customer.transform.position = seat.position + additiveSpacing;
                     customer.transform.SetParent(seat); // optional, keeps them attached
                     customer.seatedTableID = closestTable.tableID;
                     customer.SitDown();
-
-
-
                 }
-
-
-
-                //GameStateManager.SetFollowingParty(false);
             }
         }
     }
