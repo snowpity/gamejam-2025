@@ -22,6 +22,10 @@ public class Kitchen : MonoBehaviour
 
     public int selectedSprite = -1;
 
+    private int nextFoodSlot = 0;
+    private const int maxFoodSlots = 4;
+    private readonly float slotOffsetX = 1.2f; // tweak this spacing to match the counter
+
     // Dictionary to track spawned food objects by table ID
     private Dictionary<int, GameObject> spawnedFoodObjects = new Dictionary<int, GameObject>();
 
@@ -51,7 +55,12 @@ public class Kitchen : MonoBehaviour
         GameStateManager.SetTableFoodSprite(tableID, selectedSprite);
 
         // Instantiate the food prefab
-        GameObject spawnedFood = Instantiate(foodPrefab, foodSpawnPoint.position, Quaternion.identity);
+        // Calculate spawn position based on slot index
+        Vector3 spawnPosition = foodSpawnPoint.position + new Vector3(slotOffsetX * nextFoodSlot, 0, 0);
+        GameObject spawnedFood = Instantiate(foodPrefab, spawnPosition, Quaternion.identity);
+
+        // Update slot index
+        nextFoodSlot = (nextFoodSlot + 1) % maxFoodSlots;
 
         SpriteRenderer spriteRenderer = spawnedFood.GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = foodSprites[selectedSprite];
