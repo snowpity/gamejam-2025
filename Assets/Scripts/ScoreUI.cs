@@ -17,6 +17,7 @@ public class ScoreDisplay : MonoBehaviour
 
     private Text uiText;
     private bool timerStarted = false;
+    private Coroutine countdownCoroutine; // Store reference to the coroutine
 
     void Start()
     {
@@ -30,12 +31,29 @@ public class ScoreDisplay : MonoBehaviour
         // Start the timer when the game starts and timer hasn't started yet
         if (GameStateManager.IsGameStarted && !timerStarted)
         {
-            StartCoroutine(CountdownCoroutine());
+            // Stop any existing countdown coroutine before starting a new one
+            if (countdownCoroutine != null)
+            {
+                StopCoroutine(countdownCoroutine);
+            }
+
+            countdownCoroutine = StartCoroutine(CountdownCoroutine());
             timerStarted = true;
         }
 
         // Always update display to show current values
         UpdateDisplay();
+    }
+
+    // Add this method to reset the timer when replaying
+    public void ResetTimer()
+    {
+        timerStarted = false;
+        if (countdownCoroutine != null)
+        {
+            StopCoroutine(countdownCoroutine);
+            countdownCoroutine = null;
+        }
     }
 
     private void UpdateDisplay()
@@ -104,7 +122,7 @@ public class ScoreDisplay : MonoBehaviour
         // Adjust these thresholds based on your game's scoring system
         int score = GameStateManager.totalScore;
 
-        if (score >= 200)
+        if (score >= 2000)
         {
             return 0; // Gold trophy
         }
