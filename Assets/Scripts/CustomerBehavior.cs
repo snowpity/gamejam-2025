@@ -24,7 +24,7 @@ public class CustomerBehavior : MonoBehaviour
     public int partyID;
     public int seatedTableID = -1;
 
-    private CustomerSpawner spawner;
+    public CustomerSpawner spawner;
     private float menuReadingTime;  // Time spent reading menu
     private float eatingTime;
     private bool isPartyLeader = false;  // Only the leader sets the timer
@@ -214,7 +214,7 @@ public class CustomerBehavior : MonoBehaviour
         return partyMembers.IndexOf(this);
     }
 
-    private void DisableTrailFollowing()
+    public void DisableTrailFollowing()
     {
         if (trailFollower != null)
         {
@@ -434,7 +434,7 @@ public class CustomerBehavior : MonoBehaviour
 
         CustomerBehavior leader = GetPartyLeader();
 
-        // Only the party leader sets the timer
+        // only the party leader sets the timer
         if (leader == this)
         {
             isPartyLeader = true;

@@ -135,4 +135,50 @@ public class CustomerSpawner : MonoBehaviour
         CustomerBehavior behavior = customer.GetComponent<CustomerBehavior>();
         RemoveTrackedParty(behavior.partyID);
     }
+
+    public void RequeueParty(List<CustomerBehavior> partyMembers, int partyID)
+    {
+        float verticalOffset = spacing * partyQueue.Count;
+        if (!partyQueue.Contains(partyID))
+            partyQueue.Add(partyID);
+
+        for (int i = 0; i < partyMembers.Count; i++)
+        {
+            var customer = partyMembers[i];
+            Vector3 targetPos = queueStartPoint.position
+                              + Vector3.down * verticalOffset
+                              + Vector3.right * (i * horizontalSpacing);
+
+            customer.transform.position = targetPos;
+            customer.transform.SetParent(null); // detach if they were seated
+            customer.state = CustomerBehavior.CustomerState.inLine;
+            customer.Initialize(this, targetPos);
+
+            Rigidbody2D rb = customer.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.bodyType = RigidbodyType2D.Kinematic;
+            }
+
+            var trail = customer.GetComponent<TrailFollower>();
+            if (trail != null)
+            {
+                Destroy(trail);
+            }
+
+            trackedCustomers.Add(customer.gameObject);
+            Animator anim = customer.GetComponent<Animator>();
+            if (anim != null)
+                anim.Play("Anim_character_idle_right");
+            customerQueue.Add(customer.gameObject);
+        }
+    }
+
+
+    public Vector3 GetLinePosition(CustomerBehavior customer)
+    {
+        // and each customer has an index or is tracked by party ID
+        return transform.position + Vector3.down * 0.5f; // temp placeholder
+    }
 }

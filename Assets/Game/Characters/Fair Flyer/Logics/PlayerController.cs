@@ -85,7 +85,21 @@ public class PlayerController : MonoBehaviour
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactionRadius);
 
+        if (GameStateManager.hasFollowingParty)
+        {
+            foreach (var hit in hits)
+            {
+                if (hit.GetComponent<LineZone>() != null)
+                {
+                    Debug.Log("[Player] Returning following party to line.");
 
+                    // Cancel the following party (teleport them back)
+                    CancelFollowingParty();
+
+                    return; // Exit early after sending them back
+                }
+            }
+        }
 
 
         // if holding food, check for nearby correct table to deliver
@@ -598,5 +612,54 @@ public class PlayerController : MonoBehaviour
         }
 
         return leader;
+    }
+
+    private void CancelFollowingParty()
+    {
+        List<CustomerBehavior> followingParty = new List<CustomerBehavior>();
+
+        GameObject[] allCustomers = GameObject.FindGameObjectsWithTag("Customer");
+
+        foreach (GameObject obj in allCustomers)
+        {
+            CustomerBehavior customer = obj.GetComponent<CustomerBehavior>();
+            if (customer != null && customer.state == CustomerBehavior.CustomerState.following)
+            {
+                customer.state = CustomerBehavior.CustomerState.inLine;
+
+                // Reset movement
+                Rigidbody2D rb = customer.GetComponent<Rigidbody2D>();
+                if (rb != null)
+                {
+                    rb.linearVelocity = Vector2.zero;
+                    rb.bodyType = RigidbodyType2D.Dynamic;
+                }
+
+                // Clear TrailFollower
+                var trail = customer.GetComponent<TrailFollower>();
+                if (trail != null)
+                {
+                    Destroy(trail);
+                }
+
+                // Reset outline
+                SpriteRenderer sr = customer.GetComponent<SpriteRenderer>();
+                if (sr != null && sr.material != null && sr.material.HasProperty("_Outline_Thickness"))
+                {
+                    sr.material.SetFloat("_Outline_Thickness", 0f);
+                }
+
+                followingParty.Add(customer); // ← now this works
+            }
+        }
+
+        if (followingParty.Count > 0)
+        {
+            int partyID = followingParty[0].partyID;
+            CustomerSpawner spawner = FindObjectOfType<CustomerSpawner>();
+            spawner.RequeueParty(followingParty, partyID);
+        }
+
+        GameStateManager.SetFollowingParty(false);
     }
 }
