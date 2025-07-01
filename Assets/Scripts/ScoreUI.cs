@@ -104,15 +104,15 @@ public class ScoreDisplay : MonoBehaviour
         // Adjust these thresholds based on your game's scoring system
         int score = GameStateManager.totalScore;
 
-        if (score >= 850)
+        if (score >= 200)
         {
             return 0; // Gold trophy
         }
-        else if (score >= 700)
+        else if (score >= 1500)
         {
             return 1; // Silver trophy
         }
-        else if (score >= 500)
+        else if (score >= 1000)
         {
             return 2; // Bronze trophy
         }
