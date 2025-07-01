@@ -69,6 +69,7 @@ public class ScoreDisplay : MonoBehaviour
     private void OnTimerReachedZero()
     {
         // Pause the game
+        Time.timeScale = 0;
         GameStateManager.SetPaused(true);
 
         gameOverText.text = fillyServedPrefix + GameStateManager.totalCustomerServed.ToString() + "\n" + scorePrefix + GameStateManager.totalScore.ToString();
