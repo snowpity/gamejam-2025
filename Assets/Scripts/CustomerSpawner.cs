@@ -170,7 +170,9 @@ public class CustomerSpawner : MonoBehaviour
             trackedCustomers.Add(customer.gameObject);
             Animator anim = customer.GetComponent<Animator>();
             if (anim != null)
-                anim.Play("Anim_character_idle_right");
+                anim.Play("Anim_character_idle_left");
+            SpriteRenderer spriteRenderer = customer.GetComponent<SpriteRenderer>();
+            spriteRenderer.flipX = true;
             customerQueue.Add(customer.gameObject);
         }
     }
