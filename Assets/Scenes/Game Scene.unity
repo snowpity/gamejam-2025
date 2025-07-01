@@ -2033,6 +2033,7 @@ MonoBehaviour:
   rigidBody: {fileID: 1371554312}
   animator: {fileID: 1276906961}
   spriteRenderer: {fileID: 1276906960}
+  followerTrail: {fileID: 1371554314}
   interactionRadius: 1.5
   highlightOutlineThickness: 0.03125
   normalOutlineThickness: 0
@@ -2214,6 +2215,7 @@ MonoBehaviour:
   - {x: 0, y: 0}
   - {x: 0, y: 0}
   minIncrement: 0.005
+  spacingReset: 10
   previousPos: {x: 0, y: 0}
 --- !u!70 &1371554315
 CapsuleCollider2D:

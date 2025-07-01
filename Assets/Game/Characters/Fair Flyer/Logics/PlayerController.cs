@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rigidBody;
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private FollowerTrail followerTrail;
 
     [Header("Customer Interaction")]
     [SerializeField] private float interactionRadius = 1.5f;
@@ -205,6 +206,7 @@ public class PlayerController : MonoBehaviour
             {
                 GameObject[] allCustomers = GameObject.FindGameObjectsWithTag("Customer");
                 CustomerSpawner spawner = GameObject.FindObjectOfType(typeof(CustomerSpawner)) as CustomerSpawner;
+                bool checkToResetTrail = false;
 
                 foreach (var obj in allCustomers)
                 {
@@ -215,6 +217,7 @@ public class PlayerController : MonoBehaviour
                         {
                             spawner.RemoveTrackedParty(c.partyID);
                             c.startFollowing();
+                            checkToResetTrail = true;
                         }
                         else if(c.state == CustomerBehavior.CustomerState.ordering)
                         {
@@ -225,6 +228,10 @@ public class PlayerController : MonoBehaviour
                             c.dismissCustomer();
                         }
                     }
+                }
+                if (checkToResetTrail)
+                {
+                    followerTrail.UpdateTrail(allCustomers, closestPartyID);
                 }
             }
         }
