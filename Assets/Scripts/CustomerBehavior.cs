@@ -45,7 +45,7 @@ public class CustomerBehavior : MonoBehaviour
     [Header("Character Variables")]
     [SerializeField] private float idleImpatienceTimer = 30f;
     [SerializeField] private float orderingImpatienceTimer = 30f;
-    [SerializeField] private float foodImpatienceTimer = 30f;
+    [SerializeField] private float foodImpatienceTimer = 35f;
     [SerializeField] private int score = 100; // Max score for serving the filly
     [SerializeField] private int bonusScore = 10; // Score the player gets for perfectly serve the filly
     [SerializeField] private int quitPenaltyScore = -10; // Penalty for neglecting customer

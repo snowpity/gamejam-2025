@@ -56,6 +56,17 @@ public static class GameStateManager
         IsPaused = false;
         IsGameStarted = false;
         hasFollowingParty = false;
+
+        countdownTimer = 180;
+        totalCustomerServed = 0;
+        totalScore = 0;
+
+        readyTables = new HashSet<int>();
+        readyOrders = new HashSet<int>();
+        tablesAwaitingOrder = new HashSet<int>();
+        ordersInProgress = new HashSet<int>();
+
+        tableFoodSprites = new Dictionary<int, int>();
     }
 
 
