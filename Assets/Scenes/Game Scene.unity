@@ -127,6 +127,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1923747814581536088, guid: 3e581142491c2994ca49583d375527b5, type: 3}
+      propertyPath: 'trophySprites.Array.data[0]'
+      value: 
+      objectReference: {fileID: 4412285063800413098, guid: 129a836978485e84888478984b9e6522, type: 3}
+    - target: {fileID: 1923747814581536088, guid: 3e581142491c2994ca49583d375527b5, type: 3}
+      propertyPath: 'trophySprites.Array.data[1]'
+      value: 
+      objectReference: {fileID: 7273533877948148109, guid: 129a836978485e84888478984b9e6522, type: 3}
+    - target: {fileID: 1923747814581536088, guid: 3e581142491c2994ca49583d375527b5, type: 3}
+      propertyPath: 'trophySprites.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1821540497172535516, guid: 129a836978485e84888478984b9e6522, type: 3}
+    - target: {fileID: 1923747814581536088, guid: 3e581142491c2994ca49583d375527b5, type: 3}
+      propertyPath: 'trophySprites.Array.data[3]'
+      value: 
+      objectReference: {fileID: 4051231425453769402, guid: 129a836978485e84888478984b9e6522, type: 3}
     - target: {fileID: 6333190158379979317, guid: 3e581142491c2994ca49583d375527b5, type: 3}
       propertyPath: m_Name
       value: GUI
@@ -2738,12 +2754,7 @@ MonoBehaviour:
   cookPartyMultiplier: 2
   foodSprites:
   - {fileID: 376925828962962561, guid: 689887da531f26544835adb2f5205620, type: 3}
-  - {fileID: 3009692584479664067, guid: 689887da531f26544835adb2f5205620, type: 3}
-  - {fileID: -8768571359450349593, guid: 689887da531f26544835adb2f5205620, type: 3}
-  - {fileID: -1955941707604148936, guid: 689887da531f26544835adb2f5205620, type: 3}
   - {fileID: 5234464503679955727, guid: 689887da531f26544835adb2f5205620, type: 3}
-  - {fileID: 6400926670506277622, guid: 689887da531f26544835adb2f5205620, type: 3}
-  - {fileID: -1217376631381368994, guid: 689887da531f26544835adb2f5205620, type: 3}
   selectedSprite: -1
 --- !u!4 &2070523931
 Transform:
