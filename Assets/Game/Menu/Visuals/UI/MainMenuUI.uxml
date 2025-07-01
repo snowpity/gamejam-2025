@@ -6,7 +6,7 @@
             <ui:VisualElement name="mainMenu" class="menuCentered">
                 <ui:Button icon-image="project://database/Assets/Game/Menu/Visuals/Sprites/menu_strip4.png?fileID=257395994207865268&amp;guid=974bb7ce847933f49a57671c57d41d5f&amp;type=3#menu_strip4_0" selectable="true" name="playButton" class="button" />
                 <ui:Button icon-image="project://database/Assets/Game/Menu/Visuals/Sprites/menu_strip4.png?fileID=903623629362276343&amp;guid=974bb7ce847933f49a57671c57d41d5f&amp;type=3#menu_strip4_1" selectable="true" name="settingsButton" class="button" />
-                <ui:Button icon-image="project://database/Assets/Game/Characters/Anon%20Filly/Seated/Sprites/tableset_strip11.png?fileID=-7776082026843000097&amp;guid=689887da531f26544835adb2f5205620&amp;type=3#tableset_strip11_2" selectable="true" name="exitButton" class="button" />
+                <ui:Button icon-image="project://database/Assets/Game/Menu/Visuals/Sprites/menu_strip4.png?fileID=-495217455&amp;guid=974bb7ce847933f49a57671c57d41d5f&amp;type=3#menu_strip4_4" selectable="true" name="exitButton" class="button" />
             </ui:VisualElement>
             <ui:VisualElement name="settingsMenu" class="menuCentered setting">
                 <ui:Slider label="Volume&#10;" value="100.03" high-value="100" name="Volume" fill="false" style="width: 70%; color: rgb(255, 255, 255); font-size: 25px;" />

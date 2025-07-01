@@ -18,6 +18,8 @@ public static class GameStateManager
     public static int totalCustomerServed = 0;
     public static int totalScore = 0;
 
+    public static int countdownTimer = 180;
+
     // Dictionary to store sprite ID for each table's order
     public static Dictionary<int, int> tableFoodSprites = new Dictionary<int, int>();
 
