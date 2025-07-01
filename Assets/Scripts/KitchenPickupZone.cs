@@ -4,8 +4,6 @@ public class KitchenPickupZone : MonoBehaviour
 {
     public static KitchenPickupZone Instance;
 
-
-
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -14,19 +12,18 @@ public class KitchenPickupZone : MonoBehaviour
 
     public int GetReadyOrderInRange(Vector3 playerPos, float radius)
     {
-        float closestDistance = float.MaxValue;
-        int closestReadyTable = -1;
-
-        foreach (int tableID in GameStateManager.GetReadyOrders())
+        // Check if player is within the BoxCollider2D bounds
+        Collider2D pickupCollider = GetComponent<Collider2D>();
+        if (pickupCollider != null && pickupCollider.bounds.Contains(playerPos))
         {
-            float dist = Vector3.Distance(playerPos, transform.position);
-            if (dist < radius && dist < closestDistance)
+            // Player is inside the pickup zone, return any ready order
+            var readyOrders = GameStateManager.GetReadyOrders();
+            foreach (int tableID in readyOrders)
             {
-                closestDistance = dist;
-                closestReadyTable = tableID;
+                return tableID; // Return the first ready order found
             }
         }
 
-        return closestReadyTable;
+        return -1; // No ready orders or player not in range
     }
 }
