@@ -428,7 +428,7 @@ public class CustomerBehavior : MonoBehaviour
 
     public void dismissCustomer()
     {
-        if (orderingImpatientTime || orderingAngryTime || foodImpatientTime || foodAngryTime)
+        if (orderingImpatient || orderingAngry || foodWaitingImpatient || foodWaitingAngry)
             isPerfectService = false;
         //int scoreAccumulated = score - penaltyPoint; // Only one bonus score should be awarded per party?
         int scoreAccumulated = score - penaltyPoint + (isPerfectService ?  bonusScore : 0); // Base score - penalties + bonus
