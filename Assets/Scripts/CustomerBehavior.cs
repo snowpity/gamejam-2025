@@ -43,6 +43,7 @@ public class CustomerBehavior : MonoBehaviour
     [SerializeField] private FollowerTrail followerTrail;
 
     [Header("Character Variables")]
+    [SerializeField] private float idleImpatienceTimer = 30f;
     [SerializeField] private float orderingImpatienceTimer = 30f;
     [SerializeField] private float foodImpatienceTimer = 30f;
     [SerializeField] private int score = 100; // Max score for serving the filly
@@ -50,11 +51,14 @@ public class CustomerBehavior : MonoBehaviour
     [SerializeField] private int quitPenaltyScore = -10; // Penalty for neglecting customer
 
     // put these in var so we don't recalc every time, optimization
+    private float idleImpatienceTime, idleAngryTime;
     private float orderingImpatientTime, orderingAngryTime; // Timer for hoof-raised ordering
     private float foodImpatientTime, foodAngryTime; // Timer for waiting for food
 
     private readonly int animMoveLeft = Animator.StringToHash("Anim_character_move_left");
     private readonly int animIdleLeft = Animator.StringToHash("Anim_character_idle_left");
+    private readonly int animIdleImpatientLeft = Animator.StringToHash("Anim_character_idle_impatient_left");
+    private readonly int animIdleAngryLeft = Animator.StringToHash("Anim_character_idle_angry_left");
 
     private readonly int animEatingLeft = Animator.StringToHash("Anim_character_eating_left");
     private readonly int animMenuLeft = Animator.StringToHash("Anim_character_menu_left");
@@ -83,6 +87,9 @@ public class CustomerBehavior : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+
+        idleImpatienceTime = idleImpatienceTimer * 0.66f;
+        idleAngryTime = idleImpatienceTimer * 0.33f;
 
         orderingImpatientTime = orderingImpatienceTimer * 0.66f;
         orderingAngryTime = orderingImpatienceTimer * 0.33f;
@@ -279,7 +286,27 @@ public class CustomerBehavior : MonoBehaviour
                 }
             }
         }
+        // FILLIES ARE WAITING TO BE GREETED AT THE FRONT
+        if (state == CustomerState.waiting)
+        {
+            idleImpatienceTimer -= Time.deltaTime;
 
+            if (idleImpatienceTimer <= 0)
+            {
+                // Make the filly disappear lol!!!
+                Exit();
+            }
+            else if (idleImpatienceTimer <= idleAngryTime)
+            {
+                // No penalties for in line?
+                animator.CrossFade(animIdleAngryLeft, animCrossFade);
+            }
+            else if(idleImpatienceTimer <= idleImpatienceTime)
+            {
+                // No penalties for in line?
+                animator.CrossFade(animIdleImpatientLeft, animCrossFade);
+            }
+        }
 
         // FILLIES ARE HOLDING THEIR HOOVES UP TO GRAB YOUR ATTENTION
         if (state == CustomerState.ordering)
