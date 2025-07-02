@@ -54,7 +54,7 @@ public class SpriteDepth : MonoBehaviour
         currentParent = this.transform.parent;
         if(currentParent != null && currentParent.gameObject.name.ToLower().StartsWith(parentName.ToLower()))
         {
-            Debug.Log(currentParent.gameObject.name.ToLower());
+            //Debug.Log(currentParent.gameObject.name.ToLower());
             hasParent = true;
             return hasParent;
         }

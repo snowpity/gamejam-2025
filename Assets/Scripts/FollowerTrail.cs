@@ -45,7 +45,19 @@ public class FollowerTrail : MonoBehaviour
         var dynamicList = new List<GameObject>();
         foreach (var customer in customerList)
         {
+            if (customer == null)
+            {
+                Debug.LogWarning("FollowerTrail: Found null customer in customerList");
+                continue;
+            }
+
             CustomerBehavior behavior = customer.GetComponent<CustomerBehavior>();
+            if (behavior == null)
+            {
+                Debug.LogWarning($"FollowerTrail: CustomerBehavior component missing on {customer.name}");
+                continue;
+            }
+
             if (behavior.partyID == closestPartyID)
             {
                 dynamicList.Add(customer);
