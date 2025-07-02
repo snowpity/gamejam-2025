@@ -1799,6 +1799,8 @@ MonoBehaviour:
   spacing: 1.1
   horizontalSpacing: 0.5
   partySizes: 01000000020000000300000004000000
+  AudioController: {fileID: 1015362271}
+  bellSound: {fileID: 8300000, guid: 8c6fa0820ececf542895cf9ee50230e2, type: 3}
 --- !u!4 &1072079769
 Transform:
   m_ObjectHideFlags: 0
