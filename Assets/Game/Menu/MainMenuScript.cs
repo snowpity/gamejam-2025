@@ -43,13 +43,13 @@ public class MainMenuScript : MonoBehaviour
     {
         document = GetComponent<UIDocument>();
 
-        SetupAudioSources();
-
         // Set up settings path
         settingsPath = Path.Combine(Application.dataPath, "Resources/Settings/settings.json");
 
         // Load settings
         LoadSettings();
+
+        SetupAudioSources();
 
         // Get UI elements
         playButton = document.rootVisualElement.Q("playButton") as Button;
@@ -179,7 +179,7 @@ public class MainMenuScript : MonoBehaviour
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
         audioSource.loop = false;
-        audioSource.volume = AudioListener.volume;
+        audioSource.volume = gameSettings.audio / 100f;
         audioSource.pitch = 1f;
         audioSource.spatialBlend = 0f; // 2D sound
         audioSource.priority = 128;
@@ -188,7 +188,7 @@ public class MainMenuScript : MonoBehaviour
         musicSource = gameObject.AddComponent<AudioSource>();
         musicSource.playOnAwake = false;
         musicSource.loop = true; // Loop the background music
-        musicSource.volume = AudioListener.volume;
+        musicSource.volume = gameSettings.audio / 100f;
         musicSource.pitch = 1f;
         musicSource.spatialBlend = 0f; // 2D sound
         musicSource.priority = 64; // Higher priority than UI sounds
