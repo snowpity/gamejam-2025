@@ -54,6 +54,7 @@ public class CustomerSpawner : MonoBehaviour
     void SpawnCustomerGroup(int availableSlots)
     {
         //Debug.Log("[spawner] trying to spawn a new group");
+        if (availableSlots < minPartySize) return; // Don't allow for less than min to spawn
 
         int partySize = Mathf.Min(Random.Range(minPartySize, maxPartySize + 1), availableSlots);
         //Debug.Log("[spawner] rolled party size: " + partySize);

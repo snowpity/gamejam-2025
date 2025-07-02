@@ -65,6 +65,8 @@ public class VisualNovel : MonoBehaviour
     // Reference to the canvas
     private Canvas visualNovelCanvas;
 
+    [SerializeField] AudioController AudioController;
+
     void Start()
     {
         // Trigger the dialogue when game starts if a valid file is inputted, otherwise skip
@@ -395,6 +397,8 @@ public class VisualNovel : MonoBehaviour
     {
         Debug.Log("Dialogue sequence completed!");
         GameStateManager.SetGameStarted(true);
+
+        AudioController.PlayBackgroundMusic();
         // Add your custom logic here (unlock next scene, trigger events, etc.)
     }
 
