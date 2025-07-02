@@ -33,6 +33,7 @@ public class CustomerBehavior : MonoBehaviour
     private bool isPerfectService = true; // flag for if the player perfectly served this customer
     private bool orderingImpatient = false, orderingAngry = false;
     private bool foodWaitingImpatient = false, foodWaitingAngry = false;
+    private bool dismissImpatient = false, dismissAngry = false;
     private int penaltyPoint = 0;
 
     private TrailFollower trailFollower;
@@ -46,6 +47,7 @@ public class CustomerBehavior : MonoBehaviour
     [SerializeField] private float idleImpatienceTimer = 30f;
     [SerializeField] private float orderingImpatienceTimer = 30f;
     [SerializeField] private float foodImpatienceTimer = 35f;
+    [SerializeField] private float dismissImpatienceTimer = 30f;
     [SerializeField] private int score = 100; // Max score for serving the filly
     [SerializeField] private int bonusScore = 10; // Score the player gets for perfectly serve the filly
     [SerializeField] private int quitPenaltyScore = -10; // Penalty for neglecting customer
@@ -54,6 +56,7 @@ public class CustomerBehavior : MonoBehaviour
     private float idleImpatienceTime, idleAngryTime;
     private float orderingImpatientTime, orderingAngryTime; // Timer for hoof-raised ordering
     private float foodImpatientTime, foodAngryTime; // Timer for waiting for food
+    private float dismissImpatientTime, dismissAngryTime; // Timer for waiting for food
 
     private readonly int animMoveLeft = Animator.StringToHash("Anim_character_move_left");
     private readonly int animIdleLeft = Animator.StringToHash("Anim_character_idle_left");
@@ -96,6 +99,9 @@ public class CustomerBehavior : MonoBehaviour
 
         foodImpatientTime = foodImpatienceTimer * 0.66f;
         foodAngryTime = foodImpatienceTimer * 0.33f;
+
+        dismissImpatientTime = dismissImpatienceTimer * 0.66f;
+        dismissAngryTime = dismissImpatienceTimer * 0.33f;
     }
 
     public void Initialize(CustomerSpawner sourceSpawner, Vector3 startPos)
@@ -286,6 +292,9 @@ public class CustomerBehavior : MonoBehaviour
                 }
             }
         }
+
+        // PENALTY SYSTEM //
+
         // FILLIES ARE WAITING TO BE GREETED AT THE FRONT
         if (state == CustomerState.waiting)
         {
@@ -365,6 +374,36 @@ public class CustomerBehavior : MonoBehaviour
                     penaltyPoint += 10;
                 }
                 animator.CrossFade(animWaitingImpatientLeft, animCrossFade);
+            }
+        }
+
+        // FILLIES ARE WAITING TO BE DISMISSED
+        if (state == CustomerState.finished)
+        {
+            dismissImpatienceTimer -= Time.deltaTime;
+
+            if (dismissImpatienceTimer <= 0) // Filly still give you point, but with penalty because you have served them
+            {
+                penaltyPoint += 10;
+                toDismiss();
+            }
+            else if (dismissImpatienceTimer <= dismissAngryTime)
+            {
+                if(!dismissAngry)
+                {
+                    dismissAngry = true;
+                    penaltyPoint += 10;
+                }
+                animator.CrossFade(animOrderingAngryLeft, animCrossFade);
+            }
+            else if(dismissImpatienceTimer <= dismissImpatientTime)
+            {
+                if(!dismissImpatient)
+                {
+                    dismissImpatient = true;
+                    penaltyPoint += 10;
+                }
+                animator.CrossFade(animOrderingImpatientLeft, animCrossFade);
             }
         }
     }
