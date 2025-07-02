@@ -318,6 +318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionSpeed: 0.1
   futaToggleSound: {fileID: 8300000, guid: bd81e5e9a07c0b8478d5e4f0f36aad39, type: 3}
+  backgroundMusic: {fileID: 8300000, guid: 33d59ba04ecc52e478da990b34f258f8, type: 3}
 --- !u!1 &66406393
 GameObject:
   m_ObjectHideFlags: 0

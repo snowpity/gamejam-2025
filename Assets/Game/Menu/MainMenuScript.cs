@@ -22,10 +22,11 @@ public class MainMenuScript : MonoBehaviour
     [SerializeField] private float transitionSpeed = 0.2f;
 
     [Header("Audio")]
-    [SerializeField] private AudioClip futaToggleSound; // Drag your sound clip here in the inspector
+    [SerializeField] private AudioClip futaToggleSound;
+    [SerializeField] private AudioClip backgroundMusic;
 
-    // AudioSource will be created procedurally
     private AudioSource audioSource;
+    private AudioSource musicSource;
 
     private UIDocument document;
     private Button playButton, settingsButton, backButton, exitButton;
@@ -42,8 +43,7 @@ public class MainMenuScript : MonoBehaviour
     {
         document = GetComponent<UIDocument>();
 
-        // Create AudioSource procedurally
-        SetupAudioSource();
+        SetupAudioSources();
 
         // Set up settings path
         settingsPath = Path.Combine(Application.dataPath, "Resources/Settings/settings.json");
@@ -66,6 +66,9 @@ public class MainMenuScript : MonoBehaviour
 
         // Apply loaded settings to UI
         ApplySettingsToUI();
+
+        // Start background music
+        PlayBackgroundMusic();
 
         // Register button callbacks
         if (playButton != null)
@@ -90,6 +93,9 @@ public class MainMenuScript : MonoBehaviour
 
     private void OnDisable()
     {
+        // Stop background music when disabling
+        StopBackgroundMusic();
+
         // Unregister all callbacks
         if (playButton != null)
             playButton.UnregisterCallback<ClickEvent>(onPlayButtonClick);
@@ -167,18 +173,74 @@ public class MainMenuScript : MonoBehaviour
         }
     }
 
-    private void SetupAudioSource()
+    private void SetupAudioSources()
     {
-        // Create a new AudioSource component
+        // Create AudioSource for UI sounds
         audioSource = gameObject.AddComponent<AudioSource>();
-
-        // Configure the AudioSource for UI sounds
         audioSource.playOnAwake = false;
         audioSource.loop = false;
-        audioSource.volume = AudioListener.volume; // Use current AudioListener volume
+        audioSource.volume = AudioListener.volume;
         audioSource.pitch = 1f;
-        audioSource.spatialBlend = 0f; // 2D sound (not 3D positioned)
-        audioSource.priority = 128; // Default priority
+        audioSource.spatialBlend = 0f; // 2D sound
+        audioSource.priority = 128;
+
+        // Create AudioSource for background music
+        musicSource = gameObject.AddComponent<AudioSource>();
+        musicSource.playOnAwake = false;
+        musicSource.loop = true; // Loop the background music
+        musicSource.volume = AudioListener.volume;
+        musicSource.pitch = 1f;
+        musicSource.spatialBlend = 0f; // 2D sound
+        musicSource.priority = 64; // Higher priority than UI sounds
+    }
+
+    private void PlayBackgroundMusic()
+    {
+        if (musicSource != null && backgroundMusic != null)
+        {
+            musicSource.clip = backgroundMusic;
+            musicSource.Play();
+            Debug.Log("Background music started");
+        }
+        else
+        {
+            Debug.LogWarning("Cannot play background music - missing AudioSource or AudioClip");
+        }
+    }
+
+    public void StopBackgroundMusic()
+    {
+        if (musicSource != null && musicSource.isPlaying)
+        {
+            musicSource.Stop();
+            Debug.Log("Background music stopped");
+        }
+    }
+
+    public void PauseBackgroundMusic()
+    {
+        if (musicSource != null && musicSource.isPlaying)
+        {
+            musicSource.Pause();
+            Debug.Log("Background music paused");
+        }
+    }
+
+    public void ResumeBackgroundMusic()
+    {
+        if (musicSource != null && !musicSource.isPlaying && musicSource.clip != null)
+        {
+            musicSource.UnPause();
+            Debug.Log("Background music resumed");
+        }
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        if (musicSource != null)
+        {
+            musicSource.volume = Mathf.Clamp01(volume);
+        }
     }
 
     private void OnVolumeChanged(ChangeEvent<float> evt)
@@ -187,12 +249,18 @@ public class MainMenuScript : MonoBehaviour
         SaveSettings();
 
         // Apply volume change immediately
-        AudioListener.volume = evt.newValue / 100f;
+        float normalizedVolume = evt.newValue / 100f;
+        AudioListener.volume = normalizedVolume;
 
-        // Update AudioSource volume to match
+        // Update both AudioSource volumes to match
         if (audioSource != null)
         {
-            audioSource.volume = AudioListener.volume;
+            audioSource.volume = normalizedVolume;
+        }
+
+        if (musicSource != null)
+        {
+            musicSource.volume = normalizedVolume;
         }
     }
 
@@ -208,6 +276,8 @@ public class MainMenuScript : MonoBehaviour
 
     private void onPlayButtonClick(ClickEvent evt)
     {
+        // Stop background music when transitioning to game
+        StopBackgroundMusic();
         toLevel(1);
     }
 
@@ -223,6 +293,9 @@ public class MainMenuScript : MonoBehaviour
 
     private void onExitButtonClick(ClickEvent evt)
     {
+        // Stop background music before exiting
+        StopBackgroundMusic();
+
 #if UNITY_EDITOR
         // If running in the Unity Editor, stop play mode
         UnityEditor.EditorApplication.isPlaying = false;
