@@ -457,7 +457,7 @@ public class CustomerBehavior : MonoBehaviour
             if (seatedTableID != -1)
             {
                 GameStateManager.MarkTableWantsToOrder(seatedTableID);
-                Debug.Log($"[CustomerBehavior] Party leader at table {seatedTableID} marked as wanting to order.");
+                //Debug.Log($"[CustomerBehavior] Party leader at table {seatedTableID} marked as wanting to order.");
             }
         }
 

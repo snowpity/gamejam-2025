@@ -25,6 +25,8 @@ public class CustomerSpawner : MonoBehaviour
     private float timer;
     private int partySpawnCount = 0; // how many groups we've spawned so far
 
+    private readonly int animIdleLeft = Animator.StringToHash("Anim_character_idle_left");
+
     void Start()
     {
         trackedCustomers.Clear();
@@ -89,7 +91,7 @@ public class CustomerSpawner : MonoBehaviour
 
             Animator anim = customerGO.GetComponent<Animator>();
             if (anim != null)
-                anim.Play("Anim_character_idle_right");
+                anim.CrossFade(animIdleLeft, 0);
         }
     }
 
