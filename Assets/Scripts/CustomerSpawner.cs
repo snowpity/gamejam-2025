@@ -24,6 +24,10 @@ public class CustomerSpawner : MonoBehaviour
 
     private readonly int animIdleLeft = Animator.StringToHash("Anim_character_idle_left");
 
+    [Header("Audio")]
+    [SerializeField] AudioController AudioController;
+    [SerializeField] private AudioClip bellSound;
+
     void Start()
     {
         trackedCustomers.Clear();
@@ -90,6 +94,8 @@ public class CustomerSpawner : MonoBehaviour
             if (anim != null)
                 anim.CrossFade(animIdleLeft, 0);
         }
+
+        AudioController.playFX(bellSound);
     }
 
     public void RemoveTrackedParty(int partyID)
