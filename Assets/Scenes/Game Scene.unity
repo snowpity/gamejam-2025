@@ -1786,8 +1786,7 @@ MonoBehaviour:
   queueStartPoint: {fileID: 1072079769}
   spacing: 1.1
   horizontalSpacing: 0.5
-  minPartySize: 2
-  maxPartySize: 4
+  partySizes: 01000000020000000300000004000000
 --- !u!4 &1072079769
 Transform:
   m_ObjectHideFlags: 0

@@ -13,10 +13,7 @@ public class CustomerSpawner : MonoBehaviour
     public Transform queueStartPoint; // where the first customer starts
     public float spacing = 1.1f;      // vertical space between each full group in the queue
     public float horizontalSpacing = 0.5f; // Horizontal spacing between each filly in a group
-
-    [Header("group settings")]
-    [SerializeField] private int minPartySize = 2; // minimum group size to spawn
-    [SerializeField] private int maxPartySize = 6; // max group size to spawn
+    public int[] partySizes;
 
     // internal memory
     private List<GameObject> customerQueue = new List<GameObject>(); // actual lineup order
@@ -54,9 +51,8 @@ public class CustomerSpawner : MonoBehaviour
     void SpawnCustomerGroup(int availableSlots)
     {
         //Debug.Log("[spawner] trying to spawn a new group");
-        if (availableSlots < minPartySize) return; // Don't allow for less than min to spawn
 
-        int partySize = Mathf.Min(Random.Range(minPartySize, maxPartySize + 1), availableSlots);
+        int partySize = partySizes[Random.Range(0, partySizes.Length)];
         //Debug.Log("[spawner] rolled party size: " + partySize);
 
         int newPartyID = Random.Range(1000, 9999);
