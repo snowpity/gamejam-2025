@@ -548,14 +548,26 @@ public class CustomerBehavior : MonoBehaviour
         party.partyID = -1;
 
         CustomerBehavior[] allCustomers = FindObjectsByType<CustomerBehavior>(FindObjectsSortMode.None);
+        List<int> foundPartyIDs = new List<int>();
         foreach (var customer in allCustomers)
         {
             if (customer.seatedTableID == tableID)
             {
-                if (party.partyID == -1)
-                    party.partyID = customer.partyID;
-
                 party.members.Add(customer);
+                if (!foundPartyIDs.Contains(customer.partyID))
+                    foundPartyIDs.Add(customer.partyID);
+            }
+        }
+
+        if (party.members.Count > 0)
+        {
+            // Choose the lowest partyID as the unified partyID
+            int unifiedPartyID = foundPartyIDs.Count > 0 ? Mathf.Min(foundPartyIDs.ToArray()) : -1;
+            party.partyID = unifiedPartyID;
+            // Update all customers at the table to have the unified partyID
+            foreach (var member in party.members)
+            {
+                member.partyID = unifiedPartyID;
             }
         }
 
