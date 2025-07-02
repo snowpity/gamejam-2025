@@ -10,7 +10,7 @@
             </ui:VisualElement>
             <ui:VisualElement name="settingsMenu" class="menuCentered setting">
                 <ui:Slider label="Volume&#10;" value="100.03" high-value="100" name="Volume" fill="false" style="width: 70%; color: rgb(255, 255, 255); font-size: 25px;" />
-                <ui:Toggle label="Futa Mode" style="width: 70%; color: rgb(255, 255, 255); font-size: 25px;" />
+                <ui:Toggle label="Futa Mode" name="Toggle" style="width: 70%; color: rgb(255, 255, 255); font-size: 25px;" />
                 <ui:Button icon-image="project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=7433338533053954386&amp;guid=3d0afde0b0bed8849b219849713625f9&amp;type=3#check@2x" selectable="true" name="backButton" class="button" style="width: 70%; height: 10%; margin-top: 25px;" />
             </ui:VisualElement>
         </ui:VisualElement>

@@ -21,6 +21,12 @@ public class MainMenuScript : MonoBehaviour
     [Header("Attributes")]
     [SerializeField] private float transitionSpeed = 0.2f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip futaToggleSound; // Drag your sound clip here in the inspector
+
+    // AudioSource will be created procedurally
+    private AudioSource audioSource;
+
     private UIDocument document;
     private Button playButton, settingsButton, backButton, exitButton;
     private Slider volumeSlider;
@@ -35,6 +41,9 @@ public class MainMenuScript : MonoBehaviour
     private void Start()
     {
         document = GetComponent<UIDocument>();
+
+        // Create AudioSource procedurally
+        SetupAudioSource();
 
         // Set up settings path
         settingsPath = Path.Combine(Application.dataPath, "Resources/Settings/settings.json");
@@ -158,6 +167,20 @@ public class MainMenuScript : MonoBehaviour
         }
     }
 
+    private void SetupAudioSource()
+    {
+        // Create a new AudioSource component
+        audioSource = gameObject.AddComponent<AudioSource>();
+
+        // Configure the AudioSource for UI sounds
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
+        audioSource.volume = AudioListener.volume; // Use current AudioListener volume
+        audioSource.pitch = 1f;
+        audioSource.spatialBlend = 0f; // 2D sound (not 3D positioned)
+        audioSource.priority = 128; // Default priority
+    }
+
     private void OnVolumeChanged(ChangeEvent<float> evt)
     {
         gameSettings.audio = evt.newValue;
@@ -165,6 +188,12 @@ public class MainMenuScript : MonoBehaviour
 
         // Apply volume change immediately
         AudioListener.volume = evt.newValue / 100f;
+
+        // Update AudioSource volume to match
+        if (audioSource != null)
+        {
+            audioSource.volume = AudioListener.volume;
+        }
     }
 
     private void OnFutaToggleChanged(ChangeEvent<bool> evt)
@@ -172,6 +201,9 @@ public class MainMenuScript : MonoBehaviour
         gameSettings.futa = evt.newValue;
         SaveSettings();
         Debug.Log($"Futa mode: {evt.newValue}");
+
+        if(gameSettings.futa)
+            audioSource.PlayOneShot(futaToggleSound);
     }
 
     private void onPlayButtonClick(ClickEvent evt)
