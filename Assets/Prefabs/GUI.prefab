@@ -322,11 +322,11 @@ RectTransform:
   - {fileID: 215933168868532314}
   m_Father: {fileID: 6680104203410856261}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -931.7601, y: 640}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 696.4797, y: 160}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &7726467233508971370
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -838,11 +838,11 @@ RectTransform:
   - {fileID: 3821247364511607026}
   m_Father: {fileID: 6680104203410856261}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1200, y: 640}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 160}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 1}
 --- !u!222 &6154012933329298403
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1453,7 +1453,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 348.00238, y: 0.0019531}
+  m_AnchoredPosition: {x: 348.00238, y: 0.001953125}
   m_SizeDelta: {x: 662.04, y: 144.87}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &855677889234425011
@@ -1521,6 +1521,9 @@ MonoBehaviour:
   - {fileID: 4051231425453769402, guid: 129a836978485e84888478984b9e6522, type: 3}
   trophyImage: {fileID: 18911096165754318}
   gameOverText: {fileID: 8482672048947705935}
+  AudioController: {fileID: 0}
+  victorySound: {fileID: 0}
+  failureSound: {fileID: 0}
 --- !u!1 &6944535459956367807
 GameObject:
   m_ObjectHideFlags: 0
