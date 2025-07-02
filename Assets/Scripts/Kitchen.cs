@@ -29,6 +29,9 @@ public class Kitchen : MonoBehaviour
     // Dictionary to track spawned food objects by table ID
     private Dictionary<int, GameObject> spawnedFoodObjects = new Dictionary<int, GameObject>();
 
+    // Track how many orders are currently being prepared
+    private int activeOrderCount = 0;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -37,8 +40,12 @@ public class Kitchen : MonoBehaviour
 
     public void ReceiveOrder(int tableID, CustomerBehavior.CustomerParty party)
     {
-        Debug.Log($"[Kitchen] Received order from Table {tableID}. Preparing food...");
-        SetSoireeState(true);
+        //Debug.Log($"[Kitchen] Received order from Table {tableID}. Preparing food...");
+
+        // Increment active order count and update state
+        activeOrderCount++;
+        UpdateSoireeState();
+
         StartCoroutine(PrepareOrderCoroutine(tableID, party));
     }
 
@@ -69,7 +76,9 @@ public class Kitchen : MonoBehaviour
         spawnedFoodObjects[tableID] = spawnedFood;
         Debug.Log("SPAWNED:" + spawnedFoodObjects[tableID]);
 
-        SetSoireeState(false);
+        // Decrement active order count and update state
+        activeOrderCount--;
+        UpdateSoireeState();
     }
 
     // Method to get the spawned food object for a table
@@ -86,6 +95,12 @@ public class Kitchen : MonoBehaviour
         {
             spawnedFoodObjects.Remove(tableID);
         }
+    }
+
+    private void UpdateSoireeState()
+    {
+        bool shouldBeActive = activeOrderCount > 0;
+        SetSoireeState(shouldBeActive);
     }
 
     private void SetSoireeState(bool isCooking)
