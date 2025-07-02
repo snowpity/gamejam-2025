@@ -1521,6 +1521,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1923747814581536088, guid: 3e581142491c2994ca49583d375527b5, type: 3}
+      propertyPath: failureSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 3ece5d1d02c039a4a9e28d592962f168, type: 3}
+    - target: {fileID: 1923747814581536088, guid: 3e581142491c2994ca49583d375527b5, type: 3}
+      propertyPath: victorySound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4b878bcc13cf7874589bfa9179e2d716, type: 3}
+    - target: {fileID: 1923747814581536088, guid: 3e581142491c2994ca49583d375527b5, type: 3}
+      propertyPath: AudioController
+      value: 
+      objectReference: {fileID: 1015362271}
     - target: {fileID: 4518034828799052863, guid: 3e581142491c2994ca49583d375527b5, type: 3}
       propertyPath: m_IsActive
       value: 0

@@ -15,6 +15,11 @@ public class ScoreDisplay : MonoBehaviour
     public Image trophyImage;
     public Text gameOverText;
 
+    [Header("Game Over Audio")]
+    [SerializeField] private AudioController AudioController;
+    [SerializeField] private AudioClip victorySound;
+    [SerializeField] private AudioClip failureSound;
+
     private Text uiText;
     private bool timerStarted = false;
     private Coroutine countdownCoroutine; // Store reference to the coroutine
@@ -124,18 +129,22 @@ public class ScoreDisplay : MonoBehaviour
 
         if (score >= 2000)
         {
+            AudioController.playFX(victorySound);
             return 0; // Gold trophy
         }
         else if (score >= 1500)
         {
+            AudioController.playFX(victorySound);
             return 1; // Silver trophy
         }
         else if (score >= 1000)
         {
+            AudioController.playFX(victorySound);
             return 2; // Bronze trophy
         }
         else
         {
+            AudioController.playFX(failureSound);
             return 3; // Lol no star cuz u failed
         }
     }
