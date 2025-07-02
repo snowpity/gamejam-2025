@@ -8,6 +8,7 @@ using System.IO;
 [System.Serializable]
 public class GameSettings
 {
+    public float music = 100f;
     public float audio = 100f;
     public bool futa = false;
 }
@@ -30,6 +31,7 @@ public class MainMenuScript : MonoBehaviour
 
     private UIDocument document;
     private Button playButton, settingsButton, backButton, exitButton;
+    private Slider backgroundMusicSlider;
     private Slider volumeSlider;
     private Toggle futaToggle;
 
@@ -58,6 +60,7 @@ public class MainMenuScript : MonoBehaviour
         exitButton = document.rootVisualElement.Q("exitButton") as Button;
 
         // Get settings UI elements
+        backgroundMusicSlider = document.rootVisualElement.Q("BGMusic") as Slider;
         volumeSlider = document.rootVisualElement.Q("Volume") as Slider;
         futaToggle = document.rootVisualElement.Q("Toggle") as Toggle;
 
@@ -84,6 +87,9 @@ public class MainMenuScript : MonoBehaviour
             exitButton.RegisterCallback<ClickEvent>(onExitButtonClick);
 
         // Register settings callbacks
+        if (backgroundMusicSlider != null)
+            backgroundMusicSlider.RegisterValueChangedCallback(OnBGMusicChanged);
+
         if (volumeSlider != null)
             volumeSlider.RegisterValueChangedCallback(OnVolumeChanged);
 
@@ -108,6 +114,9 @@ public class MainMenuScript : MonoBehaviour
 
         if (exitButton != null)
             exitButton.UnregisterCallback<ClickEvent>(onExitButtonClick);
+
+        if (backgroundMusicSlider != null)
+            backgroundMusicSlider.UnregisterValueChangedCallback(OnVolumeChanged);
 
         if (volumeSlider != null)
             volumeSlider.UnregisterValueChangedCallback(OnVolumeChanged);
@@ -162,6 +171,11 @@ public class MainMenuScript : MonoBehaviour
 
     private void ApplySettingsToUI()
     {
+        if (backgroundMusicSlider != null)
+        {
+            backgroundMusicSlider.value = gameSettings.music;
+        }
+
         if (volumeSlider != null)
         {
             volumeSlider.value = gameSettings.audio;
@@ -181,17 +195,17 @@ public class MainMenuScript : MonoBehaviour
         audioSource.loop = false;
         audioSource.volume = gameSettings.audio / 100f;
         audioSource.pitch = 1f;
-        audioSource.spatialBlend = 0f; // 2D sound
+        audioSource.spatialBlend = 0f;
         audioSource.priority = 128;
 
         // Create AudioSource for background music
         musicSource = gameObject.AddComponent<AudioSource>();
         musicSource.playOnAwake = false;
-        musicSource.loop = true; // Loop the background music
-        musicSource.volume = gameSettings.audio / 100f;
+        musicSource.loop = true;
+        musicSource.volume = gameSettings.music / 100f;
         musicSource.pitch = 1f;
-        musicSource.spatialBlend = 0f; // 2D sound
-        musicSource.priority = 64; // Higher priority than UI sounds
+        musicSource.spatialBlend = 0f;
+        musicSource.priority = 64;
     }
 
     private void PlayBackgroundMusic()
@@ -243,6 +257,21 @@ public class MainMenuScript : MonoBehaviour
         }
     }
 
+    private void OnBGMusicChanged(ChangeEvent<float> evt)
+    {
+        gameSettings.music = evt.newValue;
+        SaveSettings();
+
+        // Apply volume change immediately
+        float normalizedVolume = evt.newValue / 100f;
+
+        // Update both AudioSource volumes to match
+        if (musicSource != null)
+        {
+            musicSource.volume = normalizedVolume;
+        }
+    }
+
     private void OnVolumeChanged(ChangeEvent<float> evt)
     {
         gameSettings.audio = evt.newValue;
@@ -250,17 +279,11 @@ public class MainMenuScript : MonoBehaviour
 
         // Apply volume change immediately
         float normalizedVolume = evt.newValue / 100f;
-        AudioListener.volume = normalizedVolume;
 
         // Update both AudioSource volumes to match
         if (audioSource != null)
         {
             audioSource.volume = normalizedVolume;
-        }
-
-        if (musicSource != null)
-        {
-            musicSource.volume = normalizedVolume;
         }
     }
 
