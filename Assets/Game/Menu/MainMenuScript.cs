@@ -3,6 +3,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UIElements;
+using System.IO;
+
+[System.Serializable]
+public class GameSettings
+{
+    public float audio = 100f;
+    public bool futa = false;
+}
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -15,13 +23,24 @@ public class MainMenuScript : MonoBehaviour
 
     private UIDocument document;
     private Button playButton, settingsButton, backButton, exitButton;
+    private Slider volumeSlider;
+    private Toggle futaToggle;
 
     private VisualElement mainMenuElement;
     private VisualElement settingsMenuElement;
 
+    private GameSettings gameSettings;
+    private string settingsPath;
+
     private void Start()
     {
         document = GetComponent<UIDocument>();
+
+        // Set up settings path
+        settingsPath = Path.Combine(Application.dataPath, "Resources/Settings/settings.json");
+
+        // Load settings
+        LoadSettings();
 
         // Get UI elements
         playButton = document.rootVisualElement.Q("playButton") as Button;
@@ -29,8 +48,15 @@ public class MainMenuScript : MonoBehaviour
         backButton = document.rootVisualElement.Q("backButton") as Button;
         exitButton = document.rootVisualElement.Q("exitButton") as Button;
 
+        // Get settings UI elements
+        volumeSlider = document.rootVisualElement.Q("Volume") as Slider;
+        futaToggle = document.rootVisualElement.Q("Toggle") as Toggle;
+
         mainMenuElement = document.rootVisualElement.Q("mainMenu");
         settingsMenuElement = document.rootVisualElement.Q("settingsMenu");
+
+        // Apply loaded settings to UI
+        ApplySettingsToUI();
 
         // Register button callbacks
         if (playButton != null)
@@ -44,6 +70,13 @@ public class MainMenuScript : MonoBehaviour
 
         if (exitButton != null)
             exitButton.RegisterCallback<ClickEvent>(onExitButtonClick);
+
+        // Register settings callbacks
+        if (volumeSlider != null)
+            volumeSlider.RegisterValueChangedCallback(OnVolumeChanged);
+
+        if (futaToggle != null)
+            futaToggle.RegisterValueChangedCallback(OnFutaToggleChanged);
     }
 
     private void OnDisable()
@@ -60,6 +93,85 @@ public class MainMenuScript : MonoBehaviour
 
         if (exitButton != null)
             exitButton.UnregisterCallback<ClickEvent>(onExitButtonClick);
+
+        if (volumeSlider != null)
+            volumeSlider.UnregisterValueChangedCallback(OnVolumeChanged);
+
+        if (futaToggle != null)
+            futaToggle.UnregisterValueChangedCallback(OnFutaToggleChanged);
+    }
+
+    private void LoadSettings()
+    {
+        try
+        {
+            if (File.Exists(settingsPath))
+            {
+                string jsonContent = File.ReadAllText(settingsPath);
+                gameSettings = JsonUtility.FromJson<GameSettings>(jsonContent);
+            }
+            else
+            {
+                // Create default settings if file doesn't exist
+                gameSettings = new GameSettings();
+                SaveSettings();
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Failed to load settings: {e.Message}");
+            gameSettings = new GameSettings(); // Use defaults
+        }
+    }
+
+    private void SaveSettings()
+    {
+        try
+        {
+            string directory = Path.GetDirectoryName(settingsPath);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            string jsonContent = JsonUtility.ToJson(gameSettings, true);
+            File.WriteAllText(settingsPath, jsonContent);
+
+            Debug.Log("Settings saved successfully");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Failed to save settings: {e.Message}");
+        }
+    }
+
+    private void ApplySettingsToUI()
+    {
+        if (volumeSlider != null)
+        {
+            volumeSlider.value = gameSettings.audio;
+        }
+
+        if (futaToggle != null)
+        {
+            futaToggle.value = gameSettings.futa;
+        }
+    }
+
+    private void OnVolumeChanged(ChangeEvent<float> evt)
+    {
+        gameSettings.audio = evt.newValue;
+        SaveSettings();
+
+        // Apply volume change immediately
+        AudioListener.volume = evt.newValue / 100f;
+    }
+
+    private void OnFutaToggleChanged(ChangeEvent<bool> evt)
+    {
+        gameSettings.futa = evt.newValue;
+        SaveSettings();
+        Debug.Log($"Futa mode: {evt.newValue}");
     }
 
     private void onPlayButtonClick(ClickEvent evt)
@@ -173,5 +285,11 @@ public class MainMenuScript : MonoBehaviour
     {
         GameStateManager.SetDefault(); // Precaution, we'll set all public flag to it's default state.
         SceneManager.LoadScene(sceneID);
+    }
+
+    // Public getter for other scripts to access settings
+    public GameSettings GetSettings()
+    {
+        return gameSettings;
     }
 }
