@@ -70,7 +70,7 @@ public class AudioController : MonoBehaviour
         audioSource.PlayOneShot(audio);
     }
 
-    public void PlayBackgroundMusic()
+    public void PlayBackgroundMusic(AudioClip backgroundMusic)
     {
         if (musicSource != null && backgroundMusic != null)
         {

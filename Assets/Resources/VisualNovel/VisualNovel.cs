@@ -45,6 +45,8 @@ public class VisualNovel : MonoBehaviour
     [Header("Resources")]
     [SerializeField] private Sprite[] characterPortraits; // Assign in inspector
     [SerializeField] private string dialogueFile = "example_dialogue";
+    [SerializeField] private AudioClip VNMusic; // Plays while in VN mode
+    [SerializeField] private AudioClip BGMusic; // Plays while in game
 
     [Header("Typewriter Settings")]
     [SerializeField] private float typewriterSpeed = 0.02f; // Time between characters
@@ -92,6 +94,7 @@ public class VisualNovel : MonoBehaviour
             // Ensure the canvas is active on start
             ShowDialogueUI();
         }
+        AudioController.PlayBackgroundMusic(VNMusic);
     }
 
     // Method to trigger dialogue from UI button or other events
@@ -398,7 +401,7 @@ public class VisualNovel : MonoBehaviour
         Debug.Log("Dialogue sequence completed!");
         GameStateManager.SetGameStarted(true);
 
-        AudioController.PlayBackgroundMusic();
+        AudioController.PlayBackgroundMusic(BGMusic);
         // Add your custom logic here (unlock next scene, trigger events, etc.)
     }
 

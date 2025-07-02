@@ -51,6 +51,11 @@ public class CustomerBehavior : MonoBehaviour
     [SerializeField] private int bonusScore = 10; // Score the player gets for perfectly serve the filly
     [SerializeField] private int quitPenaltyScore = -10; // Penalty for neglecting customer
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip audioComplete;
+    [SerializeField] private AudioClip audioFail;
+    [SerializeField] private AudioClip audioRee;
+
     // put these in var so we don't recalc every time, optimization
     private float idleImpatienceTime, idleAngryTime;
     private float orderingImpatientTime, orderingAngryTime; // Timer for hoof-raised ordering

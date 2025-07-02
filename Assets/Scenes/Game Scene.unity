@@ -951,6 +951,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1550193761446436383, guid: 7951b88bac241ff4996b87c6b689ad6f, type: 3}
+      propertyPath: BGMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 70d118fc24d678c47997772d38bfc1a4, type: 3}
+    - target: {fileID: 1550193761446436383, guid: 7951b88bac241ff4996b87c6b689ad6f, type: 3}
+      propertyPath: VNMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 6207e2a4fbc8b604e8d342cbc04d8864, type: 3}
+    - target: {fileID: 1550193761446436383, guid: 7951b88bac241ff4996b87c6b689ad6f, type: 3}
       propertyPath: AudioController
       value: 
       objectReference: {fileID: 1015362271}
