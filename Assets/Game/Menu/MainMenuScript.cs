@@ -8,8 +8,8 @@ using System.IO;
 [System.Serializable]
 public class GameSettings
 {
-    public float music = 100f;
-    public float audio = 100f;
+    public float music = 50f;
+    public float audio = 50f;
     public bool futa = false;
 }
 
