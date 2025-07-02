@@ -138,6 +138,21 @@ public class CustomerSpawner : MonoBehaviour
 
     public void RequeueParty(List<CustomerBehavior> partyMembers, int partyID)
     {
+        // Remove the party from queue first if it exists to avoid duplicates
+        if (partyQueue.Contains(partyID))
+        {
+            partyQueue.Remove(partyID);
+        }
+
+        // Remove party members from customerQueue to avoid duplicates
+        foreach (var member in partyMembers)
+        {
+            if (customerQueue.Contains(member.gameObject))
+            {
+                customerQueue.Remove(member.gameObject);
+            }
+        }
+
         float verticalOffset = spacing * partyQueue.Count;
         if (!partyQueue.Contains(partyID))
             partyQueue.Add(partyID);
