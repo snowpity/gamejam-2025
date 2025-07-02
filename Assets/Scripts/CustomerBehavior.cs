@@ -30,7 +30,6 @@ public class CustomerBehavior : MonoBehaviour
     private bool isPartyLeader = false;  // Only the leader sets the timer
 
     // Penalty flags
-    private bool isPerfectService = true; // flag for if the player perfectly served this customer
     private bool orderingImpatient = false, orderingAngry = false;
     private bool foodWaitingImpatient = false, foodWaitingAngry = false;
     private bool dismissImpatient = false, dismissAngry = false;
@@ -492,12 +491,17 @@ public class CustomerBehavior : MonoBehaviour
         animator.CrossFade(animOrderingLeft, animCrossFade);
     }
 
+    private bool isPerfectService()
+    {
+        if (orderingImpatient || orderingAngry || foodWaitingImpatient || foodWaitingAngry || dismissImpatient || dismissAngry)
+            return false;
+        return true;
+    }
+
     public void dismissCustomer()
     {
-        if (orderingImpatient || orderingAngry || foodWaitingImpatient || foodWaitingAngry)
-            isPerfectService = false;
         //int scoreAccumulated = score - penaltyPoint; // Only one bonus score should be awarded per party?
-        int scoreAccumulated = score - penaltyPoint + (isPerfectService ?  bonusScore : 0); // Base score - penalties + bonus
+        int scoreAccumulated = score - penaltyPoint + (isPerfectService() ?  bonusScore : 0); // Base score - penalties + bonus
 
         GameStateManager.IncrementScore(scoreAccumulated);
         GameStateManager.IncrementCustomerServed(1);
