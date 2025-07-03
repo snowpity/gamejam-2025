@@ -150,6 +150,37 @@ MonoBehaviour:
   isStatic: 0
   parentName: Table
   zDepthOffset: 1
+--- !u!1 &3835523961890751137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9023874945698357772}
+  m_Layer: 0
+  m_Name: FoodOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9023874945698357772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3835523961890751137}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2233030436557925815}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5212428275474758886
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,6 +366,7 @@ Transform:
   m_Children:
   - {fileID: 1975913887704149901}
   - {fileID: 4749894272484082157}
+  - {fileID: 9023874945698357772}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6033577045327395871
@@ -450,6 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db0393d823fdcdf4bbd783e8438c1098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tableID: 0
 --- !u!114 &8489424398990387489
 MonoBehaviour:
   m_ObjectHideFlags: 0
