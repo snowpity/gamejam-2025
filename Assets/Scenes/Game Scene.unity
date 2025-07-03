@@ -1801,6 +1801,10 @@ MonoBehaviour:
   partySizes: 020000000200000004000000
   AudioController: {fileID: 1015362271}
   bellSound: {fileID: 8300000, guid: 8c6fa0820ececf542895cf9ee50230e2, type: 3}
+  minSpawnInterval: 1.5
+  maxSpawnInterval: 4
+  rushHourMinInterval: 0.5
+  rushHourMaxInterval: 1.2
 --- !u!4 &1072079769
 Transform:
   m_ObjectHideFlags: 0
@@ -2091,6 +2095,7 @@ MonoBehaviour:
   animator: {fileID: 1276906961}
   spriteRenderer: {fileID: 1276906960}
   followerTrail: {fileID: 1371554314}
+  FoodPrefab: {fileID: 7220516514315675685, guid: a84c19c84682d0b47aa5dfe262760fe1, type: 3}
   interactionRadius: 1.5
   highlightOutlineThickness: 0.03125
   normalOutlineThickness: 0

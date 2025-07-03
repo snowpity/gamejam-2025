@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private FollowerTrail followerTrail;
+    [SerializeField] private GameObject FoodPrefab;
 
     [Header("Customer Interaction")]
     [SerializeField] private float interactionRadius = 1.5f;
@@ -116,7 +117,8 @@ public class PlayerController : MonoBehaviour
                     var party = CustomerBehavior.GetCustomerPartyAtTable(heldFoodTableID);
                     foreach (var member in party.members)
                     {
-                        member.StoreFoodObject(heldFoodObject);
+                        var personalFood = CreateFoodForCustomer(member, table);
+                        member.StoreFoodObject(personalFood);
                         member.ReceiveFood();
                     }
 
@@ -128,7 +130,8 @@ public class PlayerController : MonoBehaviour
 
                     if (heldFoodObject != null)
                     {
-                        SendFoodToOrigin(heldFoodObject, table);
+                        //SendFoodToOrigin(heldFoodObject, table);
+                        Destroy(heldFoodObject);
                         heldFoodObject = null;
                     }
 
@@ -321,7 +324,34 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private GameObject CreateFoodForCustomer(CustomerBehavior customer, TableZone table)
+    {
+        // Find the FoodOrigin object that belongs to this specific table
+        GameObject foodOrigin = FindFoodOriginForTable(table);
 
+        if (foodOrigin != null)
+        {
+            GameObject food = Instantiate(FoodPrefab, customer.transform);
+            food.transform.localScale = Vector3.one;
+            if (customer.transform.localPosition.x < 0f)
+            {
+                //customer is left of table
+                food.transform.localPosition = new Vector2(2.5f,-.6f);
+            }
+            else
+            {
+                food.transform.localPosition = new Vector2(-2.5f, -.6f);
+            }
+
+            Debug.Log($"[DeliverySystem] Sent food object to FoodOrigin for Table {table.GetTableID()}");
+            return food;
+        }
+        else
+        {
+            Debug.LogWarning($"[DeliverySystem] FoodOrigin not found for Table {table.GetTableID()}, destroying food object");
+            return null;
+        }
+    }
 
 
 
