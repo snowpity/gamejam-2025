@@ -1433,7 +1433,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1783112457
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -3796550865828164446, guid: b89aaf16814da4a47ad73f0a2c8f9e79, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1798,7 +1798,7 @@ MonoBehaviour:
   queueStartPoint: {fileID: 1072079769}
   spacing: 1.1
   horizontalSpacing: 0.5
-  partySizes: 01000000020000000300000004000000
+  partySizes: 020000000200000004000000
   AudioController: {fileID: 1015362271}
   bellSound: {fileID: 8300000, guid: 8c6fa0820ececf542895cf9ee50230e2, type: 3}
 --- !u!4 &1072079769
@@ -2792,8 +2792,16 @@ MonoBehaviour:
   cookBaseTime: 2
   cookPartyMultiplier: 2
   foodSprites:
-  - {fileID: 376925828962962561, guid: 689887da531f26544835adb2f5205620, type: 3}
-  - {fileID: 5234464503679955727, guid: 689887da531f26544835adb2f5205620, type: 3}
+  - {fileID: 6885711301002546425, guid: 379b8ac1dca97944da59a7517b45fe5e, type: 3}
+  - {fileID: -2806499781433977235, guid: 379b8ac1dca97944da59a7517b45fe5e, type: 3}
+  - {fileID: 8634801825589189322, guid: 379b8ac1dca97944da59a7517b45fe5e, type: 3}
+  - {fileID: -8211896768623768169, guid: 379b8ac1dca97944da59a7517b45fe5e, type: 3}
+  - {fileID: 8576781517678426914, guid: 379b8ac1dca97944da59a7517b45fe5e, type: 3}
+  - {fileID: 2274806311681831520, guid: 379b8ac1dca97944da59a7517b45fe5e, type: 3}
+  - {fileID: -138459672875835555, guid: 379b8ac1dca97944da59a7517b45fe5e, type: 3}
+  - {fileID: -1356607188747525808, guid: 379b8ac1dca97944da59a7517b45fe5e, type: 3}
+  - {fileID: -4849185776257792237, guid: 379b8ac1dca97944da59a7517b45fe5e, type: 3}
+  - {fileID: -5148612040661272091, guid: 379b8ac1dca97944da59a7517b45fe5e, type: 3}
   selectedSprite: -1
 --- !u!4 &2070523931
 Transform:

@@ -57,10 +57,6 @@ public class Kitchen : MonoBehaviour
         Debug.Log($"[Kitchen] Order for Table {tableID} is ready.");
         GameStateManager.MarkOrderReady(tableID);
 
-        // Select sprite and store it in GameStateManager
-        selectedSprite = Random.Range(0, foodSprites.Length);
-        GameStateManager.SetTableFoodSprite(tableID, selectedSprite);
-
         // Instantiate the food prefab
         // Calculate spawn position based on slot index
         Vector3 spawnPosition = foodSpawnPoint.position + new Vector3(slotOffsetX * nextFoodSlot, 0, 0);
@@ -70,7 +66,7 @@ public class Kitchen : MonoBehaviour
         nextFoodSlot = (nextFoodSlot + 1) % maxFoodSlots;
 
         SpriteRenderer spriteRenderer = spawnedFood.GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = foodSprites[selectedSprite];
+        spriteRenderer.sprite = foodSprites[tableID-1];
 
         // Store the spawned food object so we can destroy it later
         spawnedFoodObjects[tableID] = spawnedFood;

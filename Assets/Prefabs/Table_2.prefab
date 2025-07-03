@@ -483,6 +483,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tableID: 0
+  tableTag:
+  - {fileID: -6180866001433134797, guid: 4cf94c4d6909093409f95d3bc8a3d0e5, type: 3}
+  - {fileID: 7084500889739454465, guid: 4cf94c4d6909093409f95d3bc8a3d0e5, type: 3}
+  - {fileID: 1157271934540135067, guid: 4cf94c4d6909093409f95d3bc8a3d0e5, type: 3}
+  - {fileID: 6631174352721489797, guid: 4cf94c4d6909093409f95d3bc8a3d0e5, type: 3}
+  - {fileID: -4006197264056076103, guid: 4cf94c4d6909093409f95d3bc8a3d0e5, type: 3}
+  - {fileID: -8762940105564942630, guid: 4cf94c4d6909093409f95d3bc8a3d0e5, type: 3}
+  - {fileID: 308672489033892467, guid: 4cf94c4d6909093409f95d3bc8a3d0e5, type: 3}
+  - {fileID: 126230293825337201, guid: 4cf94c4d6909093409f95d3bc8a3d0e5, type: 3}
+  - {fileID: 3889489174542019090, guid: 4cf94c4d6909093409f95d3bc8a3d0e5, type: 3}
+  - {fileID: 2865979582986966937, guid: 4cf94c4d6909093409f95d3bc8a3d0e5, type: 3}
+  tableTagPrefab: {fileID: 7220516514315675685, guid: 22f087160e30cab40aaec7cb8bf79d91, type: 3}
 --- !u!114 &8489424398990387489
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -40,6 +40,7 @@ public class CustomerBehavior : MonoBehaviour
     private GameObject storedFoodObject = null;
     private SpriteRenderer storedFoodSprite = null;
     private FoodType foodType = FoodType.Sketti;
+    private TableZone assignedTable = null;
 
     // Penalty flags
     private bool orderingImpatient = false, orderingAngry = false;
@@ -150,24 +151,23 @@ public class CustomerBehavior : MonoBehaviour
         // Only the party leader should submit the order to the kitchen
         if (leader == this)
         {
-            TableZone[] allTables = FindObjectsByType<TableZone>(FindObjectsSortMode.None);
-            foreach (var table in allTables)
+            int tableID = assignedTable.GetTableID();
+            if (tableID == leader.seatedTableID) // Just making sure it's the right ID
             {
-                int tableID = table.GetTableID();
-                if (tableID == leader.seatedTableID)
-                {
-                    Debug.Log($"[Player] Took receipt from Table {tableID}, submitting to kitchen...");
+                Debug.Log($"[Player] Took receipt from Table {tableID}, submitting to kitchen...");
 
-                    GameStateManager.SubmitOrderToKitchen(tableID);
-                    Kitchen.Instance.ReceiveOrder(tableID, GetCustomerPartyAtTable(tableID));
-                    break; // Found the table, no need to continue searching
-                }
+                GameStateManager.SubmitOrderToKitchen(tableID);
+                Kitchen.Instance.ReceiveOrder(tableID, GetCustomerPartyAtTable(tableID));
+
+                assignedTable.createTableTag();
             }
+
         }
 
         // All customers in the party should change their state to waitingFood
         state = CustomerState.waitingFood;
         animator.CrossFade(animWaitingLeft, animCrossFade);
+
     }
 
     public void SitDownAt(Transform seat)
@@ -458,6 +458,21 @@ public class CustomerBehavior : MonoBehaviour
 
         CustomerBehavior leader = GetPartyLeader();
 
+        // Only the party leader have the table zone
+        if (leader == this)
+        {
+            TableZone[] allTables = FindObjectsByType<TableZone>(FindObjectsSortMode.None);
+            foreach (var table in allTables)
+            {
+                int tableID = table.GetTableID();
+                if (tableID == leader.seatedTableID)
+                {
+                    assignedTable = table;
+                    break; // Found the table, no need to continue searching
+                }
+            }
+        }
+
         // Only the party leader sets the timer
         if (leader == this)
         {
@@ -520,6 +535,7 @@ public class CustomerBehavior : MonoBehaviour
         // only the party leader sets the timer
         if (leader == this)
         {
+            assignedTable.deleteTableTag();
             isPartyLeader = true;
             eatingTime = Random.Range(10f, 21f); // 10 to 20 seconds (inclusive)
             eatingTimeOriginal = eatingTime;
@@ -585,6 +601,8 @@ public class CustomerBehavior : MonoBehaviour
         {
             spawner.RemoveFromQueue(this.gameObject);
         }
+        if (assignedTable != null)
+            assignedTable.deleteTableTag();
         CleanupStoredFood();
         Destroy(this.gameObject);
     }
@@ -629,13 +647,17 @@ public class CustomerBehavior : MonoBehaviour
             storedFoodObject = foodObject;
             storedFoodSprite = storedFoodObject.GetComponent<SpriteRenderer>();
 
+            int rand = Random.Range(0, 1);
+
             string spriteName = storedFoodSprite.sprite.name;
-            if(spriteName.Contains("7"))
+            if(rand == 0)
             {
+                storedFoodSprite.sprite = foodSprites[4];
                 foodType = FoodType.Tendies;
             }
-            else if(spriteName.Contains("3"))
+            else
             {
+                storedFoodSprite.sprite = foodSprites[0];
                 foodType = FoodType.Sketti;
             }
             Debug.Log($"[Customer] Stored food object for customer at table {seatedTableID}");
