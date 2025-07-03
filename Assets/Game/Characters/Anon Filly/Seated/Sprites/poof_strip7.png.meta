@@ -1,0 +1,331 @@
+fileFormatVersion: 2
+guid: 2fc032f75e0a3be46ac21025ba4b8500
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1554737815237986987
+    second: poof_strip7_0
+  - first:
+      213: 3064873824901590483
+    second: poof_strip7_1
+  - first:
+      213: -4223931379384359499
+    second: poof_strip7_2
+  - first:
+      213: -5739201224296842239
+    second: poof_strip7_3
+  - first:
+      213: -1491624762449967307
+    second: poof_strip7_4
+  - first:
+      213: -6799837469294534249
+    second: poof_strip7_5
+  - first:
+      213: -4280860893311303062
+    second: poof_strip7_6
+  - first:
+      213: -4062675364328949629
+    second: poof_strip7_7
+  - first:
+      213: -2970968215315589994
+    second: poof_strip7_8
+  - first:
+      213: 5095753613448561917
+    second: poof_strip7_9
+  - first:
+      213: -3069772994481193282
+    second: poof_strip7_10
+  - first:
+      213: -4742070809272966613
+    second: poof_strip7_11
+  - first:
+      213: -6209392852526666795
+    second: poof_strip7_12
+  - first:
+      213: 7058774392340543232
+    second: poof_strip7_13
+  - first:
+      213: 7044137682479368652
+    second: poof_strip7_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: poof_strip7_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 7
+        width: 42
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: baa802c3ec9839510800000000000000
+      internalID: 1554737815237986987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: poof_strip7_1
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 8
+        width: 56
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3dde6ae518e988a20800000000000000
+      internalID: 3064873824901590483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: poof_strip7_2
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 6
+        width: 49
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b56b203ac49165c0800000000000000
+      internalID: -4223931379384359499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: poof_strip7_3
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 15
+        width: 50
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10cbc43e4e24a50b0800000000000000
+      internalID: -5739201224296842239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: poof_strip7_5
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 9
+        width: 59
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 791ee4849df12a1a0800000000000000
+      internalID: -6799837469294534249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: poof_strip7_8
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 14
+        width: 51
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6945327262005c6d0800000000000000
+      internalID: -2970968215315589994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: poof_strip7_11
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 14
+        width: 54
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b22298939b7c03eb0800000000000000
+      internalID: -4742070809272966613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: e231a271e1cecc24ab96872856c66567
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      poof_strip7_0: 1554737815237986987
+      poof_strip7_1: 3064873824901590483
+      poof_strip7_10: -3069772994481193282
+      poof_strip7_11: -4742070809272966613
+      poof_strip7_12: -6209392852526666795
+      poof_strip7_13: 7058774392340543232
+      poof_strip7_14: 7044137682479368652
+      poof_strip7_2: -4223931379384359499
+      poof_strip7_3: -5739201224296842239
+      poof_strip7_4: -1491624762449967307
+      poof_strip7_5: -6799837469294534249
+      poof_strip7_6: -4280860893311303062
+      poof_strip7_7: -4062675364328949629
+      poof_strip7_8: -2970968215315589994
+      poof_strip7_9: 5095753613448561917
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
