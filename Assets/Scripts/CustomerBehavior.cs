@@ -114,10 +114,7 @@ public class CustomerBehavior : MonoBehaviour
         animator = GetComponent<Animator>();
         AudioController = Object.FindFirstObjectByType<AudioController>();
 
-        // Add 2 seconds to food impatience timer at the start
-        foodImpatienceTimer += 2f;
-        foodImpatientTime = foodImpatienceTimer * 0.66f;
-        foodAngryTime = foodImpatienceTimer * 0.33f;
+        // FOOD IMPATIENCE HAS BEEN MOVED TO startWaitingFood()
 
         idleImpatienceTime = idleImpatienceTimer * 0.66f;
         idleAngryTime = idleImpatienceTimer * 0.33f;
