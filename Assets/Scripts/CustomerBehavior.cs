@@ -20,15 +20,26 @@ public class CustomerBehavior : MonoBehaviour
         finished
     }
 
+    public enum FoodType
+    {
+        Sketti,
+        Tendies
+    }
+
     public CustomerState state;
     public int partyID;
     public int seatedTableID = -1;
 
     public CustomerSpawner spawner;
     private float menuReadingTime;  // Time spent reading menu
+
+    // Leader variables
+    private float eatingTimeOriginal;
     private float eatingTime;
     private bool isPartyLeader = false;  // Only the leader sets the timer
     private GameObject storedFoodObject = null;
+    private SpriteRenderer storedFoodSprite = null;
+    private FoodType foodType = FoodType.Sketti;
 
     // Penalty flags
     private bool orderingImpatient = false, orderingAngry = false;
@@ -78,6 +89,9 @@ public class CustomerBehavior : MonoBehaviour
     private readonly int animWaitingLeft = Animator.StringToHash("Anim_character_waiting_left");
     private readonly int animWaitingImpatientLeft = Animator.StringToHash("Anim_character_waiting_impatient_left");
     private readonly int animWaitingAngryLeft = Animator.StringToHash("Anim_character_waiting_angry_left");
+
+    [Header("Food Sprites")]
+    public Sprite[] foodSprites;
 
     private void FindFollowerTrail()
     {
@@ -260,8 +274,30 @@ public class CustomerBehavior : MonoBehaviour
                 {
                     eatingTime -= Time.deltaTime;
 
+                    // Change the food sprite to reflect my stage
+                    if (eatingTime <= eatingTimeOriginal * 0.66)
+                    {
+                        // Half eaten
+                        if(foodType == FoodType.Tendies)
+                            storedFoodSprite.sprite = foodSprites[5];
+                        else
+                            storedFoodSprite.sprite = foodSprites[1];
+                    }
+                    if (eatingTime <= eatingTimeOriginal * 0.33)
+                    {
+                        // Mostly eaten (overwrites previous)
+                        if(foodType == FoodType.Tendies)
+                            storedFoodSprite.sprite = foodSprites[6];
+                        else
+                            storedFoodSprite.sprite = foodSprites[2];
+                    }
                     if (eatingTime <= 0)
                     {
+                        // Completely eaten (overwrites previous)
+                        if(foodType == FoodType.Tendies)
+                            storedFoodSprite.sprite = foodSprites[7];
+                        else
+                            storedFoodSprite.sprite = foodSprites[3];
                         toDismiss();
                     }
                 }
@@ -483,6 +519,7 @@ public class CustomerBehavior : MonoBehaviour
         {
             isPartyLeader = true;
             eatingTime = Random.Range(10f, 21f); // 10 to 20 seconds (inclusive)
+            eatingTimeOriginal = eatingTime;
         }
         else
         {
@@ -581,6 +618,17 @@ public class CustomerBehavior : MonoBehaviour
         if(isPartyLeader)
         {
             storedFoodObject = foodObject;
+            storedFoodSprite = storedFoodObject.GetComponent<SpriteRenderer>();
+
+            string spriteName = storedFoodSprite.sprite.name;
+            if(spriteName.Contains("7"))
+            {
+                foodType = FoodType.Tendies;
+            }
+            else if(spriteName.Contains("3"))
+            {
+                foodType = FoodType.Sketti;
+            }
             Debug.Log($"[Customer] Stored food object for customer at table {seatedTableID}");
         }
     }
