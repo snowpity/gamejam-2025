@@ -20,9 +20,46 @@ public static class GameStateManager
 
     public static int countdownTimer = 180;
 
+    private static int goldTrophyPoint = 3000;
+    private static int silverTrophyPoint = 2000;
+    private static int copperTrophyPoint = 1000;
+
     // Dictionary to store sprite ID for each table's order
     public static Dictionary<int, int> tableFoodSprites = new Dictionary<int, int>();
 
+
+    // TROPHY POINTS
+    public static int getGoldTrophyPoint()
+    {
+        return goldTrophyPoint;
+    }
+
+    public static int getSilverTrophyPoint()
+    {
+        return goldTrophyPoint;
+    }
+
+    public static int getCopperTrophyPoint()
+    {
+        return goldTrophyPoint;
+    }
+
+    public static void setGoldTrophyPoint(int point)
+    {
+        goldTrophyPoint = point;
+    }
+
+    public static void setSilverTrophyPoint(int point)
+    {
+        silverTrophyPoint = point;
+    }
+
+    public static void setCopperTrophyPoint(int point)
+    {
+        copperTrophyPoint = point;
+    }
+
+    // STATISTICS
     public static void IncrementCustomerServed(int number)
     {
         totalCustomerServed += number;

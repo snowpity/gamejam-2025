@@ -121,23 +121,21 @@ public class ScoreDisplay : MonoBehaviour
         }
     }
 
-        private int GetTrophyIndex()
+    private int GetTrophyIndex()
     {
-        // Example trophy logic based on score
-        // Adjust these thresholds based on your game's scoring system
         int score = GameStateManager.totalScore;
 
-        if (score >= 2000)
+        if (score >= GameStateManager.getGoldTrophyPoint())
         {
             AudioController.playFX(victorySound);
             return 0; // Gold trophy
         }
-        else if (score >= 1500)
+        else if (score >= GameStateManager.getSilverTrophyPoint())
         {
             AudioController.playFX(victorySound);
             return 1; // Silver trophy
         }
-        else if (score >= 1000)
+        else if (score >= GameStateManager.getCopperTrophyPoint())
         {
             AudioController.playFX(victorySound);
             return 2; // Bronze trophy
