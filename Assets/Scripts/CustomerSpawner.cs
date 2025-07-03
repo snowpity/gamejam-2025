@@ -28,27 +28,68 @@ public class CustomerSpawner : MonoBehaviour
     [SerializeField] AudioController AudioController;
     [SerializeField] private AudioClip bellSound;
 
+    [Header("Spawning Randomness")]
+    public float minSpawnInterval = 1.5f;
+    public float maxSpawnInterval = 4f;
+    public float rushHourMinInterval = 0.5f;
+    public float rushHourMaxInterval = 1.2f;
+    private float nextSpawnTime = 0f;
+    private float rushHourTimer = 0f;
+    private float nextRushHourCheck = 0f;
+    private bool isRushHour = false;
+
     void Start()
     {
         trackedCustomers.Clear();
+        nextSpawnTime = Random.Range(minSpawnInterval, maxSpawnInterval);
+        nextRushHourCheck = Time.time + Random.Range(30f, 60f);
         //Debug.Log("[spawner] initialized.");
     }
 
     void Update()
     {
-        if (GameStateManager.IsPaused || !GameStateManager.IsGameStarted) return; // Don't spawn anypony in
+        if (GameStateManager.IsPaused || !GameStateManager.IsGameStarted) return;
         timer += Time.deltaTime;
 
-        if (timer >= spawnInterval)
+        // Rush hour logic
+        if (!isRushHour && Time.time >= nextRushHourCheck)
+        {
+            if (Random.value < 0.5f) // 50% chance to trigger rush hour
+            {
+                isRushHour = true;
+                rushHourTimer = Random.Range(10f, 15f);
+                Debug.Log("[RushHour] Rush hour started!");
+            }
+            nextRushHourCheck = Time.time + Random.Range(30f, 40f);
+        }
+
+        if (isRushHour)
+        {
+            rushHourTimer -= Time.deltaTime;
+            if (rushHourTimer <= 0f)
+            {
+                isRushHour = false;
+                Debug.Log("[RushHour] Rush hour ended.");
+            }
+        }
+
+        if (timer >= nextSpawnTime)
         {
             if (trackedCustomers.Count < maxCustomers)
             {
                 int slotsLeft = maxCustomers - trackedCustomers.Count;
-                //Debug.Log($"[spawner] timer hit {timer:F2}, currently tracking {trackedCustomers.Count}, max is {maxCustomers}");
                 SpawnCustomerGroup(slotsLeft);
             }
-
             timer = 0f;
+            if (isRushHour)
+            {
+                nextSpawnTime = Random.Range(rushHourMinInterval, rushHourMaxInterval);
+            }
+            else
+            {
+                nextSpawnTime = Random.Range(minSpawnInterval, maxSpawnInterval);
+            }
+            Debug.Log($"[Spawner] Next spawn in {nextSpawnTime:F2} seconds. Rush hour: {isRushHour}");
         }
     }
 

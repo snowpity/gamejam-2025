@@ -610,6 +610,11 @@ public class CustomerBehavior : MonoBehaviour
                 Debug.Log($"[SeatingSystem] Table {assignedTable.GetTableID()} unlocked by party leader {partyID}.");
             }
         }
+        if (isPartyLeader && seatedTableID > 0)
+        {
+            Kitchen.Instance.DestroyFoodForTable(seatedTableID);
+            Debug.Log($"[CustomerBehavior] destroyed food for Table {seatedTableID} because party left.");
+        }
         CleanupStoredFood();
         Destroy(this.gameObject);
     }

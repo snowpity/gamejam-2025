@@ -105,4 +105,18 @@ public class Kitchen : MonoBehaviour
         SoireeIdle.SetActive(!isCooking);
         SoireeActive.SetActive(isCooking);
     }
+
+    public void DestroyFoodForTable(int tableID)
+    {
+        if (spawnedFoodObjects.ContainsKey(tableID))
+        {
+            GameObject food = spawnedFoodObjects[tableID];
+            if (food != null)
+            {
+                Destroy(food);
+            }
+            spawnedFoodObjects.Remove(tableID);
+            Debug.Log($"[Kitchen] destroyed food for Table {tableID} because the party left.");
+        }
+    }
 }
