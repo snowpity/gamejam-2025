@@ -28,6 +28,7 @@ public class CustomerBehavior : MonoBehaviour
     private float menuReadingTime;  // Time spent reading menu
     private float eatingTime;
     private bool isPartyLeader = false;  // Only the leader sets the timer
+    private GameObject storedFoodObject = null;
 
     // Penalty flags
     private bool orderingImpatient = false, orderingAngry = false;
@@ -538,7 +539,7 @@ public class CustomerBehavior : MonoBehaviour
         {
             spawner.RemoveFromQueue(this.gameObject);
         }
-
+        CleanupStoredFood();
         Destroy(this.gameObject);
     }
 
@@ -572,5 +573,25 @@ public class CustomerBehavior : MonoBehaviour
         }
 
         return party;
+    }
+
+    // FOOD STORAGE
+    public void StoreFoodObject(GameObject foodObject)
+    {
+        if(isPartyLeader)
+        {
+            storedFoodObject = foodObject;
+            Debug.Log($"[Customer] Stored food object for customer at table {seatedTableID}");
+        }
+    }
+
+    private void CleanupStoredFood()
+    {
+        if (storedFoodObject != null && isPartyLeader)
+        {
+            Debug.Log($"[Customer] Cleaning up stored food object for table {seatedTableID}");
+            Destroy(storedFoodObject);
+            storedFoodObject = null;
+        }
     }
 }

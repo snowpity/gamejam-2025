@@ -116,6 +116,7 @@ public class PlayerController : MonoBehaviour
                     var party = CustomerBehavior.GetCustomerPartyAtTable(heldFoodTableID);
                     foreach (var member in party.members)
                     {
+                        member.StoreFoodObject(heldFoodObject);
                         member.ReceiveFood();
                     }
 
@@ -127,7 +128,7 @@ public class PlayerController : MonoBehaviour
 
                     if (heldFoodObject != null)
                     {
-                        Destroy(heldFoodObject);
+                        SendFoodToOrigin(heldFoodObject, table);
                         heldFoodObject = null;
                     }
 
@@ -135,7 +136,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
 
         // prevent picking up if already holding food
         if (!isHoldingFood)
@@ -311,6 +311,40 @@ public class PlayerController : MonoBehaviour
 
 
 
+
+    private void SendFoodToOrigin(GameObject foodObject, TableZone table)
+    {
+        // Find the FoodOrigin object that belongs to this specific table
+        GameObject foodOrigin = FindFoodOriginForTable(table);
+
+        if (foodOrigin != null)
+        {
+            // Detach from player
+            foodObject.transform.SetParent(table.transform);
+
+            // Move to FoodOrigin position
+            foodObject.transform.position = foodOrigin.transform.position;
+
+            Debug.Log($"[DeliverySystem] Sent food object to FoodOrigin for Table {table.GetTableID()}");
+        }
+        else
+        {
+            Debug.LogWarning($"[DeliverySystem] FoodOrigin not found for Table {table.GetTableID()}, destroying food object");
+            Destroy(foodObject);
+        }
+    }
+    private GameObject FindFoodOriginForTable(TableZone table)
+    {
+        // Look for FoodOrigin as a direct child of the table
+        Transform foodOriginTransform = table.transform.Find("FoodOrigin");
+        if (foodOriginTransform != null)
+        {
+            return foodOriginTransform.gameObject;
+        }
+
+        Debug.LogWarning($"[PlayerController] Could not find FoodOrigin for Table {table.GetTableID()}. Make sure there's a child GameObject named 'FoodOrigin'");
+        return null;
+    }
 
     private void Update()
     {
