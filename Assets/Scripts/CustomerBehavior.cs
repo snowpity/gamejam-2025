@@ -280,68 +280,49 @@ public class CustomerBehavior : MonoBehaviour
 
             if (leader != null)
             {
+                float leaderTime, leaderTimeOriginal;
                 // If I'm the leader, countdown my own timer
                 if (leader == this)
                 {
                     eatingTime -= Time.deltaTime;
-
-                    // Change the food sprite to reflect my stage
-                    if (eatingTime <= eatingTimeOriginal * 0.66)
-                    {
-                        // Half eaten
-                        if(foodType == FoodType.Tendies)
-                            storedFoodSprite.sprite = foodSprites[5];
-                        else
-                            storedFoodSprite.sprite = foodSprites[1];
-                    }
-                    if (eatingTime <= eatingTimeOriginal * 0.33)
-                    {
-                        // Mostly eaten (overwrites previous)
-                        if(foodType == FoodType.Tendies)
-                            storedFoodSprite.sprite = foodSprites[6];
-                        else
-                            storedFoodSprite.sprite = foodSprites[2];
-                    }
-                    if (eatingTime <= 0)
-                    {
-                        // Completely eaten (overwrites previous)
-                        if(foodType == FoodType.Tendies)
-                            storedFoodSprite.sprite = foodSprites[7];
-                        else
-                            storedFoodSprite.sprite = foodSprites[3];
-                        toDismiss();
-                    }
+                    leaderTime = eatingTime;
+                    leaderTimeOriginal = eatingTimeOriginal;
                 }
-                // If I'm not the leader, check if the leader is done
                 else
                 {
-                    // Change the food sprite to reflect my stage
-                    if (leader.GetEatingTime() <= leader.GetEatingTimeOriginal() * 0.66)
-                    {
-                        // Half eaten
-                        if (foodType == FoodType.Tendies)
-                            storedFoodSprite.sprite = foodSprites[5];
-                        else
-                            storedFoodSprite.sprite = foodSprites[1];
-                    }
-                    if (leader.GetEatingTime() <= leader.GetEatingTimeOriginal() * 0.33)
-                    {
-                        // Mostly eaten (overwrites previous)
-                        if (foodType == FoodType.Tendies)
-                            storedFoodSprite.sprite = foodSprites[6];
-                        else
-                            storedFoodSprite.sprite = foodSprites[2];
-                    }
-                    if (leader.GetEatingTime() <= 0)
-                    {
-                        // Completely eaten (overwrites previous)
-                        if (foodType == FoodType.Tendies)
-                            storedFoodSprite.sprite = foodSprites[7];
-                        else
-                            storedFoodSprite.sprite = foodSprites[3];
-                    }
-                    if (leader.state == CustomerState.finished)
-                        toDismiss();
+                    leaderTime = leader.GetEatingTime();
+                    leaderTimeOriginal = leader.GetEatingTimeOriginal();
+                }
+
+
+                if (leaderTime <= 0)
+                {
+                    // Completely eaten
+                    if (foodType == FoodType.Tendies)
+                        storedFoodSprite.sprite = foodSprites[7];
+                    else
+                        storedFoodSprite.sprite = foodSprites[3];
+
+                    // Move to finished state
+                    toDismiss();
+                    return;
+                }
+
+                if (leaderTime <= leaderTimeOriginal * 0.33)
+                {
+                    // Mostly eaten
+                    if (foodType == FoodType.Tendies)
+                        storedFoodSprite.sprite = foodSprites[6];
+                    else
+                        storedFoodSprite.sprite = foodSprites[2];
+                }
+                else if (leaderTime <= leaderTimeOriginal * 0.66)
+                {
+                    // Half eaten
+                    if (foodType == FoodType.Tendies)
+                        storedFoodSprite.sprite = foodSprites[5];
+                    else
+                        storedFoodSprite.sprite = foodSprites[1];
                 }
             }
         }
@@ -690,10 +671,7 @@ public class CustomerBehavior : MonoBehaviour
     {
         storedFoodObject = foodObject;
         storedFoodSprite = storedFoodObject.GetComponent<SpriteRenderer>();
-
-        int rand = Random.Range(0, 1);
-
-        string spriteName = storedFoodSprite.sprite.name;
+        int rand = Random.Range(0, 2);
         if (rand == 0)
         {
             storedFoodSprite.sprite = foodSprites[4];
