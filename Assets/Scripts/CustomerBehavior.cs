@@ -114,7 +114,7 @@ public class CustomerBehavior : MonoBehaviour
         animator = GetComponent<Animator>();
         AudioController = Object.FindFirstObjectByType<AudioController>();
 
-        // FOOD IMPATIENCE HAS BEEN MOVED TO startWaitingFood()
+        // FOOD IMPATIENCE HAS BEEN MOVED TO toReadingMenu()
 
         idleImpatienceTime = idleImpatienceTimer * 0.66f;
         idleAngryTime = idleImpatienceTimer * 0.33f;
@@ -161,14 +161,6 @@ public class CustomerBehavior : MonoBehaviour
                 assignedTable.createTableTag();
             }
         }
-
-        // Scale impatience timer based on party size
-        var party = GetCustomerPartyAtTable(seatedTableID);
-        int partySize = party.members.Count;
-        foodImpatienceTimer = 35f + 2f * (partySize - 1) + 2f; // base 35s + 2s per extra filly + 2s buffer
-        foodImpatientTime = foodImpatienceTimer * 0.66f;
-        foodAngryTime = foodImpatienceTimer * 0.33f;
-        Debug.Log($"[Impatience] Table {seatedTableID} party size {partySize}, foodImpatienceTimer set to {foodImpatienceTimer}s");
 
         // All customers in the party should change their state to waitingFood
         state = CustomerState.waitingFood;
@@ -469,6 +461,14 @@ public class CustomerBehavior : MonoBehaviour
         state = CustomerState.readingMenu;
 
         CustomerBehavior leader = GetPartyLeader();
+
+        // Scale impatience timer based on party size
+        var party = GetCustomerPartyAtTable(seatedTableID);
+        int partySize = party.members.Count;
+        foodImpatienceTimer = 35f + 2f * (partySize - 1) + 2f; // base 35s + 2s per extra filly + 2s buffer
+        foodImpatientTime = foodImpatienceTimer * 0.66f;
+        foodAngryTime = foodImpatienceTimer * 0.33f;
+        Debug.Log($"[Impatience] Table {seatedTableID} party size {partySize}, foodImpatienceTimer set to {foodImpatienceTimer}s");
 
         // Only the party leader have the table zone
         if (leader == this)
