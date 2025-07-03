@@ -96,30 +96,32 @@ public class CustomerSpawner : MonoBehaviour
         }
 
         AudioController.playFX(bellSound);
+        UpdateQueuePositions();
+    }
+
+    private void UpdateQueuePositions()
+    {
+        for (int i = 0; i < partyQueue.Count; i++)
+        {
+            int partyID = partyQueue[i];
+            List<GameObject> partyMembers = customerQueue.FindAll(
+                customer => customer.GetComponent<CustomerBehavior>().partyID == partyID
+            );
+            for (int j = 0; j < partyMembers.Count; j++)
+            {
+                partyMembers[j].transform.position =
+                    queueStartPoint.position
+                    + Vector3.down * (i * spacing)
+                    + Vector3.right * (j * horizontalSpacing);
+            }
+        }
     }
 
     public void RemoveTrackedParty(int partyID)
     {
         if (partyQueue.Remove(partyID))
         {
-            for (int i = 0; i < partyQueue.Count; i++)
-            {
-                List<GameObject> partyMembers = customerQueue.FindAll(
-                    delegate (GameObject customer)
-                    {
-                        CustomerBehavior behavior = customer.GetComponent<CustomerBehavior>();
-                        return behavior.partyID == partyQueue[i];
-                    }
-                );
-
-                for (int j = 0; j < partyMembers.Count; j++)
-                {
-                    partyMembers[j].transform.position =
-                        queueStartPoint.position
-                        + Vector3.down * (i * spacing)
-                        + Vector3.right * (j * horizontalSpacing);
-                }
-            }
+            UpdateQueuePositions();
         }
     }
 
@@ -159,8 +161,8 @@ public class CustomerSpawner : MonoBehaviour
         }
 
         float verticalOffset = spacing * partyQueue.Count;
-        if (!partyQueue.Contains(partyID))
-            partyQueue.Add(partyID);
+        partyQueue.Add(partyID);
+        UpdateQueuePositions();
 
         for (int i = 0; i < partyMembers.Count; i++)
         {
