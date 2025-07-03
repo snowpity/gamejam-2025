@@ -3,71 +3,87 @@
     "dialogues": [
         {
             "characterName": "Fair Flyer",
-            "dialogueText": "Hello! Welcome to Mare Fair: Tendie Frenzy!",
+            "dialogueText": "Alright, does everypony know the plan?",
             "portraitSpriteRight": "MF_charsheet_0",
             "portraitSpriteLeft": "",
             "emotion": 1,
             "audioCue": ""
         },
         {
-            "characterName": "Matinee",
-            "dialogueText": "Due to time constraint, we're not able to flesh out the Visual Novel element, so this is a little taste of how it would look like!",
-            "portraitSpriteRight": "MF_charsheet_1",
-            "portraitSpriteLeft": "",
-            "emotion": 1,
-            "audioCue": ""
-        },
-        {
             "characterName": "Soiree",
-            "dialogueText": "I think you should explain how they game plays...",
-            "portraitSpriteRight": "MF_charsheet_1",
-            "portraitSpriteLeft": "MF_charsheet_3",
-            "emotion": 0,
-            "audioCue": ""
-        },
-        {
-            "characterName": "Matinee",
-            "dialogueText": "You're absolutely correct! You can use WASD to move around and space to interact!",
-            "portraitSpriteRight": "MF_charsheet_1",
-            "portraitSpriteLeft": "",
-            "emotion": 1,
-            "audioCue": ""
-        },
-        {
-            "characterName": "Soiree",
-            "dialogueText": "Your objective is to serve the customers, who will arrive in groups. Select a group and seat them...",
+            "dialogueText": "Why are we doing this again?",
             "portraitSpriteRight": "MF_charsheet_3",
             "portraitSpriteLeft": "",
             "emotion": 0,
-            "audioCue": ""
-        },
-        {
-            "characterName": "Matinee",
-            "dialogueText": "They will take a while to look at the menu, but once they're ready, their little hooves will point up, catching your attention!",
-            "portraitSpriteRight": "MF_charsheet_1",
-            "portraitSpriteLeft": "",
-            "emotion": 1,
             "audioCue": ""
         },
         {
             "characterName": "Fair Flyer",
-            "dialogueText": "Simply come up to the filly and take their order, Soiree will start preparing the food. You can then take it to the fillies! Don't forget to pick up the cheques once they've finished!",
+            "dialogueText": "The charity fundraiser is short thousands of bits and the con starts in just a few days! We can't let all those ponies down!",
             "portraitSpriteRight": "MF_charsheet_0",
             "portraitSpriteLeft": "",
             "emotion": 1,
             "audioCue": ""
         },
         {
+            "characterName": "Matinee",
+            "dialogueText": "So we're opening a last-minute pop-up diner to raise donations the old-fashioned way!",
+            "portraitSpriteRight": "MF_charsheet_1",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
             "characterName": "Soiree",
-            "dialogueText": "The fillies can be impatient, and if you neglect them, they will storm off. Quitting fillies will give you a 10 points deduction from your current total.",
+            "dialogueText": "Fine. I'll handle the cooking, and Matinee will help me in the kitchen.",
             "portraitSpriteRight": "MF_charsheet_3",
             "portraitSpriteLeft": "",
             "emotion": 0,
             "audioCue": ""
         },
         {
+            "characterName": "Fair Flyer",
+            "dialogueText": "Great! I'll use WASD to move around and space to interact!",
+            "portraitSpriteRight": "MF_charsheet_0",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Matinee",
+            "dialogueText": "Customers will arrive in groups. Select a group and seat them at the tables!",
+            "portraitSpriteRight": "MF_charsheet_1",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
             "characterName": "Soiree",
-            "dialogueText": "If you did succeed serving them but leave them upset in any stage, some points will be deducted when you dismiss them at the end.",
+            "dialogueText": "They'll read the menu, then raise their hooves when ready to order. Take their order and I'll start cooking.",
+            "portraitSpriteRight": "MF_charsheet_3",
+            "portraitSpriteLeft": "",
+            "emotion": 0,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Fair Flyer",
+            "dialogueText": "Once the food is ready, I'll pick it up and deliver it to the table.",
+            "portraitSpriteRight": "MF_charsheet_0",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Matinee",
+            "dialogueText": "Don't forget to collect payment and dismiss them when they're done!",
+            "portraitSpriteRight": "MF_charsheet_1",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Soiree",
+            "dialogueText": "Careful, these fillies can be impatient. If you neglect them, they'll storm off and cost us bits.",
             "portraitSpriteRight": "MF_charsheet_3",
             "portraitSpriteLeft": "",
             "emotion": 0,
@@ -75,24 +91,53 @@
         },
         {
             "characterName": "Matinee",
-            "dialogueText": "On the contrary, if you perfectly satisfy them, they would leave a tip! So try your best satisfying the customer!",
+            "dialogueText": "But if you serve them swiftly, they'll leave a nice tip! Every bit counts for the charity!",
             "portraitSpriteRight": "MF_charsheet_1",
             "portraitSpriteLeft": "",
             "emotion": 1,
             "audioCue": ""
         },
+
         {
             "characterName": "Morning Mimosa",
-            "dialogueText": "Hello! I won't be in the game, along with Matinee due to time constraint. The developers have plans for us, so stay tuned for any update!",
+            "dialogueText": "Oh! What do I get to do?",
             "portraitSpriteRight": "MF_charsheet_2",
             "portraitSpriteLeft": "",
             "emotion": 1,
             "audioCue": ""
         },
+
+        {
+            "characterName": "Fair Flyer",
+            "dialogueText": "Uhhh, we'll figure something out!",
+            "portraitSpriteRight": "MF_charsheet_0",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+
         {
             "characterName": "Morning Mimosa",
-            "dialogueText": "Phew, that's about it. Press continue to start!",
+            "dialogueText": "Wait, I know! I can run the bar! I'll turn it into a full attraction!",
             "portraitSpriteRight": "MF_charsheet_2",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+
+        {
+            "characterName": "Soiree",
+            "dialogueText": "Did you not tell her we ran out of time to-",
+            "portraitSpriteRight": "MF_charsheet_3",
+            "portraitSpriteLeft": "",
+            "emotion": 0,
+            "audioCue": ""
+        },
+
+        {
+            "characterName": "Fair Flyer",
+            "dialogueText": "Anyways! Let's save this charity and run this diner!",
+            "portraitSpriteRight": "MF_charsheet_0",
             "portraitSpriteLeft": "",
             "emotion": 1,
             "audioCue": ""
