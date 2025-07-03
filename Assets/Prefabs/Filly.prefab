@@ -226,7 +226,8 @@ MonoBehaviour:
   score: 100
   bonusScore: 10
   quitPenaltyScore: -10
-  audioComplete: {fileID: 0}
+  AudioController: {fileID: 0}
+  audioComplete: {fileID: 8300000, guid: ceabb9d188dd9fb45a28cad0c792e8f5, type: 3}
   audioFail: {fileID: 0}
   audioRee: {fileID: 0}
   foodSprites:

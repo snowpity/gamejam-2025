@@ -68,6 +68,8 @@ public class CustomerBehavior : MonoBehaviour
     [SerializeField] private AudioClip audioFail;
     [SerializeField] private AudioClip audioRee;
 
+    private AudioController AudioController; // Can't apply as a field because it is inside a prefab
+
     // put these in var so we don't recalc every time, optimization
     private float idleImpatienceTime, idleAngryTime;
     private float orderingImpatientTime, orderingAngryTime; // Timer for hoof-raised ordering
@@ -109,6 +111,7 @@ public class CustomerBehavior : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        AudioController = Object.FindFirstObjectByType<AudioController>();
 
         idleImpatienceTime = idleImpatienceTimer * 0.66f;
         idleAngryTime = idleImpatienceTimer * 0.33f;
@@ -544,7 +547,13 @@ public class CustomerBehavior : MonoBehaviour
     public void dismissCustomer()
     {
         //int scoreAccumulated = score - penaltyPoint; // Only one bonus score should be awarded per party?
-        int scoreAccumulated = score - penaltyPoint + (isPerfectService() ?  bonusScore : 0); // Base score - penalties + bonus
+        bool isPerfect = isPerfectService();
+        int scoreAccumulated = score - penaltyPoint + (isPerfect ?  bonusScore : 0); // Base score - penalties + bonus
+
+        if (isPerfect && isPartyLeader && AudioController != null) // Only party leader to prevent multiple audio playing
+        {
+            AudioController.playFX(audioComplete);
+        }
 
         GameStateManager.IncrementScore(scoreAccumulated);
         GameStateManager.IncrementCustomerServed(1);
