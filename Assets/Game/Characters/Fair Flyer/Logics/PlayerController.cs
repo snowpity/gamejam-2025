@@ -325,6 +325,10 @@ public class PlayerController : MonoBehaviour
             // Move to FoodOrigin position
             foodObject.transform.position = foodOrigin.transform.position;
 
+            // Rot, Scale
+            foodObject.transform.localScale = Vector3.one;
+            foodObject.transform.rotation = Quaternion.Euler(0, 0, 90);
+
             Debug.Log($"[DeliverySystem] Sent food object to FoodOrigin for Table {table.GetTableID()}");
         }
         else
