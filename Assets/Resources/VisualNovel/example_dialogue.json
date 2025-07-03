@@ -10,7 +10,7 @@
             "audioCue": ""
         },
         {
-            "characterName": "Soiree",
+            "characterName": "Soirée",
             "dialogueText": "Why are we doing this again?",
             "portraitSpriteRight": "MF_charsheet_3",
             "portraitSpriteLeft": "",
@@ -26,7 +26,7 @@
             "audioCue": ""
         },
         {
-            "characterName": "Matinee",
+            "characterName": "Matinée",
             "dialogueText": "So we're opening a last-minute pop-up diner to raise donations the old-fashioned way!",
             "portraitSpriteRight": "MF_charsheet_1",
             "portraitSpriteLeft": "",
@@ -34,8 +34,8 @@
             "audioCue": ""
         },
         {
-            "characterName": "Soiree",
-            "dialogueText": "Fine. I'll handle the cooking, and Matinee will help me in the kitchen.",
+            "characterName": "Soirée",
+            "dialogueText": "Fine. I'll handle the cooking, and Matinée will help me in the kitchen.",
             "portraitSpriteRight": "MF_charsheet_3",
             "portraitSpriteLeft": "",
             "emotion": 0,
@@ -50,7 +50,7 @@
             "audioCue": ""
         },
         {
-            "characterName": "Matinee",
+            "characterName": "Matinée",
             "dialogueText": "Customers will arrive in groups. Select a group and seat them at the tables!",
             "portraitSpriteRight": "MF_charsheet_1",
             "portraitSpriteLeft": "",
@@ -58,7 +58,7 @@
             "audioCue": ""
         },
         {
-            "characterName": "Soiree",
+            "characterName": "Soirée",
             "dialogueText": "They'll read the menu, then raise their hooves when ready to order. Take their order and I'll start cooking.",
             "portraitSpriteRight": "MF_charsheet_3",
             "portraitSpriteLeft": "",
@@ -74,7 +74,7 @@
             "audioCue": ""
         },
         {
-            "characterName": "Matinee",
+            "characterName": "Matinée",
             "dialogueText": "Don't forget to collect payment and dismiss them when they're done!",
             "portraitSpriteRight": "MF_charsheet_1",
             "portraitSpriteLeft": "",
@@ -82,7 +82,7 @@
             "audioCue": ""
         },
         {
-            "characterName": "Soiree",
+            "characterName": "Soirée",
             "dialogueText": "Careful, these fillies can be impatient. If you neglect them, they'll storm off and cost us bits.",
             "portraitSpriteRight": "MF_charsheet_3",
             "portraitSpriteLeft": "",
@@ -90,7 +90,7 @@
             "audioCue": ""
         },
         {
-            "characterName": "Matinee",
+            "characterName": "Matinée",
             "dialogueText": "But if you serve them swiftly, they'll leave a nice tip! Every bit counts for the charity!",
             "portraitSpriteRight": "MF_charsheet_1",
             "portraitSpriteLeft": "",
@@ -126,7 +126,7 @@
         },
 
         {
-            "characterName": "Soiree",
+            "characterName": "Soirée",
             "dialogueText": "Did you not tell her we ran out of time to-",
             "portraitSpriteRight": "MF_charsheet_3",
             "portraitSpriteLeft": "",
