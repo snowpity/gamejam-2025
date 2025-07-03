@@ -48,7 +48,7 @@ Material:
     - _Float: 0
     - _MASK: 0.016
     - _Outline_Thickness: 0
-    - _x_divide_y: 10
+    - _x_divide_y: 1
     m_Colors:
     - _Color: {r: 0.3044335, g: 0.9339623, b: 0.2775454, a: 0}
     - _Outline_Color: {r: 1, g: 0, b: 0, a: 0}

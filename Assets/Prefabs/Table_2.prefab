@@ -57,7 +57,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 70d8f9821c24dc64c9f88836a65469e6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 1444288481
   m_SortingLayer: 2
   m_SortingOrder: -1
-  m_Sprite: {fileID: 5954573287755826741, guid: 689887da531f26544835adb2f5205620, type: 3}
+  m_Sprite: {fileID: 5843985864524226762, guid: 8bbdb80617d715f42bd428cece5874c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -238,7 +238,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 70d8f9821c24dc64c9f88836a65469e6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -259,7 +259,7 @@ SpriteRenderer:
   m_SortingLayerID: 1444288481
   m_SortingLayer: 2
   m_SortingOrder: -1
-  m_Sprite: {fileID: 5954573287755826741, guid: 689887da531f26544835adb2f5205620, type: 3}
+  m_Sprite: {fileID: 5843985864524226762, guid: 8bbdb80617d715f42bd428cece5874c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -413,12 +413,12 @@ SpriteRenderer:
   m_SortingLayerID: 1444288481
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1986927276189674245, guid: 689887da531f26544835adb2f5205620, type: 3}
+  m_Sprite: {fileID: 497600754102043572, guid: 0d939495198cc0047a439a46d1f4c259, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4, y: 4}
+  m_Size: {x: 4.625, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -462,8 +462,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4, y: 4}
-    newSize: {x: 4, y: 4}
+    oldSize: {x: 4.625, y: 4}
+    newSize: {x: 4.625, y: 4}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
