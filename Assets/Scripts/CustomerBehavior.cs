@@ -602,7 +602,14 @@ public class CustomerBehavior : MonoBehaviour
             spawner.RemoveFromQueue(this.gameObject);
         }
         if (assignedTable != null)
+        {
             assignedTable.deleteTableTag();
+            if (isPartyLeader)
+            {
+                assignedTable.UnlockTable();
+                Debug.Log($"[SeatingSystem] Table {assignedTable.GetTableID()} unlocked by party leader {partyID}.");
+            }
+        }
         CleanupStoredFood();
         Destroy(this.gameObject);
     }

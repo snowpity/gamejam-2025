@@ -260,21 +260,34 @@ public class PlayerController : MonoBehaviour
                 TableZone table = hit.GetComponent<TableZone>();
                 if (table == null) continue;
 
-                var seats = table.GetSeatPositions().Where(s => s.childCount == 0).ToArray();
-                if (seats.Length < partySize)
-                    continue;
+                // Only consider tables that are available for seating
+                if (!table.IsAvailableForSeating()) continue;
 
-                float distance = Vector2.Distance(transform.position, table.transform.position);
-                if (distance < closestDistance)
+                // Check if table has enough available seats
+                var availableSeats = table.GetSeatPositions().Where(s => s.childCount == 0).ToArray();
+                if (availableSeats.Length >= partySize)
                 {
-                    closestDistance = distance;
-                    closestTable = table;
+                    float distance = Vector2.Distance(transform.position, table.transform.position);
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestTable = table;
+                    }
                 }
             }
 
             // Seat the party at the closest table if found
             if (closestTable != null)
             {
+                // Check if the table is available for seating
+                if (!closestTable.IsAvailableForSeating())
+                {
+                    Debug.Log($"[SeatingSystem] Table {closestTable.GetTableID()} is already occupied by party {closestTable.GetOccupiedPartyID()}. Cannot seat new party.");
+                    return;
+                }
+                // Lock the table for this party
+                closestTable.LockTable(followingParty[0].partyID);
+
                 var seats = closestTable.GetSeatPositions().Where(s => s.childCount == 0).ToArray();
 
                 for (int i = 0; i < partySize; i++)
@@ -450,6 +463,9 @@ public class PlayerController : MonoBehaviour
             {
                 TableZone table = hit.GetComponent<TableZone>();
                 if (table == null) continue;
+
+                // Only consider tables that are available for seating
+                if (!table.IsAvailableForSeating()) continue;
 
                 // Check if table has enough available seats
                 var availableSeats = table.GetSeatPositions().Where(s => s.childCount == 0).ToArray();

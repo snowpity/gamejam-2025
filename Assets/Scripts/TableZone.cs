@@ -14,6 +14,9 @@ public class TableZone : MonoBehaviour
     [SerializeField] public Sprite[] tableTag;
     [SerializeField] public GameObject tableTagPrefab;
 
+    private bool isOccupied = false;
+    private int occupiedPartyID = -1;
+
     private void Awake()
     {
         // Auto-load seats
@@ -74,5 +77,27 @@ public class TableZone : MonoBehaviour
             tableTagObj = null;
             tableTagSprite = null;
         }
+    }
+
+    public bool IsAvailableForSeating()
+    {
+        return !isOccupied;
+    }
+
+    public void LockTable(int partyID)
+    {
+        isOccupied = true;
+        occupiedPartyID = partyID;
+    }
+
+    public void UnlockTable()
+    {
+        isOccupied = false;
+        occupiedPartyID = -1;
+    }
+
+    public int GetOccupiedPartyID()
+    {
+        return occupiedPartyID;
     }
 }
