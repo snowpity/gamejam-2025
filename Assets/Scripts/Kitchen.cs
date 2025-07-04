@@ -81,6 +81,7 @@ public class Kitchen : MonoBehaviour
         // Decrement active order count and update state
         activeOrderCount--;
         UpdateSoireeState();
+        UpdateMatineeState();
     }
 
     // Method to get the spawned food object for a table
