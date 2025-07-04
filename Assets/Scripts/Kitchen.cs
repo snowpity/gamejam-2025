@@ -139,7 +139,7 @@ public class Kitchen : MonoBehaviour
             Debug.Log($"[Kitchen] destroyed food for Table {tableID} because the party left.");
         }
         // also destroy food held by the player for this table
-        var player = GameObject.FindObjectOfType<PlayerController>();
+        var player = GameObject.FindFirstObjectByType<PlayerController>();
         if (player != null)
         {
             var heldFoodTableIDField = player.GetType().GetField("heldFoodTableID", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);

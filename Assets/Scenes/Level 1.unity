@@ -2054,8 +2054,8 @@ MonoBehaviour:
   partySizes: 02000000020000000200000004000000
   AudioController: {fileID: 1015362271}
   bellSound: {fileID: 8300000, guid: 8c6fa0820ececf542895cf9ee50230e2, type: 3}
-  minSpawnInterval: 3
-  maxSpawnInterval: 8
+  minSpawnInterval: 2
+  maxSpawnInterval: 6
   rushHourMinInterval: 0.5
   rushHourMaxInterval: 1.2
 --- !u!4 &1072079769

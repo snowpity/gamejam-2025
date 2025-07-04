@@ -208,7 +208,7 @@ public class PlayerController : MonoBehaviour
             if (closestPartyID != -1)
             {
                 GameObject[] allCustomers = GameObject.FindGameObjectsWithTag("Customer");
-                CustomerSpawner spawner = GameObject.FindObjectOfType(typeof(CustomerSpawner)) as CustomerSpawner;
+                CustomerSpawner spawner = GameObject.FindFirstObjectByType(typeof(CustomerSpawner)) as CustomerSpawner;
                 bool checkToResetTrail = false;
 
                 foreach (var obj in allCustomers)
@@ -747,7 +747,7 @@ public class PlayerController : MonoBehaviour
         if (followingParty.Count > 0)
         {
             int partyID = followingParty[0].partyID;
-            CustomerSpawner spawner = FindObjectOfType<CustomerSpawner>();
+            CustomerSpawner spawner = Object.FindFirstObjectByType<CustomerSpawner>();
             spawner.RequeueParty(followingParty, partyID);
         }
 
