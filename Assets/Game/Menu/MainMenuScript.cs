@@ -15,7 +15,7 @@ public class GameSettings
 
 public class MainMenuScript : MonoBehaviour
 {
-    private enum Menus { MAIN, SETTINGS }
+    private enum Menus { MAIN, SETTINGS, PLAY }
     private Menus currentMenu = Menus.MAIN;
     private bool isTransitioning = false;
 
@@ -53,10 +53,9 @@ public class MainMenuScript : MonoBehaviour
 
         SetupAudioSources();
 
-        // Get UI elements
+        // Get MAIN UI elements
         playButton = document.rootVisualElement.Q("playButton") as Button;
         settingsButton = document.rootVisualElement.Q("settingsButton") as Button;
-        backButton = document.rootVisualElement.Q("backButton") as Button;
         exitButton = document.rootVisualElement.Q("exitButton") as Button;
 
         // Get settings UI elements
@@ -64,8 +63,11 @@ public class MainMenuScript : MonoBehaviour
         volumeSlider = document.rootVisualElement.Q("Volume") as Slider;
         futaToggle = document.rootVisualElement.Q("Toggle") as Toggle;
 
+        // GET MENU WRAPPERS
         mainMenuElement = document.rootVisualElement.Q("mainMenu");
         settingsMenuElement = document.rootVisualElement.Q("settingsMenu");
+
+        RegisterAllBackButtons();
 
         // Apply loaded settings to UI
         ApplySettingsToUI();
@@ -95,6 +97,19 @@ public class MainMenuScript : MonoBehaviour
 
         if (futaToggle != null)
             futaToggle.RegisterValueChangedCallback(OnFutaToggleChanged);
+    }
+    private void RegisterAllBackButtons()
+    {
+        // Get all buttons with the "backButton" class
+        var allBackButtons = document.rootVisualElement.Query<Button>(className: "backButton").ToList();
+
+        // Register the same callback for all of them
+        foreach (var button in allBackButtons)
+        {
+            button.RegisterCallback<ClickEvent>(onBackButtonClick);
+        }
+
+        Debug.Log($"Registered {allBackButtons.Count} back buttons");
     }
 
     private void OnDisable()

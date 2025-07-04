@@ -12,7 +12,15 @@
                 <ui:Slider label="BG Music" value="50" high-value="100" name="BGMusic" fill="true" style="width: 70%; color: rgb(255, 255, 255); font-size: 25px;" />
                 <ui:Slider label="Volume" value="50" high-value="100" name="Volume" fill="true" style="width: 70%; color: rgb(255, 255, 255); font-size: 25px;" />
                 <ui:Toggle label="Futa Mode" name="Toggle" style="width: 70%; color: rgb(255, 255, 255); font-size: 25px;" />
-                <ui:Button icon-image="project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=7433338533053954386&amp;guid=3d0afde0b0bed8849b219849713625f9&amp;type=3#check@2x" selectable="true" name="backButton" class="button" style="width: 70%; height: 10%; margin-top: 25px;" />
+                <ui:Button icon-image="project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=7433338533053954386&amp;guid=3d0afde0b0bed8849b219849713625f9&amp;type=3#check@2x" selectable="true" name="backButton" class="button backButton" style="width: 70%; height: 10%; margin-top: 25px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="levelMenu" class="menuCentered levelSelection">
+                <ui:VisualElement style="width: 80%; height: 80%; max-height: none; min-height: auto; flex-direction: row; align-items: stretch; justify-content: center;">
+                    <ui:Button text="Level 1" name="lvl1-Button" class="lvlButtton" style="background-color: rgb(255, 255, 255);" />
+                    <ui:Button text="Level 2" name="lvl2-Button" class="lvlButtton" style="background-color: rgb(255, 255, 255);" />
+                    <ui:Button text="Level 3&#10;SOON" name="lvl2-Button" class="lvlButtton" style="background-color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:Button selectable="true" name="backButton" text="BACK" class="button backButton" style="width: 70%; height: 10%; margin-top: 25px;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

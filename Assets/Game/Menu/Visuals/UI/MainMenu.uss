@@ -50,3 +50,16 @@
     position: absolute;
     translate: 200% 0;
 }
+
+.levelSelection {
+    position: absolute;
+    translate: -200% 0;
+}
+
+.lvlButtton {
+    width: 100px;
+    height: 100px;
+}
+
+.backButton {
+}
