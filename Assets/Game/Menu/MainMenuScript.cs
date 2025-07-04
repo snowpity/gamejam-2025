@@ -15,7 +15,7 @@ public class GameSettings
 
 public class MainMenuScript : MonoBehaviour
 {
-    private enum Menus { MAIN, SETTINGS, PLAY }
+    private enum Menus { MAIN, SETTINGS, LEVEL }
     private Menus currentMenu = Menus.MAIN;
     private bool isTransitioning = false;
 
@@ -37,6 +37,7 @@ public class MainMenuScript : MonoBehaviour
 
     private VisualElement mainMenuElement;
     private VisualElement settingsMenuElement;
+    private VisualElement levelMenuElement;
 
     private GameSettings gameSettings;
     private string settingsPath;
@@ -66,6 +67,7 @@ public class MainMenuScript : MonoBehaviour
         // GET MENU WRAPPERS
         mainMenuElement = document.rootVisualElement.Q("mainMenu");
         settingsMenuElement = document.rootVisualElement.Q("settingsMenu");
+        levelMenuElement = document.rootVisualElement.Q("levelMenu");
 
         RegisterAllBackButtons();
 
@@ -315,8 +317,9 @@ public class MainMenuScript : MonoBehaviour
     private void onPlayButtonClick(ClickEvent evt)
     {
         // Stop background music when transitioning to game
-        StopBackgroundMusic();
-        toLevel(1);
+        transitionMenuToLevel();
+        //StopBackgroundMusic();
+        //toLevel(1);
     }
 
     private void onSettingsButtonClick(ClickEvent evt)
@@ -326,7 +329,7 @@ public class MainMenuScript : MonoBehaviour
 
     private void onBackButtonClick(ClickEvent evt)
     {
-        transitionSettingToMenu();
+        transitionToMenu();
     }
 
     private void onExitButtonClick(ClickEvent evt)
@@ -385,6 +388,39 @@ private IEnumerator menuTransition(Menus from, Menus to)
 
         currentMenu = Menus.MAIN;
     }
+    else if (from == Menus.MAIN && to == Menus.LEVEL)
+    {
+        if (mainMenuElement != null)
+        {
+            mainMenuElement.RemoveFromClassList("menuCentered");
+            mainMenuElement.AddToClassList("menuRight");
+        }
+
+        if (levelMenuElement != null)
+        {
+            levelMenuElement.RemoveFromClassList("menuLeft");
+            levelMenuElement.AddToClassList("menuCentered");
+        }
+
+        currentMenu = Menus.LEVEL;
+    }
+    else if (from == Menus.LEVEL && to == Menus.MAIN)
+    {
+        if (mainMenuElement != null)
+        {
+            mainMenuElement.RemoveFromClassList("menuRight");
+            mainMenuElement.AddToClassList("menuCentered");
+        }
+
+        if (levelMenuElement != null)
+        {
+            levelMenuElement.RemoveFromClassList("menuCentered");
+            levelMenuElement.AddToClassList("menuLeft");
+        }
+
+        currentMenu = Menus.MAIN;
+    }
+
 
     // Wait for the transition duration to complete
     yield return new WaitForSeconds(transitionSpeed);
@@ -402,12 +438,24 @@ private IEnumerator menuTransition(Menus from, Menus to)
         }
     }
 
-    public void transitionSettingToMenu()
+    public void transitionMenuToLevel()
     {
         if (!isTransitioning)
         {
             isTransitioning = true;
-            StartCoroutine(menuTransition(Menus.SETTINGS, Menus.MAIN));
+            StartCoroutine(menuTransition(Menus.MAIN, Menus.LEVEL));
+        }
+    }
+
+    public void transitionToMenu()
+    {
+        if (!isTransitioning)
+        {
+            isTransitioning = true;
+            if(currentMenu == Menus.SETTINGS)
+                StartCoroutine(menuTransition(Menus.SETTINGS, Menus.MAIN));
+            if(currentMenu == Menus.LEVEL)
+                StartCoroutine(menuTransition(Menus.LEVEL, Menus.MAIN));
         }
     }
 
