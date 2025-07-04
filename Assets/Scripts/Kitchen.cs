@@ -10,8 +10,13 @@ public class Kitchen : MonoBehaviour
     [SerializeField] public GameObject foodPrefab;
     [SerializeField] private Transform foodSpawnPoint;
 
+    [Header("Soiree")]
     [SerializeField] private GameObject SoireeIdle;
     [SerializeField] private GameObject SoireeActive;
+
+    [Header("Matinee")]
+    [SerializeField] private GameObject MatineeIdle;
+    [SerializeField] private GameObject MatineeActive;
 
     [Header("Variables")]
     [SerializeField] private float cookBaseTime = 2f;
@@ -45,6 +50,7 @@ public class Kitchen : MonoBehaviour
         // Increment active order count and update state
         activeOrderCount++;
         UpdateSoireeState();
+        UpdateMatineeState();
 
         StartCoroutine(PrepareOrderCoroutine(tableID, party));
     }
@@ -104,6 +110,19 @@ public class Kitchen : MonoBehaviour
         if (SoireeIdle == null || SoireeActive == null) return;
         SoireeIdle.SetActive(!isCooking);
         SoireeActive.SetActive(isCooking);
+    }
+
+    private void UpdateMatineeState()
+    {
+        bool shouldBeActive = activeOrderCount > 0;
+        SetMatineeState(shouldBeActive);
+    }
+
+    private void SetMatineeState(bool isCooking)
+    {
+        if (MatineeIdle == null || SoireeActive == null) return;
+        MatineeIdle.SetActive(!isCooking);
+        MatineeActive.SetActive(isCooking);
     }
 
     public void DestroyFoodForTable(int tableID)
