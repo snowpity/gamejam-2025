@@ -1,0 +1,45 @@
+{
+    "sequenceId": "level3_win_dialogue",
+    "dialogues": [
+        {
+            "characterName": "Fair Flyer",
+            "dialogueText": "We did it! We made it through the busiest day yet!",
+            "portraitSpriteRight": "MF_charsheet_0",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Matinée",
+            "dialogueText": "I can't believe how many fillies we served. Everypony worked so hard!",
+            "portraitSpriteRight": "MF_charsheet_1",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Soirée",
+            "dialogueText": "All those smiles... it was worth every second.",
+            "portraitSpriteRight": "MF_charsheet_3",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Fair Flyer",
+            "dialogueText": "Let's celebrate! Mare Fair is going to be amazing thanks to you!",
+            "portraitSpriteRight": "MF_charsheet_0",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Soirée",
+            "dialogueText": "Who are you pointing at?",
+            "portraitSpriteRight": "MF_charsheet_3",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        }
+    ]
+} 

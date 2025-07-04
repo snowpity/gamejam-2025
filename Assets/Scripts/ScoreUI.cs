@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class ScoreDisplay : MonoBehaviour
 {
@@ -94,6 +95,18 @@ public class ScoreDisplay : MonoBehaviour
         // Pause the game
         Time.timeScale = 0;
         GameStateManager.SetPaused(true);
+
+        // Check for Level 3 win and trigger win dialogue if bronze or above
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName == "Level 3" && GameStateManager.totalScore >= 2000)
+        {
+            var vn = GameObject.FindObjectOfType<VisualNovel>();
+            if (vn != null)
+            {
+                vn.TriggerDialogue("level3_win_dialogue");
+                Debug.Log("Triggered Level 3 win dialogue!");
+            }
+        }
 
         gameOverText.text = fillyServedPrefix + GameStateManager.totalCustomerServed.ToString() + "\n" + scorePrefix + GameStateManager.totalScore.ToString();
 
