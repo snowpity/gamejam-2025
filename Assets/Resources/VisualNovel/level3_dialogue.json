@@ -1,0 +1,37 @@
+{
+    "sequenceId": "level3_dialogue",
+    "dialogues": [
+        {
+            "characterName": "Fair Flyer",
+            "dialogueText": "Wow, this is getting intense!",
+            "portraitSpriteRight": "MF_charsheet_0",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Fair Flyer",
+            "dialogueText": "It's hard keeping up with all these orders... but look at those happy faces!",
+            "portraitSpriteRight": "MF_charsheet_0",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Matinée",
+            "dialogueText": "I'm exhausted, but it's so satisfying to see those fillies enjoying themselves!",
+            "portraitSpriteRight": "MF_charsheet_1",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Fair Flyer",
+            "dialogueText": "Let's keep it up! We're making a real difference!",
+            "portraitSpriteRight": "MF_charsheet_0",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        }
+    ]
+} 

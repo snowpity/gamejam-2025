@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class GameStateManager
 {
@@ -18,7 +19,7 @@ public static class GameStateManager
     public static int totalCustomerServed = 0;
     public static int totalScore = 0;
 
-    public static int countdownTimer = 180;
+    public static int countdownTimer;
 
     private static int goldTrophyPoint = 3000;
     private static int silverTrophyPoint = 2000;
@@ -94,7 +95,39 @@ public static class GameStateManager
         IsGameStarted = false;
         hasFollowingParty = false;
 
-        countdownTimer = 180;
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName == "Level 1")
+        {
+            countdownTimer = 120;
+            goldTrophyPoint = 2400;
+            silverTrophyPoint = 1600;
+            copperTrophyPoint = 800;
+            Debug.Log("[SetDefault] Level 1 settings applied");
+        }
+        else if (sceneName == "Level 2")
+        {
+            countdownTimer = 180;
+            goldTrophyPoint = 3000;
+            silverTrophyPoint = 2000;
+            copperTrophyPoint = 1000;
+            Debug.Log("[SetDefault] Level 2 settings applied");
+        }
+        else if (sceneName == "Level 3")
+        {
+            countdownTimer = 240;
+            goldTrophyPoint = 5000;
+            silverTrophyPoint = 3500;
+            copperTrophyPoint = 2000;
+            Debug.Log("[SetDefault] Level 3 settings applied");
+        }
+        else
+        {
+            countdownTimer = 120;
+            goldTrophyPoint = 3000;
+            silverTrophyPoint = 2000;
+            copperTrophyPoint = 1000;
+            Debug.Log("[SetDefault] Default settings applied");
+        }
         totalCustomerServed = 0;
         totalScore = 0;
 

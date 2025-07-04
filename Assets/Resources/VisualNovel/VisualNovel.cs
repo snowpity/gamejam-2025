@@ -5,6 +5,7 @@ using System;
 using static VisualNovel;
 using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 // Data structure for dialogue entries
 [System.Serializable]
@@ -71,6 +72,15 @@ public class VisualNovel : MonoBehaviour
 
     void Start()
     {
+        // Automatically select dialogue file based on scene
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName == "Level 2")
+            dialogueFile = "level2_dialogue";
+        else if (sceneName == "Level 3")
+            dialogueFile = "level3_dialogue";
+        else
+            dialogueFile = "example_dialogue";
+
         // Trigger the dialogue when game starts if a valid file is inputted, otherwise skip
         if (dialogueFile != null)
         {

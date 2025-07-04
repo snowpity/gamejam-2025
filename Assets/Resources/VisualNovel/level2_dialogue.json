@@ -1,0 +1,37 @@
+{
+    "sequenceId": "level2_dialogue",
+    "dialogues": [
+        {
+            "characterName": "Fair Flyer",
+            "dialogueText": "Day two! Everypony ready for a bigger crowd?",
+            "portraitSpriteRight": "MF_charsheet_0",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Matinée",
+            "dialogueText": "The word's out! Expect more fillies!",
+            "portraitSpriteRight": "MF_charsheet_1",
+            "portraitSpriteLeft": "",
+            "emotion": 0,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Soirée",
+            "dialogueText": "We'll probably see lots of bigger parties too.",
+            "portraitSpriteRight": "MF_charsheet_3",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Fair Flyer",
+            "dialogueText": "Alright girls, let's make this day even better than the last!",
+            "portraitSpriteRight": "MF_charsheet_0",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        }
+    ]
+} 
