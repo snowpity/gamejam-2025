@@ -128,10 +128,10 @@ TextureImporter:
       name: matinee_strip5_0
       rect:
         serializedVersion: 2
-        x: 8
+        x: 0
         y: 0
-        width: 53
-        height: 61
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,10 +150,10 @@ TextureImporter:
       name: matinee_strip5_1
       rect:
         serializedVersion: 2
-        x: 72
+        x: 64
         y: 0
-        width: 53
-        height: 61
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,10 +172,10 @@ TextureImporter:
       name: matinee_strip5_2
       rect:
         serializedVersion: 2
-        x: 136
+        x: 128
         y: 0
-        width: 56
-        height: 61
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,10 +194,10 @@ TextureImporter:
       name: matinee_strip5_3
       rect:
         serializedVersion: 2
-        x: 209
-        y: 8
-        width: 31
-        height: 47
+        x: 192
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,10 +216,10 @@ TextureImporter:
       name: matinee_strip5_4
       rect:
         serializedVersion: 2
-        x: 273
-        y: 8
-        width: 31
-        height: 48
+        x: 256
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -238,7 +238,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 020a7780c539c8c43bd8d6200bc794a9
     internalID: 0
     vertices: []
     indices: 
@@ -246,7 +246,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       matinee_strip5_0: -577610346507171990
       matinee_strip5_1: 4248900921594176469
