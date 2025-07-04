@@ -144,7 +144,8 @@ public class Kitchen : MonoBehaviour
         {
             var heldFoodTableIDField = player.GetType().GetField("heldFoodTableID", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             var heldFoodObjectField = player.GetType().GetField("heldFoodObject", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            if (heldFoodTableIDField != null && heldFoodObjectField != null)
+            var isHoldingFoodField = player.GetType().GetField("isHoldingFood", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            if (heldFoodTableIDField != null && heldFoodObjectField != null && isHoldingFoodField != null)
             {
                 int heldTableID = (int)heldFoodTableIDField.GetValue(player);
                 GameObject heldObj = (GameObject)heldFoodObjectField.GetValue(player);
@@ -153,7 +154,8 @@ public class Kitchen : MonoBehaviour
                     Object.Destroy(heldObj);
                     heldFoodObjectField.SetValue(player, null);
                     heldFoodTableIDField.SetValue(player, -1);
-                    Debug.Log($"[Kitchen] destroyed food held by player for Table {tableID}.");
+                    isHoldingFoodField.SetValue(player, false);
+                    Debug.Log($"[Kitchen] destroyed food held by player for Table {tableID} and reset isHoldingFood.");
                 }
             }
         }
