@@ -138,5 +138,24 @@ public class Kitchen : MonoBehaviour
             spawnedFoodObjects.Remove(tableID);
             Debug.Log($"[Kitchen] destroyed food for Table {tableID} because the party left.");
         }
+        // also destroy food held by the player for this table
+        var player = GameObject.FindObjectOfType<PlayerController>();
+        if (player != null)
+        {
+            var heldFoodTableIDField = player.GetType().GetField("heldFoodTableID", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var heldFoodObjectField = player.GetType().GetField("heldFoodObject", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            if (heldFoodTableIDField != null && heldFoodObjectField != null)
+            {
+                int heldTableID = (int)heldFoodTableIDField.GetValue(player);
+                GameObject heldObj = (GameObject)heldFoodObjectField.GetValue(player);
+                if (heldTableID == tableID && heldObj != null)
+                {
+                    Object.Destroy(heldObj);
+                    heldFoodObjectField.SetValue(player, null);
+                    heldFoodTableIDField.SetValue(player, -1);
+                    Debug.Log($"[Kitchen] destroyed food held by player for Table {tableID}.");
+                }
+            }
+        }
     }
 }
