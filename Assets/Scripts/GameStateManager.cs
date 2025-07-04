@@ -36,12 +36,12 @@ public static class GameStateManager
 
     public static int getSilverTrophyPoint()
     {
-        return goldTrophyPoint;
+        return silverTrophyPoint;
     }
 
     public static int getCopperTrophyPoint()
     {
-        return goldTrophyPoint;
+        return copperTrophyPoint;
     }
 
     public static void setGoldTrophyPoint(int point)
