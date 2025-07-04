@@ -2046,16 +2046,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customerPrefab: {fileID: 4901972792627519135, guid: f036220f895951145af6af520542405e, type: 3}
-  maxCustomers: 12
+  maxCustomers: 14
   spawnInterval: 3
   queueStartPoint: {fileID: 1072079769}
   spacing: 1.1
   horizontalSpacing: 0.5
-  partySizes: 020000000200000004000000
+  partySizes: 02000000020000000200000004000000
   AudioController: {fileID: 1015362271}
   bellSound: {fileID: 8300000, guid: 8c6fa0820ececf542895cf9ee50230e2, type: 3}
   minSpawnInterval: 3
-  maxSpawnInterval: 10
+  maxSpawnInterval: 8
   rushHourMinInterval: 0.5
   rushHourMaxInterval: 1.2
 --- !u!4 &1072079769
