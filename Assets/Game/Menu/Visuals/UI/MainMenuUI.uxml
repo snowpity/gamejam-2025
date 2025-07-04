@@ -3,18 +3,18 @@
     <ui:VisualElement class="background" style="background-image: none;">
         <ui:VisualElement name="banner" class="banner" />
         <ui:VisualElement style="flex-grow: 1;">
-            <ui:VisualElement name="mainMenu" class="menuCentered">
+            <ui:VisualElement name="mainMenu" class="menuCentered menu">
                 <ui:Button icon-image="project://database/Assets/Game/Menu/Visuals/Sprites/menu_strip4.png?fileID=257395994207865268&amp;guid=974bb7ce847933f49a57671c57d41d5f&amp;type=3#menu_strip4_0" selectable="true" name="playButton" class="button" />
                 <ui:Button icon-image="project://database/Assets/Game/Menu/Visuals/Sprites/menu_strip4.png?fileID=903623629362276343&amp;guid=974bb7ce847933f49a57671c57d41d5f&amp;type=3#menu_strip4_1" selectable="true" name="settingsButton" class="button" />
                 <ui:Button icon-image="project://database/Assets/Game/Menu/Visuals/Sprites/menu_strip4.png?fileID=-495217455&amp;guid=974bb7ce847933f49a57671c57d41d5f&amp;type=3#menu_strip4_4" selectable="true" name="exitButton" class="button" />
             </ui:VisualElement>
-            <ui:VisualElement name="settingsMenu" class="menuCentered setting">
+            <ui:VisualElement name="settingsMenu" class="setting menuRight menu">
                 <ui:Slider label="BG Music" value="50" high-value="100" name="BGMusic" fill="true" style="width: 70%; color: rgb(255, 255, 255); font-size: 25px;" />
                 <ui:Slider label="Volume" value="50" high-value="100" name="Volume" fill="true" style="width: 70%; color: rgb(255, 255, 255); font-size: 25px;" />
                 <ui:Toggle label="Futa Mode" name="Toggle" style="width: 70%; color: rgb(255, 255, 255); font-size: 25px;" />
                 <ui:Button icon-image="project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=7433338533053954386&amp;guid=3d0afde0b0bed8849b219849713625f9&amp;type=3#check@2x" selectable="true" name="backButton" class="button backButton" style="width: 70%; height: 10%; margin-top: 25px;" />
             </ui:VisualElement>
-            <ui:VisualElement name="levelMenu" class="menuCentered levelSelection">
+            <ui:VisualElement name="levelMenu" class="levelSelection menuLeft menuRight menu">
                 <ui:VisualElement style="width: 80%; height: 80%; max-height: none; min-height: auto; flex-direction: row; align-items: stretch; justify-content: center;">
                     <ui:Button text="Level 1" name="lvl1-Button" class="lvlButtton" style="background-color: rgb(255, 255, 255);" />
                     <ui:Button text="Level 2" name="lvl2-Button" class="lvlButtton" style="background-color: rgb(255, 255, 255);" />

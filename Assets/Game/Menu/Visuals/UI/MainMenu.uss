@@ -10,7 +10,7 @@
     background-position: top left;
 }
 
-.menuCentered {
+.menu {
     background-color: rgba(221, 221, 221, 0.32);
     width: 40%;
     height: 80%;
@@ -27,6 +27,7 @@
     border-right-color: rgb(255, 255, 255);
     border-top-color: rgb(255, 255, 255);
     border-bottom-color: rgb(255, 255, 255);
+    transition: translate 0.2s ease-in-out;
 }
 
 .button {
@@ -48,12 +49,22 @@
 
 .setting {
     position: absolute;
+}
+
+.menuRight {
     translate: 200% 0;
+}
+
+.menuLeft {
+    translate: -200% 0;
+}
+
+.menuCentered {
+    translate: 0 0;
 }
 
 .levelSelection {
     position: absolute;
-    translate: -200% 0;
 }
 
 .lvlButtton {

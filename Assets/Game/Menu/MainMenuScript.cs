@@ -343,67 +343,54 @@ public class MainMenuScript : MonoBehaviour
 #endif
     }
 
-    private IEnumerator menuTransition(Menus from, Menus to)
+private IEnumerator menuTransition(Menus from, Menus to)
+{
+    if (from == to)
     {
-        if (from == to)
-        {
-            isTransitioning = false;
-            yield break;
-        }
+        isTransitioning = false;
+        yield break;
+    }
 
-        float elapsedTime = 0f;
-        float startMainTranslateX = 0f;
-        float targetMainTranslateX = 0f;
-        float startSettingTranslateX = 200f; // Starting position from CSS
-        float targetSettingTranslateX = 200f;
-
-        if (from == Menus.MAIN && to == Menus.SETTINGS)
-        {
-            // Main menu slides out to the left, settings menu slides in from the right
-            startMainTranslateX = 0f;
-            targetMainTranslateX = -200f;
-            startSettingTranslateX = 200f;
-            targetSettingTranslateX = 0f;
-            currentMenu = Menus.SETTINGS;
-        }
-        else if (from == Menus.SETTINGS && to == Menus.MAIN)
-        {
-            // Settings menu slides out to the right, main menu slides in from the left
-            startMainTranslateX = -200f;
-            targetMainTranslateX = 0f;
-            startSettingTranslateX = 0f;
-            targetSettingTranslateX = 200f;
-            currentMenu = Menus.MAIN;
-        }
-
-        while (elapsedTime < transitionSpeed)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = elapsedTime / transitionSpeed;
-
-            // Smooth interpolation
-            float currentMainTranslateX = Mathf.Lerp(startMainTranslateX, targetMainTranslateX, t);
-            float currentSettingTranslateX = Mathf.Lerp(startSettingTranslateX, targetSettingTranslateX, t);
-
-            // Apply transforms
-            if (mainMenuElement != null)
-                mainMenuElement.style.translate = new Translate(Length.Percent(currentMainTranslateX), 0);
-
-            if (settingsMenuElement != null)
-                settingsMenuElement.style.translate = new Translate(Length.Percent(currentSettingTranslateX), 0);
-
-            yield return null;
-        }
-
-        // Ensure final positions are exact
+    if (from == Menus.MAIN && to == Menus.SETTINGS)
+    {
+        // Main menu slides out to the left, settings menu slides in from the right
         if (mainMenuElement != null)
-            mainMenuElement.style.translate = new Translate(Length.Percent(targetMainTranslateX), 0);
+        {
+            mainMenuElement.RemoveFromClassList("menuCentered");
+            mainMenuElement.AddToClassList("menuLeft");
+        }
 
         if (settingsMenuElement != null)
-            settingsMenuElement.style.translate = new Translate(Length.Percent(targetSettingTranslateX), 0);
+        {
+            settingsMenuElement.RemoveFromClassList("menuRight");
+            settingsMenuElement.AddToClassList("menuCentered");
+        }
 
-        isTransitioning = false;
+        currentMenu = Menus.SETTINGS;
     }
+    else if (from == Menus.SETTINGS && to == Menus.MAIN)
+    {
+        // Settings menu slides out to the right, main menu slides in from the left
+        if (mainMenuElement != null)
+        {
+            mainMenuElement.RemoveFromClassList("menuLeft");
+            mainMenuElement.AddToClassList("menuCentered");
+        }
+
+        if (settingsMenuElement != null)
+        {
+            settingsMenuElement.RemoveFromClassList("menuCentered");
+            settingsMenuElement.AddToClassList("menuRight");
+        }
+
+        currentMenu = Menus.MAIN;
+    }
+
+    // Wait for the transition duration to complete
+    yield return new WaitForSeconds(transitionSpeed);
+
+    isTransitioning = false;
+}
 
     // Public methods
     public void transitionMenuToSetting()
