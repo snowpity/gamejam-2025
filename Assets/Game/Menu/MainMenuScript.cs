@@ -70,6 +70,7 @@ public class MainMenuScript : MonoBehaviour
         levelMenuElement = document.rootVisualElement.Q("levelMenu");
 
         RegisterAllBackButtons();
+        RegisterAllLevelButtons();
 
         // Apply loaded settings to UI
         ApplySettingsToUI();
@@ -114,34 +115,7 @@ public class MainMenuScript : MonoBehaviour
         Debug.Log($"Registered {allBackButtons.Count} back buttons");
     }
 
-    private void OnDisable()
-    {
-        // Stop background music when disabling
-        StopBackgroundMusic();
-
-        // Unregister all callbacks
-        if (playButton != null)
-            playButton.UnregisterCallback<ClickEvent>(onPlayButtonClick);
-
-        if (settingsButton != null)
-            settingsButton.UnregisterCallback<ClickEvent>(onSettingsButtonClick);
-
-        if (backButton != null)
-            backButton.UnregisterCallback<ClickEvent>(onBackButtonClick);
-
-        if (exitButton != null)
-            exitButton.UnregisterCallback<ClickEvent>(onExitButtonClick);
-
-        if (backgroundMusicSlider != null)
-            backgroundMusicSlider.UnregisterValueChangedCallback(OnVolumeChanged);
-
-        if (volumeSlider != null)
-            volumeSlider.UnregisterValueChangedCallback(OnVolumeChanged);
-
-        if (futaToggle != null)
-            futaToggle.UnregisterValueChangedCallback(OnFutaToggleChanged);
-    }
-
+    // LOAD AND SAVE
     private void LoadSettings()
     {
         try
@@ -204,6 +178,7 @@ public class MainMenuScript : MonoBehaviour
         }
     }
 
+    // AUDIO SETUP
     private void SetupAudioSources()
     {
         // Create AudioSource for UI sounds
@@ -289,6 +264,7 @@ public class MainMenuScript : MonoBehaviour
         }
     }
 
+    // SETTINGS
     private void OnVolumeChanged(ChangeEvent<float> evt)
     {
         gameSettings.audio = evt.newValue;
@@ -314,12 +290,10 @@ public class MainMenuScript : MonoBehaviour
             audioSource.PlayOneShot(futaToggleSound);
     }
 
+    // BUTTON REGISTERING
     private void onPlayButtonClick(ClickEvent evt)
     {
-        // Stop background music when transitioning to game
         transitionMenuToLevel();
-        //StopBackgroundMusic();
-        //toLevel(1);
     }
 
     private void onSettingsButtonClick(ClickEvent evt)
@@ -346,87 +320,129 @@ public class MainMenuScript : MonoBehaviour
 #endif
     }
 
+    private void RegisterAllLevelButtons()
+    {
+        // Get all buttons whose name starts with "lvl" and ends with "Button"
+        var allButtons = document.rootVisualElement.Query<Button>().ToList();
+
+        int registeredCount = 0;
+
+        foreach (var button in allButtons)
+        {
+            string buttonName = button.name;
+
+            // Check if button name matches the pattern "lvl[number]-Button"
+            if (buttonName.StartsWith("lvl") && buttonName.EndsWith("-Button"))
+            {
+                // Extract the number between "lvl" and "-Button"
+                string numberPart = buttonName.Substring(3, buttonName.Length - 3 - 7); // Remove "lvl" and "-Button"
+
+                if (int.TryParse(numberPart, out int levelNumber))
+                {
+                    // Register callback with the extracted level number
+                    button.RegisterCallback<ClickEvent>(evt => OnLevelButtonClick(levelNumber));
+                    registeredCount++;
+                    Debug.Log($"Registered level button: {buttonName} -> Level {levelNumber}");
+                }
+                else
+                {
+                    Debug.LogWarning($"Could not parse level number from button name: {buttonName}");
+                }
+            }
+        }
+
+        Debug.Log($"Registered {registeredCount} level buttons");
+    }
+
+    private void OnLevelButtonClick(int levelNumber)
+    {
+        Debug.Log($"Level {levelNumber} button clicked");
+
+        StopBackgroundMusic();
+        toLevel(levelNumber);
+    }
+
 private IEnumerator menuTransition(Menus from, Menus to)
-{
-    if (from == to)
     {
+        if (from == to)
+        {
+            isTransitioning = false;
+            yield break;
+        }
+
+        if (from == Menus.MAIN && to == Menus.SETTINGS)
+        {
+            // Main menu slides out to the left, settings menu slides in from the right
+            if (mainMenuElement != null)
+            {
+                mainMenuElement.RemoveFromClassList("menuCentered");
+                mainMenuElement.AddToClassList("menuLeft");
+            }
+
+            if (settingsMenuElement != null)
+            {
+                settingsMenuElement.RemoveFromClassList("menuRight");
+                settingsMenuElement.AddToClassList("menuCentered");
+            }
+
+            currentMenu = Menus.SETTINGS;
+        }
+        else if (from == Menus.SETTINGS && to == Menus.MAIN)
+        {
+            // Settings menu slides out to the right, main menu slides in from the left
+            if (mainMenuElement != null)
+            {
+                mainMenuElement.RemoveFromClassList("menuLeft");
+                mainMenuElement.AddToClassList("menuCentered");
+            }
+
+            if (settingsMenuElement != null)
+            {
+                settingsMenuElement.RemoveFromClassList("menuCentered");
+                settingsMenuElement.AddToClassList("menuRight");
+            }
+
+            currentMenu = Menus.MAIN;
+        }
+        else if (from == Menus.MAIN && to == Menus.LEVEL)
+        {
+            if (mainMenuElement != null)
+            {
+                mainMenuElement.RemoveFromClassList("menuCentered");
+                mainMenuElement.AddToClassList("menuRight");
+            }
+
+            if (levelMenuElement != null)
+            {
+                levelMenuElement.RemoveFromClassList("menuLeft");
+                levelMenuElement.AddToClassList("menuCentered");
+            }
+
+            currentMenu = Menus.LEVEL;
+        }
+        else if (from == Menus.LEVEL && to == Menus.MAIN)
+        {
+            if (mainMenuElement != null)
+            {
+                mainMenuElement.RemoveFromClassList("menuRight");
+                mainMenuElement.AddToClassList("menuCentered");
+            }
+
+            if (levelMenuElement != null)
+            {
+                levelMenuElement.RemoveFromClassList("menuCentered");
+                levelMenuElement.AddToClassList("menuLeft");
+            }
+
+            currentMenu = Menus.MAIN;
+        }
+
+
+        // Wait for the transition duration to complete
+        yield return new WaitForSeconds(transitionSpeed);
+
         isTransitioning = false;
-        yield break;
     }
-
-    if (from == Menus.MAIN && to == Menus.SETTINGS)
-    {
-        // Main menu slides out to the left, settings menu slides in from the right
-        if (mainMenuElement != null)
-        {
-            mainMenuElement.RemoveFromClassList("menuCentered");
-            mainMenuElement.AddToClassList("menuLeft");
-        }
-
-        if (settingsMenuElement != null)
-        {
-            settingsMenuElement.RemoveFromClassList("menuRight");
-            settingsMenuElement.AddToClassList("menuCentered");
-        }
-
-        currentMenu = Menus.SETTINGS;
-    }
-    else if (from == Menus.SETTINGS && to == Menus.MAIN)
-    {
-        // Settings menu slides out to the right, main menu slides in from the left
-        if (mainMenuElement != null)
-        {
-            mainMenuElement.RemoveFromClassList("menuLeft");
-            mainMenuElement.AddToClassList("menuCentered");
-        }
-
-        if (settingsMenuElement != null)
-        {
-            settingsMenuElement.RemoveFromClassList("menuCentered");
-            settingsMenuElement.AddToClassList("menuRight");
-        }
-
-        currentMenu = Menus.MAIN;
-    }
-    else if (from == Menus.MAIN && to == Menus.LEVEL)
-    {
-        if (mainMenuElement != null)
-        {
-            mainMenuElement.RemoveFromClassList("menuCentered");
-            mainMenuElement.AddToClassList("menuRight");
-        }
-
-        if (levelMenuElement != null)
-        {
-            levelMenuElement.RemoveFromClassList("menuLeft");
-            levelMenuElement.AddToClassList("menuCentered");
-        }
-
-        currentMenu = Menus.LEVEL;
-    }
-    else if (from == Menus.LEVEL && to == Menus.MAIN)
-    {
-        if (mainMenuElement != null)
-        {
-            mainMenuElement.RemoveFromClassList("menuRight");
-            mainMenuElement.AddToClassList("menuCentered");
-        }
-
-        if (levelMenuElement != null)
-        {
-            levelMenuElement.RemoveFromClassList("menuCentered");
-            levelMenuElement.AddToClassList("menuLeft");
-        }
-
-        currentMenu = Menus.MAIN;
-    }
-
-
-    // Wait for the transition duration to complete
-    yield return new WaitForSeconds(transitionSpeed);
-
-    isTransitioning = false;
-}
 
     // Public methods
     public void transitionMenuToSetting()
