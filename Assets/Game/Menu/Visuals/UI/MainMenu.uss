@@ -68,8 +68,8 @@
 }
 
 .lvlButtton {
-    width: 100px;
-    height: 100px;
+    width: 20%;
+    height: 25%;
 }
 
 .backButton {
