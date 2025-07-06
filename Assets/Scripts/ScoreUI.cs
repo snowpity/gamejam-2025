@@ -136,7 +136,7 @@ public class ScoreDisplay : MonoBehaviour
         string currentScene = SceneManager.GetActiveScene().name;
         bool isLevel3 = currentScene == "Level 3";
 
-        if (GameStateManager.nextLevel != -1 || isLevel3)
+        if (GameStateManager.nextLevel != -1 || isLevel3 && GetTrophyIndex() <= 2) // Trophy Index of 2 is bronze
         {
             hasNoNextObject.SetActive(false);
             hasNextObject.SetActive(true);
