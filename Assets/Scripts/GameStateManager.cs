@@ -28,6 +28,8 @@ public static class GameStateManager
     // Dictionary to store sprite ID for each table's order
     public static Dictionary<int, int> tableFoodSprites = new Dictionary<int, int>();
 
+    public static bool isInfiniteTime = false;
+
 
     // TROPHY POINTS
     public static int getGoldTrophyPoint()
@@ -102,6 +104,7 @@ public static class GameStateManager
             goldTrophyPoint = 2400;
             silverTrophyPoint = 1600;
             copperTrophyPoint = 800;
+            isInfiniteTime = false;
             Debug.Log("[SetDefault] Level 1 settings applied");
         }
         else if (sceneName == "Level 2")
@@ -110,6 +113,7 @@ public static class GameStateManager
             goldTrophyPoint = 3000;
             silverTrophyPoint = 2000;
             copperTrophyPoint = 1000;
+            isInfiniteTime = false;
             Debug.Log("[SetDefault] Level 2 settings applied");
         }
         else if (sceneName == "Level 3")
@@ -118,6 +122,7 @@ public static class GameStateManager
             goldTrophyPoint = 5000;
             silverTrophyPoint = 3500;
             copperTrophyPoint = 2000;
+            isInfiniteTime = true;
             Debug.Log("[SetDefault] Level 3 settings applied");
         }
         else
@@ -126,6 +131,7 @@ public static class GameStateManager
             goldTrophyPoint = 3000;
             silverTrophyPoint = 2000;
             copperTrophyPoint = 1000;
+            isInfiniteTime = false;
             Debug.Log("[SetDefault] Default settings applied");
         }
         totalCustomerServed = 0;

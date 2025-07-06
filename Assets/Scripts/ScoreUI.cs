@@ -63,12 +63,18 @@ public class ScoreDisplay : MonoBehaviour
 
     private void UpdateDisplay()
     {
-        string displayText;
+        string displayText = "";
 
         int min = GameStateManager.countdownTimer / 60;
         int sec = GameStateManager.countdownTimer % 60;
 
-        displayText = timerPrefix + min.ToString("00") + ":" + sec.ToString("00") + "\n" + scorePrefix + GameStateManager.totalScore.ToString();
+        if (GameStateManager.isInfiniteTime)
+            // displayText = timerPrefix + "Infinity" + "\n"; // No need to show this, the player knows it's infinite
+            displayText = fillyServedPrefix + GameStateManager.totalCustomerServed.ToString() + "\n";
+        else
+            displayText = timerPrefix + min.ToString("00") + ":" + sec.ToString("00") + "\n";
+
+        displayText = displayText + scorePrefix + GameStateManager.totalScore.ToString();
 
         uiText.text = displayText;
     }
@@ -79,7 +85,7 @@ public class ScoreDisplay : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
 
-            if (!GameStateManager.IsPaused && GameStateManager.IsGameStarted)
+            if (!GameStateManager.IsPaused && GameStateManager.IsGameStarted && !GameStateManager.isInfiniteTime)
             {
                 GameStateManager.countdownTimer--;
             }
