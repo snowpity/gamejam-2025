@@ -415,6 +415,12 @@ public class VisualNovel : MonoBehaviour
         // Add your custom logic here (unlock next scene, trigger events, etc.)
     }
 
+    // Public method to check if dialogue is currently active
+    public bool IsDialogueActive()
+    {
+        return isDialogueActive;
+    }
+
     // Utility method to create example JSON
     [ContextMenu("Generate Example JSON")]
     private void GenerateExampleJSON()

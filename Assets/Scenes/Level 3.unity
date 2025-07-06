@@ -1880,6 +1880,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1923747814581536088, guid: 3e581142491c2994ca49583d375527b5, type: 3}
+      propertyPath: visualNovel
+      value: 
+      objectReference: {fileID: 1376221228}
+    - target: {fileID: 1923747814581536088, guid: 3e581142491c2994ca49583d375527b5, type: 3}
       propertyPath: failureSound
       value: 
       objectReference: {fileID: 8300000, guid: 3ece5d1d02c039a4a9e28d592962f168, type: 3}
@@ -2675,6 +2679,17 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.8}
   m_Size: {x: 1, y: 0.3}
   m_Direction: 1
+--- !u!114 &1376221228 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1550193761446436383, guid: 7951b88bac241ff4996b87c6b689ad6f, type: 3}
+  m_PrefabInstance: {fileID: 570229393}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad3697f09fa08a42a2a508de724d91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1421459131
 PrefabInstance:
   m_ObjectHideFlags: 0

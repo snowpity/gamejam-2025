@@ -23,6 +23,9 @@ public class ScoreDisplay : MonoBehaviour
     [SerializeField] private AudioClip victorySound;
     [SerializeField] private AudioClip failureSound;
 
+    [Header("Visual Novel")]
+    [SerializeField] private VisualNovel visualNovel; // Reference to VisualNovel component
+
     private Text uiText;
     private bool timerStarted = false;
     private Coroutine countdownCoroutine; // Store reference to the coroutine
@@ -120,6 +123,7 @@ public class ScoreDisplay : MonoBehaviour
 
     private void OnTimerReachedZero()
     {
+        Debug.Log("[ScoreUI] OnTimerReachedZero called. Scene: " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().name + ", nextLevel: " + GameStateManager.nextLevel);
         // Pause the game
         Time.timeScale = 0;
         GameStateManager.SetPaused(true);
@@ -129,7 +133,10 @@ public class ScoreDisplay : MonoBehaviour
         // Set the trophy sprite based on score
         SetTrophySprite();
 
-        if (GameStateManager.nextLevel != -1)
+        string currentScene = SceneManager.GetActiveScene().name;
+        bool isLevel3 = currentScene == "Level 3";
+
+        if (GameStateManager.nextLevel != -1 || isLevel3)
         {
             hasNoNextObject.SetActive(false);
             hasNextObject.SetActive(true);
@@ -138,7 +145,16 @@ public class ScoreDisplay : MonoBehaviour
             if (nextButton != null)
             {
                 nextButton.onClick.RemoveAllListeners();
-                nextButton.onClick.AddListener(() => LoadNextLevel(GameStateManager.nextLevel));
+                if (isLevel3)
+                {
+                    Debug.Log("[ScoreUI] Setting NextButton to PlayLevel3WinDialogue");
+                    nextButton.onClick.AddListener(PlayLevel3WinDialogue);
+                }
+                else
+                {
+                    Debug.Log("[ScoreUI] Setting NextButton to LoadNextLevel(" + GameStateManager.nextLevel + ")");
+                    nextButton.onClick.AddListener(() => LoadNextLevel(GameStateManager.nextLevel));
+                }
             }
         }
         else
@@ -152,6 +168,55 @@ public class ScoreDisplay : MonoBehaviour
         {
             gameOverUI.SetActive(true);
         }
+    }
+
+    private void PlayLevel3WinDialogue()
+    {
+        Debug.Log("[ScoreUI] PlayLevel3WinDialogue called");
+        if (visualNovel != null)
+        {
+            // Unpause the game so dialogue and coroutines work
+            Debug.Log("[ScoreUI] Unpausing game and hiding game over UI");
+            Time.timeScale = 1;
+            GameStateManager.SetPaused(false);
+
+            if (gameOverUI != null)
+            {
+                gameOverUI.SetActive(false);
+            }
+
+            Debug.Log("[ScoreUI] Loading level3_win_dialogue in VisualNovel");
+            visualNovel.LoadDialogueFromJSON("level3_win_dialogue");
+
+            Debug.Log("[ScoreUI] Starting WaitForDialogueComplete coroutine");
+            StartCoroutine(WaitForDialogueComplete());
+        }
+        else
+        {
+            Debug.LogError("[ScoreUI] VisualNovel component not found! Cannot play win dialogue.");
+            ReturnToMainMenu();
+        }
+    }
+
+    private IEnumerator WaitForDialogueComplete()
+    {
+        Debug.Log("[ScoreUI] WaitForDialogueComplete coroutine started");
+        int frameCount = 0;
+        while (visualNovel != null && visualNovel.IsDialogueActive())
+        {
+            if (frameCount % 30 == 0) Debug.Log("[ScoreUI] Dialogue still active, waiting...");
+            frameCount++;
+            yield return null;
+        }
+        Debug.Log("[ScoreUI] Dialogue complete, returning to main menu");
+        ReturnToMainMenu();
+    }
+
+    private void ReturnToMainMenu()
+    {
+        Unpause();
+        GameStateManager.SetDefault();
+        SceneManager.LoadScene(0); // Load main menu scene
     }
 
     private void SetTrophySprite()

@@ -1,0 +1,45 @@
+{
+    "sequenceId": "level3_win_dialogue",
+    "dialogues": [
+        {
+            "characterName": "Fair Flyer",
+            "dialogueText": "We did it! We actually pulled off the biggest day yet!",
+            "portraitSpriteRight": "MF_charsheet_0",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Matinée",
+            "dialogueText": "I can't believe how many fillies we served today! My hooves are still shaking!",
+            "portraitSpriteRight": "MF_charsheet_1",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Soirée",
+            "dialogueText": "And we raised enough bits to save the charity.",
+            "portraitSpriteRight": "MF_charsheet_3",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Fair Flyer",
+            "dialogueText": "Truly this makes us a Mare Fair!",
+            "portraitSpriteRight": "MF_charsheet_0",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        },
+        {
+            "characterName": "Morning Mimosa",
+            "dialogueText": "Say that again...",
+            "portraitSpriteRight": "MF_charsheet_2",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        }
+    ]
+} 
