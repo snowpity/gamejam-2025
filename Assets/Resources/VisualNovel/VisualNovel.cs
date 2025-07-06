@@ -74,7 +74,9 @@ public class VisualNovel : MonoBehaviour
     {
         // Automatically select dialogue file based on scene
         string sceneName = SceneManager.GetActiveScene().name;
-        if (sceneName == "Level 2")
+        if (sceneName == "Level 1")
+            dialogueFile = "example_dialogue";
+        else if (sceneName == "Level 2")
             dialogueFile = "level2_dialogue";
         else if (sceneName == "Level 3")
             dialogueFile = "level3_dialogue";
