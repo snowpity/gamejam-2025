@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class ScoreDisplay : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class ScoreDisplay : MonoBehaviour
 
     [Header("Game Over UI")]
     public GameObject gameOverUI; // Assign your game over UI element
+    public GameObject hasNoNextObject;
+    public GameObject hasNextObject;
     public Sprite[] trophySprites;
     public Image trophyImage;
     public Text gameOverText;
@@ -126,6 +129,24 @@ public class ScoreDisplay : MonoBehaviour
         // Set the trophy sprite based on score
         SetTrophySprite();
 
+        if (GameStateManager.nextLevel != -1)
+        {
+            hasNoNextObject.SetActive(false);
+            hasNextObject.SetActive(true);
+
+            Button nextButton = hasNextObject.transform.Find("NextButton")?.GetComponent<Button>();
+            if (nextButton != null)
+            {
+                nextButton.onClick.RemoveAllListeners();
+                nextButton.onClick.AddListener(() => LoadNextLevel(GameStateManager.nextLevel));
+            }
+        }
+        else
+        {
+            hasNoNextObject.SetActive(true);
+            hasNextObject.SetActive(false);
+        }
+
         // Activate game over UI
         if (gameOverUI != null)
         {
@@ -145,6 +166,19 @@ public class ScoreDisplay : MonoBehaviour
                 trophyImage.sprite = trophySprites[trophyIndex];
             }
         }
+    }
+
+    public void LoadNextLevel(int sceneID)
+    {
+        Unpause();
+        GameStateManager.SetDefault();
+        SceneManager.LoadScene(sceneID);
+    }
+
+    public void Unpause()
+    {
+        Time.timeScale = 1;
+        GameStateManager.SetPaused(false);
     }
 
     private int GetTrophyIndex()

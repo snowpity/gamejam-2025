@@ -30,6 +30,8 @@ public static class GameStateManager
 
     public static bool isInfiniteTime = false;
 
+    public static int nextLevel = -1;
+
 
     // TROPHY POINTS
     public static int getGoldTrophyPoint()
@@ -105,6 +107,7 @@ public static class GameStateManager
             silverTrophyPoint = 1600;
             copperTrophyPoint = 800;
             isInfiniteTime = false;
+            nextLevel = 2;
             Debug.Log("[SetDefault] Level 1 settings applied");
         }
         else if (sceneName == "Level 2")
@@ -114,6 +117,8 @@ public static class GameStateManager
             silverTrophyPoint = 2000;
             copperTrophyPoint = 1000;
             isInfiniteTime = false;
+            nextLevel = -1;
+
             Debug.Log("[SetDefault] Level 2 settings applied");
         }
         else if (sceneName == "Level 3")
@@ -123,6 +128,7 @@ public static class GameStateManager
             silverTrophyPoint = 3500;
             copperTrophyPoint = 2000;
             isInfiniteTime = true;
+            nextLevel = -1;
             Debug.Log("[SetDefault] Level 3 settings applied");
         }
         else
@@ -132,6 +138,7 @@ public static class GameStateManager
             silverTrophyPoint = 2000;
             copperTrophyPoint = 1000;
             isInfiniteTime = false;
+            nextLevel = -1;
             Debug.Log("[SetDefault] Default settings applied");
         }
         totalCustomerServed = 0;
