@@ -18,8 +18,9 @@
                 <ui:VisualElement style="width: 80%; height: 80%; max-height: none; min-height: auto; flex-direction: row; align-items: stretch; justify-content: center;">
                     <ui:Button text="Level 1" name="lvl1-Button" class="lvlButtton" style="background-color: rgb(255, 255, 255);" />
                     <ui:Button text="Level 2" name="lvl2-Button" enabled="true" class="lvlButtton" style="background-color: rgb(255, 255, 255);" />
-                    <ui:Button text="Level 3&#10;SOON" name="lvl4-Button" enabled="false" focusable="true" class="lvlButtton" style="background-color: rgb(255, 255, 255);" />
-                    <ui:Button text="Infinite&#10;Time" name="lvl3-Button" enabled="true" class="lvlButtton" style="background-color: rgb(255, 255, 255);" />
+                    <ui:Button text="Level 3" name="lvl3-Button" enabled="true" focusable="true" class="lvlButtton" style="background-color: rgb(255, 255, 255);" />
+                    <ui:Button text="MORE&#10;LEVELS&#10;SOON" name="lvl5-Button" enabled="false" focusable="true" class="lvlButtton" style="background-color: rgb(255, 255, 255);" />
+                    <ui:Button text="Infinite&#10;Time" name="lvl4-Button" enabled="true" class="lvlButtton" style="background-color: rgb(255, 255, 255);" />
                 </ui:VisualElement>
                 <ui:Button selectable="true" name="backButton" text="BACK" class="button backButton" style="width: 70%; height: 10%; margin-top: 25px;" />
             </ui:VisualElement>

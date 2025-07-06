@@ -79,7 +79,7 @@ public class VisualNovel : MonoBehaviour
         else if (sceneName == "Level 3")
             dialogueFile = "level3_dialogue";
         else
-            dialogueFile = "example_dialogue";
+            dialogueFile = "Inf1_dialogue";
 
         // Trigger the dialogue when game starts if a valid file is inputted, otherwise skip
         if (dialogueFile != null)

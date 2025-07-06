@@ -1,0 +1,13 @@
+{
+    "sequenceId": "level3_dialogue",
+    "dialogues": [
+        {
+            "characterName": "Fair Flyer",
+            "dialogueText": "Welcome to the infinite level! Make up your own rules and challenges! If you're ready, press start!",
+            "portraitSpriteRight": "MF_charsheet_0",
+            "portraitSpriteLeft": "",
+            "emotion": 1,
+            "audioCue": ""
+        }
+    ]
+}

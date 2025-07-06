@@ -117,27 +117,27 @@ public static class GameStateManager
             silverTrophyPoint = 2000;
             copperTrophyPoint = 1000;
             isInfiniteTime = false;
-            nextLevel = -1;
+            nextLevel = 3;
 
             Debug.Log("[SetDefault] Level 2 settings applied");
         }
         else if (sceneName == "Level 3")
         {
-            countdownTimer = 0;
+            countdownTimer = 240;
             goldTrophyPoint = 5000;
             silverTrophyPoint = 3500;
             copperTrophyPoint = 2000;
-            isInfiniteTime = true;
+            isInfiniteTime = false;
             nextLevel = -1;
             Debug.Log("[SetDefault] Level 3 settings applied");
         }
         else
         {
-            countdownTimer = 120;
+            countdownTimer = 0;
             goldTrophyPoint = 3000;
             silverTrophyPoint = 2000;
             copperTrophyPoint = 1000;
-            isInfiniteTime = false;
+            isInfiniteTime = true;
             nextLevel = -1;
             Debug.Log("[SetDefault] Default settings applied");
         }
