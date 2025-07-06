@@ -118,7 +118,7 @@ public static class GameStateManager
         }
         else if (sceneName == "Level 3")
         {
-            countdownTimer = 240;
+            countdownTimer = 0;
             goldTrophyPoint = 5000;
             silverTrophyPoint = 3500;
             copperTrophyPoint = 2000;

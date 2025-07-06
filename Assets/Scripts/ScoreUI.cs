@@ -69,8 +69,11 @@ public class ScoreDisplay : MonoBehaviour
         int sec = GameStateManager.countdownTimer % 60;
 
         if (GameStateManager.isInfiniteTime)
+        {
             // displayText = timerPrefix + "Infinity" + "\n"; // No need to show this, the player knows it's infinite
-            displayText = fillyServedPrefix + GameStateManager.totalCustomerServed.ToString() + "\n";
+            displayText = timerPrefix + min.ToString("00") + ":" + sec.ToString("00") + "\n";
+            displayText = displayText + fillyServedPrefix + GameStateManager.totalCustomerServed.ToString() + "\n";
+        }
         else
             displayText = timerPrefix + min.ToString("00") + ":" + sec.ToString("00") + "\n";
 
@@ -81,18 +84,35 @@ public class ScoreDisplay : MonoBehaviour
 
     IEnumerator CountdownCoroutine()
     {
-        while (GameStateManager.countdownTimer > 0)
+        if (GameStateManager.isInfiniteTime)
         {
-            yield return new WaitForSeconds(1f);
-
-            if (!GameStateManager.IsPaused && GameStateManager.IsGameStarted && !GameStateManager.isInfiniteTime)
+            while (true)
             {
-                GameStateManager.countdownTimer--;
+                yield return new WaitForSeconds(1f);
+
+                if (!GameStateManager.IsPaused && GameStateManager.IsGameStarted)
+                {
+                    GameStateManager.countdownTimer++;
+                }
             }
+
+        }
+        else
+        {
+            while (GameStateManager.countdownTimer > 0)
+            {
+                yield return new WaitForSeconds(1f);
+
+                if (!GameStateManager.IsPaused && GameStateManager.IsGameStarted)
+                {
+                    GameStateManager.countdownTimer--;
+                }
+            }
+
+            // Timer hit zero - trigger game over
+            OnTimerReachedZero();
         }
 
-        // Timer hit zero - trigger game over
-        OnTimerReachedZero();
     }
 
     private void OnTimerReachedZero()
