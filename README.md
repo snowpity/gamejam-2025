@@ -30,8 +30,13 @@ This work is licensed under a
 
 # Credits
 Hoover - Producer, Programmer
+
 Gonderlane - Programmer
+
 Weegee- Assistant Programmer
+
 Wolvan - Assistant Programmer
+
 Sigil - Art
+
 HorsePen - Art
