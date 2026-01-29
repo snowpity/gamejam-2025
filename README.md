@@ -10,6 +10,7 @@ If they can hold it together, they might raise enough to save the charity!
 
 # Mare Fair: Tendie Frency
 Mare Fair's Particition in the /mlp/ game jam of 2025.
+Play it here: https://marefair.itch.io/mare-fair-tendie-frenzy
 
 # Engine version
 Unity 6000.1.7f1
