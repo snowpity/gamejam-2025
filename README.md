@@ -7,9 +7,11 @@ Her solution? A last minute pop-up diner to bring in donations the old-fashioned
 Matinée and Soirée surprise everypony with their cooking skills, while Morning Mimosa somehow turns improved bartending into a full-on attraction. But as the diner starts to fill with hungry congoers, tensions between the mascots bubble up: old habits clash, tempers rise, burnout looms, and worst of all, hostile reviewers...
 
 If they can hold it together, they might raise enough to save the charity! 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/256599cf-1001-4223-ae7e-6809158c84ab" />
 
 # Mare Fair: Tendie Frency
 Mare Fair's Particition in the /mlp/ game jam of 2025.
+
 Play it here: https://marefair.itch.io/mare-fair-tendie-frenzy
 
 # Engine version
